@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import Accordion from '../ui/Accordion.astro';
+import { getLang, useTranslations } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const faqs = {
+  ca: [
+    { q: 'Cal ser sòcia per comprar?', a: 'No. El súper està obert a tothom. Les sòcies, però, gaudeixen del 12% de descompte, la botiga en línia i el vot a l’assemblea.' },
+    { q: 'Quant costa fer-se sòcia?', a: 'Es fa una aportació de capital social retornable. És una inversió que et fa copropietària del projecte, no una despesa.' },
+    { q: 'Quantes hores he de dedicar-hi?', a: 'Les sòcies consumidores dediquen unes 2-2,5 hores al mes a un torn per fer funcionar el súper.' },
+    { q: 'Què és el capital social?', a: 'És l’aportació econòmica que fa cada sòcia a la cooperativa. Si un dia te’n dones de baixa, se’t retorna.' },
+    { q: 'Com funciona la botiga en línia?', a: 'És exclusiva per a sòcies. Pots fer la comanda en línia i rebre-la a casa amb repartiment en bici de la cooperativa Mensakas.' },
+    { q: 'Una entitat pot fer-se sòcia?', a: 'Sí. Cooperatives, associacions i empreses de l’economia social poden formar-ne part mitjançant acords d’intercooperació.' },
+  ],
+  es: [
+    { q: '¿Hay que ser socia para comprar?', a: 'No. El súper está abierto a todo el mundo. Las socias, eso sí, disfrutan del 12% de descuento, la tienda online y el voto en la asamblea.' },
+    { q: '¿Cuánto cuesta hacerse socia?', a: 'Se hace una aportación de capital social retornable. Es una inversión que te hace copropietaria del proyecto, no un gasto.' },
+    { q: '¿Cuántas horas tengo que dedicar?', a: 'Las socias consumidoras dedican unas 2-2,5 horas al mes a un turno para hacer funcionar el súper.' },
+    { q: '¿Qué es el capital social?', a: 'Es la aportación económica que hace cada socia a la cooperativa. Si algún día te das de baja, se te devuelve.' },
+    { q: '¿Cómo funciona la tienda online?', a: 'Es exclusiva para socias. Puedes hacer el pedido online y recibirlo en casa con reparto en bici de la cooperativa Mensakas.' },
+    { q: '¿Una entidad puede hacerse socia?', a: 'Sí. Cooperativas, asociaciones y empresas de la economía social pueden formar parte mediante acuerdos de intercooperación.' },
+  ],
+}[lang];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<BaseLayout title={t('nav.faqs')} jsonLd={jsonLd}>
+  <PageHeader eyebrow={t('nav.faqs')} title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'} />
+  <Section width="narrow">
+    {faqs.map((f, i) => (
+      <Accordion question={f.q} open={i === 0}>
+        <p>{f.a}</p>
+      </Accordion>
+    ))}
+  </Section>
+</BaseLayout>

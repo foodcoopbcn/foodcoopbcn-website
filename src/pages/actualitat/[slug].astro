@@ -1,0 +1,14 @@
+---
+import PostPage from '../../components/blog/PostPage.astro';
+import { getPosts, entrySlug } from '../../lib/posts';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getPosts('news', 'ca');
+  return posts.map((entry) => ({ params: { slug: entrySlug(entry.id) }, props: { entry } }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props;
+---
+<PostPage entry={entry} type="news" />

@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import SplitCards from '../sections/SplitCards.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    title: 'Fes-te sòcia',
+    intro: 'Forma part del projecte i ajuda’ns a construir una altra manera d’alimentar-nos. Pots sumar-t’hi com a persona o com a entitat.',
+    options: [
+      {
+        title: 'Com a persona', featured: true, badge: 'Particulars',
+        text: 'Fes-te sòcia consumidora i gaudeix de tots els avantatges del súper cooperatiu.',
+        points: ['12% de descompte', 'Botiga en línia', 'Vot a l’assemblea', 'Participació d’unes 2-2,5 h al mes'],
+        cta: { label: lang === 'ca' ? 'Saber-ne més' : 'Saber más', href: localizePath('/fes-te-socia/persona', lang) },
+      },
+      {
+        title: 'Com a entitat', badge: 'Col·lectius',
+        text: 'Cooperatives, associacions i empreses de l’economia social també poden formar-ne part.',
+        points: ['Intercooperació', 'Compres col·lectives', 'Aliances de barri'],
+        cta: { label: lang === 'ca' ? 'Saber-ne més' : 'Saber más', href: localizePath('/fes-te-socia/entitat', lang) },
+      },
+    ],
+    stepsTitle: 'Com m’hi faig sòcia?',
+    steps: [
+      { n: '1', t: 'Informa-te’n', d: 'Llegeix les condicions o vine a una sessió informativa.' },
+      { n: '2', t: 'Aporta el capital social', d: 'Una aportació retornable que et fa copropietària del projecte.' },
+      { n: '3', t: 'Tria el teu torn', d: 'Dedica unes 2-2,5 h al mes a fer funcionar el súper.' },
+      { n: '4', t: 'Comença a comprar', d: 'Gaudeix del descompte i de la botiga en línia.' },
+    ],
+  },
+  es: {
+    title: 'Hazte socia',
+    intro: 'Forma parte del proyecto y ayúdanos a construir otra manera de alimentarnos. Puedes sumarte como persona o como entidad.',
+    options: [
+      {
+        title: 'Como persona', featured: true, badge: 'Particulares',
+        text: 'Hazte socia consumidora y disfruta de todas las ventajas del súper cooperativo.',
+        points: ['12% de descuento', 'Tienda online', 'Voto en la asamblea', 'Participación de unas 2-2,5 h al mes'],
+        cta: { label: 'Saber más', href: localizePath('/fes-te-socia/persona', lang) },
+      },
+      {
+        title: 'Como entidad', badge: 'Colectivos',
+        text: 'Cooperativas, asociaciones y empresas de la economía social también pueden formar parte.',
+        points: ['Intercooperación', 'Compras colectivas', 'Alianzas de barrio'],
+        cta: { label: 'Saber más', href: localizePath('/fes-te-socia/entitat', lang) },
+      },
+    ],
+    stepsTitle: '¿Cómo me hago socia?',
+    steps: [
+      { n: '1', t: 'Infórmate', d: 'Lee las condiciones o ven a una sesión informativa.' },
+      { n: '2', t: 'Aporta el capital social', d: 'Una aportación retornable que te hace copropietaria del proyecto.' },
+      { n: '3', t: 'Elige tu turno', d: 'Dedica unas 2-2,5 h al mes a hacer funcionar el súper.' },
+      { n: '4', t: 'Empieza a comprar', d: 'Disfruta del descuento y de la tienda online.' },
+    ],
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.title} title={c.title} intro={c.intro} />
+
+  <SplitCards options={c.options} tone="paper" />
+
+  <Section tone="soft">
+    <h2 class="mb-10 text-center text-2xl">{c.stepsTitle}</h2>
+    <ol class="grid gap-6 md:grid-cols-4">
+      {c.steps.map((s) => (
+        <li class="rounded-lg bg-paper p-6 shadow-sm ring-1 ring-line">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-brand font-display text-lg font-extrabold text-paper">{s.n}</span>
+          <h3 class="mt-4 text-lg">{s.t}</h3>
+          <p class="mt-1.5 text-sm text-ink-soft">{s.d}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <CTASection
+    title={lang === 'ca' ? 'Tens dubtes?' : '¿Tienes dudas?'}
+    text={lang === 'ca' ? 'Mira les preguntes freqüents o escriu-nos.' : 'Mira las preguntas frecuentes o escríbenos.'}
+    primaryCta={{ label: t('nav.faqs'), href: localizePath('/faqs', lang) }}
+    secondaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+  />
+</BaseLayout>

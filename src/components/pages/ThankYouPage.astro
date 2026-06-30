@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+interface Props {
+  variant?: 'contact' | 'newsletter';
+}
+const { variant = 'contact' } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const msg = {
+  contact: { ca: 'Gràcies! Hem rebut el teu missatge i et respondrem ben aviat.', es: '¡Gracias! Hemos recibido tu mensaje y te responderemos pronto.' },
+  newsletter: { ca: 'Gràcies per subscriure’t! Aviat rebràs les nostres novetats.', es: '¡Gracias por suscribirte! Pronto recibirás nuestras novedades.' },
+}[variant][lang];
+---
+<BaseLayout title={lang === 'ca' ? 'Gràcies' : 'Gracias'} noindex={true}>
+  <section class="section">
+    <div class="container-narrow text-center">
+      <div class="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-brand text-paper">
+        <Icon name="leaf" size={32} />
+      </div>
+      <h1 class="text-2xl">{lang === 'ca' ? 'Gràcies!' : '¡Gracias!'}</h1>
+      <p class="mx-auto mt-4 max-w-md text-lg text-ink-soft">{msg}</p>
+      <div class="mt-8">
+        <Button href={localizePath('/', lang)} variant="primary">{lang === 'ca' ? 'Torna a l’inici' : 'Volver al inicio'}</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+/* Generic section wrapper — controls background tone and width. Compose pages from these. */
+interface Props {
+  tone?: 'paper' | 'soft' | 'green' | 'ink';
+  width?: 'page' | 'narrow';
+  id?: string;
+  class?: string;
+}
+const { tone = 'paper', width = 'page', id, class: className = '' } = Astro.props;
+const tones = {
+  paper: 'bg-paper text-ink',
+  soft: 'bg-paper-soft text-ink',
+  green: 'bg-paper-green text-brand-dark',
+  ink: 'bg-ink text-paper',
+};
+const container = width === 'narrow' ? 'container-narrow' : 'container-page';
+---
+<section id={id} class:list={['section', tones[tone], className]}>
+  <div class={container}>
+    <slot />
+  </div>
+</section>

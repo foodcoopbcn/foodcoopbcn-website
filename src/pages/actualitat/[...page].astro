@@ -1,0 +1,16 @@
+---
+import BlogListing from '../../components/blog/BlogListing.astro';
+import { getAllPosts } from '../../lib/posts';
+import { useTranslations } from '../../i18n/utils';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const posts = await getAllPosts('ca');
+  return paginate(posts, { pageSize: 9 });
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { page } = Astro.props;
+const t = useTranslations('ca');
+---
+<BlogListing page={page} title={t('blog.title')} />

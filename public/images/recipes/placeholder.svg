@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <rect width="800" height="500" fill="#fff894"/>
+  <circle cx="400" cy="250" r="150" fill="#ffffff"/>
+  <circle cx="400" cy="250" r="150" fill="none" stroke="#c8102e" stroke-width="10"/>
+  <path d="M400 160a90 90 0 0 1 0 180" fill="#8aa41f"/>
+  <text x="60" y="450" font-family="Open Sans, sans-serif" font-weight="800" font-size="40" fill="#06402a">Recepta</text>
+</svg>

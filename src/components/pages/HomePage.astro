@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../sections/Hero.astro';
+import FeatureGrid from '../sections/FeatureGrid.astro';
+import SplitCards from '../sections/SplitCards.astro';
+import Stats from '../sections/Stats.astro';
+import CTASection from '../sections/CTASection.astro';
+import Section from '../sections/Section.astro';
+import PostCard from '../blog/PostCard.astro';
+import Button from '../ui/Button.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { getAllPosts, getCategoryLabels, entrySlug, entryLang, postPath } from '../../lib/posts';
+import { org } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const posts = (await getAllPosts(lang)).slice(0, 3);
+const labels = await getCategoryLabels(lang);
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'GroceryStore',
+  name: org.name,
+  legalName: org.legalName,
+  email: org.email,
+  telephone: org.phone,
+  url: Astro.site?.href,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: org.address.street,
+    addressLocality: org.address.locality,
+    postalCode: org.address.postalCode,
+    addressCountry: org.address.country,
+  },
+  sameAs: ['https://www.instagram.com/foodcoopbcn/', 'https://www.facebook.com/foodcoopbcn'],
+};
+
+const c = {
+  ca: {
+    eyebrow: 'Supermercat cooperatiu de Barcelona',
+    title: 'Bons productes per a tu i per a la terra',
+    highlights: ['Decisions i marges transparents', 'Productes sostenibles i de proximitat', 'Bon ambient i comunitat'],
+    heroText:
+      'El primer supermercat cooperatiu, participatiu i sense ànim de lucre de Barcelona. Productes bons, sans i a un preu just, sense marges per a ningú.',
+    valuesTitle: 'Per què FoodCoop?',
+    valuesIntro: 'Un model just per a les persones, els productors i el planeta.',
+    values: [
+      { icon: 'leaf', title: 'Sostenible i de proximitat', text: 'Prioritzem productors locals catalans i productes agroecològics, a granel i amb poc envàs.' },
+      { icon: 'vote', title: 'Transparència total', text: 'Decisions preses en assemblea i marges visibles. Sense ànim de lucre: cap benefici privat.' },
+      { icon: 'heart', title: 'Sa i assequible', text: 'Més de 1.200 productes de qualitat a un preu just, perquè menjar bé sigui per a tothom.' },
+      { icon: 'user', title: 'Comunitat', text: 'Un projecte fet entre totes: les sòcies hi dediquen unes hores al mes i en decideixen el rumb.' },
+    ],
+    accessTitle: 'Dues maneres de comprar-hi',
+    accessIntro: 'Pots comprar-hi sense ser sòcia, o fer-te’n part i gaudir de tots els avantatges.',
+    options: [
+      {
+        badge: 'Obert a tothom',
+        title: 'Compra pública',
+        text: 'No cal ser sòcia per comprar al súper. Vine i descobreix els nostres productes.',
+        points: ['Sense quota ni compromís', 'Productes a granel i de proximitat', 'Horari ampli de dilluns a dissabte'],
+        cta: { label: t('cta.visitShop'), href: localizePath('/el-super', lang) },
+      },
+      {
+        badge: 'Recomanat',
+        featured: true,
+        title: 'Fes-te sòcia',
+        text: 'Forma part del projecte, decideix i estalvia.',
+        points: ['12% de descompte en tots els productes', 'Accés a la botiga en línia amb repartiment en bici', 'Vot a les assemblees', 'Participació d’unes 2-2,5 h al mes'],
+        cta: { label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) },
+      },
+    ],
+    stats: [
+      { value: '1.200+', label: 'Productes' },
+      { value: '12%', label: 'Descompte sòcies' },
+      { value: '100%', label: 'Sense ànim de lucre' },
+      { value: '0', label: 'Marges privats' },
+    ],
+    newsTitle: t('blog.news'),
+  },
+  es: {
+    eyebrow: 'Supermercado cooperativo de Barcelona',
+    title: 'Buenos productos para ti y para la tierra',
+    highlights: ['Decisiones y márgenes transparentes', 'Productos sostenibles y de proximidad', 'Buen ambiente y comunidad'],
+    heroText:
+      'El primer supermercado cooperativo, participativo y sin ánimo de lucro de Barcelona. Productos buenos, sanos y a un precio justo, sin márgenes para nadie.',
+    valuesTitle: '¿Por qué FoodCoop?',
+    valuesIntro: 'Un modelo justo para las personas, los productores y el planeta.',
+    values: [
+      { icon: 'leaf', title: 'Sostenible y de proximidad', text: 'Priorizamos productores locales catalanes y productos agroecológicos, a granel y con poco envase.' },
+      { icon: 'vote', title: 'Transparencia total', text: 'Decisiones tomadas en asamblea y márgenes visibles. Sin ánimo de lucro: ningún beneficio privado.' },
+      { icon: 'heart', title: 'Sano y asequible', text: 'Más de 1.200 productos de calidad a un precio justo, para que comer bien sea para todo el mundo.' },
+      { icon: 'user', title: 'Comunidad', text: 'Un proyecto hecho entre todas: las socias dedican unas horas al mes y deciden su rumbo.' },
+    ],
+    accessTitle: 'Dos maneras de comprar',
+    accessIntro: 'Puedes comprar sin ser socia, o formar parte y disfrutar de todas las ventajas.',
+    options: [
+      {
+        badge: 'Abierto a todos',
+        title: 'Compra pública',
+        text: 'No hace falta ser socia para comprar en el súper. Ven y descubre nuestros productos.',
+        points: ['Sin cuota ni compromiso', 'Productos a granel y de proximidad', 'Horario amplio de lunes a sábado'],
+        cta: { label: t('cta.visitShop'), href: localizePath('/el-super', lang) },
+      },
+      {
+        badge: 'Recomendado',
+        featured: true,
+        title: 'Hazte socia',
+        text: 'Forma parte del proyecto, decide y ahorra.',
+        points: ['12% de descuento en todos los productos', 'Acceso a la tienda online con reparto en bici', 'Voto en las asambleas', 'Participación de unas 2-2,5 h al mes'],
+        cta: { label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) },
+      },
+    ],
+    stats: [
+      { value: '1.200+', label: 'Productos' },
+      { value: '12%', label: 'Descuento socias' },
+      { value: '100%', label: 'Sin ánimo de lucro' },
+      { value: '0', label: 'Márgenes privados' },
+    ],
+    newsTitle: t('blog.news'),
+  },
+}[lang];
+---
+<BaseLayout title="" jsonLd={orgJsonLd}>
+  <Hero
+    eyebrow={c.eyebrow}
+    title={c.title}
+    highlights={c.highlights}
+    text={c.heroText}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: t('cta.visitShop'), href: localizePath('/el-super', lang) }}
+  />
+
+  <FeatureGrid title={c.valuesTitle} intro={c.valuesIntro} features={c.values} columns={4} tone="paper" />
+
+  <SplitCards eyebrow="FoodCoop BCN" title={c.accessTitle} intro={c.accessIntro} options={c.options} tone="soft" />
+
+  <Stats stats={c.stats} tone="ink" />
+
+  {posts.length > 0 && (
+    <Section tone="paper">
+      <div class="mb-10 flex items-end justify-between gap-4">
+        <h2 class="text-2xl">{c.newsTitle}</h2>
+        <Button href={localizePath('/actualitat', lang)} variant="ghost">{t('cta.allNews')}</Button>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map(({ type, entry }) => (
+          <PostCard
+            href={postPath(type, entryLang(entry.id), entrySlug(entry.id))}
+            title={entry.data.title}
+            date={entry.data.date}
+            excerpt={entry.data.excerpt}
+            cover={entry.data.cover}
+            category={labels[entry.data.category] ?? entry.data.category}
+          />
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <CTASection
+    title={lang === 'ca' ? 'Vols formar part del projecte?' : '¿Quieres formar parte del proyecto?'}
+    text={lang === 'ca'
+      ? 'Fes-te sòcia i ajuda’ns a construir una altra manera d’alimentar-nos a Barcelona.'
+      : 'Hazte socia y ayúdanos a construir otra manera de alimentarnos en Barcelona.'}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+  />
+</BaseLayout>

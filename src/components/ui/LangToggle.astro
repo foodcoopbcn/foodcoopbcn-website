@@ -1,0 +1,19 @@
+---
+import { getLang, otherLang, localizePath, stripLocale } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
+import Icon from './Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const target = otherLang(lang);
+const canonicalPath = stripLocale(Astro.url.pathname);
+const href = localizePath(canonicalPath, target);
+---
+<a
+  href={href}
+  class="inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-sm font-semibold ring-1 ring-ink/15 hover:ring-brand hover:text-brand"
+  hreflang={target}
+  aria-label={`${languages[target]}`}
+>
+  <Icon name="globe" size={16} />
+  {target.toUpperCase()}
+</a>

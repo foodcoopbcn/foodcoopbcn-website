@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLang, useTranslations } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+---
+<BaseLayout title={t('blog.search')} noindex={true}>
+  <section class="bg-paper-green">
+    <div class="container-page py-12">
+      <h1 class="text-3xl text-ink">{t('blog.search')}</h1>
+    </div>
+  </section>
+  <div class="container-page py-12">
+    <!-- Pagefind UI: the index is generated at build time (`pagefind --site dist`). -->
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <div id="search" data-lang={lang}></div>
+  </div>
+
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline define:vars={{ lang }}>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof PagefindUI === 'undefined') return;
+      const ui = new PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: true,
+        translations: {
+          placeholder: lang === 'es' ? 'Buscar artículos y recetas…' : 'Cerca articles i receptes…',
+        },
+      });
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) {
+        const input = document.querySelector('#search input');
+        if (input) {
+          input.value = q;
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    });
+  </script>
+</BaseLayout>

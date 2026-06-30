@@ -1,0 +1,47 @@
+---
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { getCategoryCounts, getCategoryLabels } from '../../lib/posts';
+import Icon from '../ui/Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const counts = await getCategoryCounts(lang);
+const labels = await getCategoryLabels(lang);
+const activeCategory = Astro.props.activeCategory as string | undefined;
+---
+<aside class="space-y-8">
+  <div>
+    <h2 class="mb-3 font-display text-lg font-bold">{t('blog.search')}</h2>
+    <form action={localizePath('/actualitat/cerca', lang)} method="get" class="relative">
+      <input
+        type="search"
+        name="q"
+        placeholder={t('blog.searchPlaceholder')}
+        class="w-full rounded-pill border border-line bg-paper py-2.5 pl-10 pr-4 text-sm focus:border-brand focus:outline-none"
+      />
+      <Icon name="search" size={18} class="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
+    </form>
+  </div>
+
+  <div>
+    <h2 class="mb-3 font-display text-lg font-bold">{t('blog.categories')}</h2>
+    <ul class="space-y-1">
+      {
+        counts.map((c) => (
+          <li>
+            <a
+              href={localizePath(`/actualitat/categoria/${c.slug}`, lang)}
+              class:list={[
+                'flex items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-paper-green',
+                activeCategory === c.slug ? 'bg-paper-green font-semibold text-brand-dark' : 'text-ink-soft',
+              ]}
+            >
+              <span>{labels[c.slug] ?? c.slug}</span>
+              <span class="text-xs text-muted">{c.count}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</aside>

@@ -1,0 +1,18 @@
+---
+import Section from './Section.astro';
+interface Props {
+  stats: { value: string; label: string }[];
+  tone?: 'paper' | 'soft' | 'green' | 'ink';
+}
+const { stats, tone = 'ink' } = Astro.props;
+---
+<Section tone={tone}>
+  <dl class="grid grid-cols-2 gap-8 text-center lg:grid-cols-4">
+    {stats.map((s) => (
+      <div>
+        <dt class="font-display text-3xl font-extrabold text-accent">{s.value}</dt>
+        <dd class="mt-1 text-sm font-semibold uppercase tracking-wide opacity-80">{s.label}</dd>
+      </div>
+    ))}
+  </dl>
+</Section>

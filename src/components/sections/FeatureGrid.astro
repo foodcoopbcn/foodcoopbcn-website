@@ -1,0 +1,42 @@
+---
+import Section from './Section.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Feature {
+  icon?: string;
+  title: string;
+  text: string;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  features: Feature[];
+  tone?: 'paper' | 'soft' | 'green';
+  columns?: 2 | 3 | 4;
+}
+const { eyebrow, title, intro, features, tone = 'paper', columns = 3 } = Astro.props;
+const cols = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' }[columns];
+---
+<Section tone={tone}>
+  {(eyebrow || title || intro) && (
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand">{eyebrow}</p>}
+      {title && <h2 class="text-2xl">{title}</h2>}
+      {intro && <p class="mt-4 text-lg text-ink-soft">{intro}</p>}
+    </div>
+  )}
+  <div class:list={['grid gap-6', cols]}>
+    {features.map((f) => (
+      <div class="rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
+        {f.icon && (
+          <div class="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-paper-green text-brand">
+            <Icon name={f.icon as any} size={24} />
+          </div>
+        )}
+        <h3 class="text-lg">{f.title}</h3>
+        <p class="mt-2 text-ink-soft">{f.text}</p>
+      </div>
+    ))}
+  </div>
+</Section>

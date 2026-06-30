@@ -1,0 +1,69 @@
+---
+import Section from './Section.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Option {
+  badge?: string;
+  title: string;
+  text: string;
+  points?: string[];
+  cta?: { label: string; href: string };
+  featured?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  options: Option[];
+  tone?: 'paper' | 'soft' | 'green';
+}
+const { eyebrow, title, intro, options, tone = 'soft' } = Astro.props;
+---
+<Section tone={tone}>
+  {(eyebrow || title || intro) && (
+    <div class="mx-auto mb-12 max-w-2xl text-center">
+      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand">{eyebrow}</p>}
+      {title && <h2 class="text-2xl">{title}</h2>}
+      {intro && <p class="mt-4 text-lg text-ink-soft">{intro}</p>}
+    </div>
+  )}
+  <div class="grid gap-6 md:grid-cols-2">
+    {options.map((o) => (
+      <div
+        class:list={[
+          'flex flex-col rounded-2xl p-8 ring-1',
+          o.featured ? 'bg-ink text-paper ring-ink shadow-lg' : 'bg-paper text-ink ring-line shadow-sm',
+        ]}
+      >
+        {o.badge && (
+          <span
+            class:list={[
+              'mb-4 inline-flex w-fit items-center rounded-pill px-3 py-1 text-xs font-bold uppercase tracking-wide',
+              o.featured ? 'bg-accent text-ink' : 'bg-paper-green text-brand-dark',
+            ]}
+          >
+            {o.badge}
+          </span>
+        )}
+        <h3 class="text-xl">{o.title}</h3>
+        <p class:list={['mt-3', o.featured ? 'text-paper/80' : 'text-ink-soft']}>{o.text}</p>
+        {o.points && (
+          <ul class="mt-5 space-y-2.5">
+            {o.points.map((p) => (
+              <li class="flex items-start gap-2.5 text-sm">
+                <Icon name="leaf" size={18} class={o.featured ? 'mt-0.5 shrink-0 text-accent' : 'mt-0.5 shrink-0 text-brand'} />
+                <span class={o.featured ? 'text-paper/90' : 'text-ink'}>{p}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {o.cta && (
+          <div class="mt-7 pt-2">
+            <Button href={o.cta.href} variant={o.featured ? 'accent' : 'primary'}>{o.cta.label}</Button>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</Section>

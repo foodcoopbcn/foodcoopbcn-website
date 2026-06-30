@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from './PostCard.astro';
+import BlogSidebar from './BlogSidebar.astro';
+import Pagination from './Pagination.astro';
+import { getLang, useTranslations } from '../../i18n/utils';
+import { getCategoryLabels, entrySlug, entryLang, postPath, type PostType } from '../../lib/posts';
+import type { AnyPost } from '../../lib/posts';
+
+interface PageData {
+  data: { type: PostType; entry: AnyPost }[];
+  url: { prev?: string; next?: string };
+  currentPage: number;
+  lastPage: number;
+}
+interface Props {
+  page: PageData;
+  title: string;
+  description?: string;
+  activeCategory?: string;
+}
+const { page, title, description, activeCategory } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const labels = await getCategoryLabels(lang);
+---
+<BaseLayout title={title} description={description}>
+  <section class="bg-paper-green">
+    <div class="container-page py-12 md:py-16">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand">{t('blog.title')}</p>
+      <h1 class="mt-2 text-3xl text-ink">{title}</h1>
+    </div>
+  </section>
+
+  <div class="container-page grid gap-12 py-12 lg:grid-cols-[1fr_280px]">
+    <div>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {page.data.map(({ type, entry }) => (
+          <PostCard
+            href={postPath(type, entryLang(entry.id), entrySlug(entry.id))}
+            title={entry.data.title}
+            date={entry.data.date}
+            excerpt={entry.data.excerpt}
+            cover={entry.data.cover}
+            category={labels[entry.data.category] ?? entry.data.category}
+          />
+        ))}
+      </div>
+      <Pagination
+        prevUrl={page.url.prev}
+        nextUrl={page.url.next}
+        currentPage={page.currentPage}
+        lastPage={page.lastPage}
+      />
+    </div>
+    <BlogSidebar activeCategory={activeCategory} />
+  </div>
+</BaseLayout>

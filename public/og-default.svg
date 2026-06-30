@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#009739"/>
+  <circle cx="1000" cy="160" r="200" fill="#feec3f" opacity="0.85"/>
+  <path d="M120 560c0-200 150-350 360-350-15 200-150 350-360 350Z" fill="#06402a"/>
+  <text x="100" y="300" font-family="Open Sans, sans-serif" font-weight="800" font-size="92" fill="#ffffff">FoodCoop BCN</text>
+  <text x="104" y="370" font-family="Open Sans, sans-serif" font-weight="600" font-size="36" fill="#e9fbe5">Supermercat cooperatiu de Barcelona</text>
+</svg>

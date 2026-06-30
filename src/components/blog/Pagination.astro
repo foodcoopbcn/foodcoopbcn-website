@@ -1,0 +1,33 @@
+---
+import { getLang, useTranslations } from '../../i18n/utils';
+interface Props {
+  prevUrl?: string;
+  nextUrl?: string;
+  currentPage: number;
+  lastPage: number;
+}
+const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+---
+{
+  lastPage > 1 && (
+    <nav class="mt-12 flex items-center justify-between gap-4" aria-label="Pagination">
+      {prevUrl ? (
+        <a href={prevUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand hover:ring-brand">
+          ← {t('blog.newer')}
+        </a>
+      ) : (
+        <span />
+      )}
+      <span class="text-sm text-muted">{currentPage} / {lastPage}</span>
+      {nextUrl ? (
+        <a href={nextUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand hover:ring-brand">
+          {t('blog.older')} →
+        </a>
+      ) : (
+        <span />
+      )}
+    </nav>
+  )
+}

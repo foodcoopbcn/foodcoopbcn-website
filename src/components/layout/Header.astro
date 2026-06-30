@@ -1,0 +1,120 @@
+---
+import { getLang, useTranslations, localizePath, stripLocale } from '../../i18n/utils';
+import { mainNav, org } from '../../config/site';
+import Logo from './Logo.astro';
+import LangToggle from '../ui/LangToggle.astro';
+import Icon from '../ui/Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const current = stripLocale(Astro.url.pathname);
+
+function isActive(path: string) {
+  return current === path || current.startsWith(path + '/');
+}
+---
+<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
+  <div class="container-page flex h-[68px] items-center justify-between gap-4">
+    <a href={localizePath('/', lang)} class="flex items-center gap-2" aria-label={org.name}>
+      <Logo class="h-9 w-auto" />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+      {
+        mainNav.map((item) =>
+          item.children ? (
+            <div class="group relative">
+              <a
+                href={localizePath(item.path, lang)}
+                class:list={[
+                  'flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold hover:text-brand',
+                  isActive(item.path) && 'text-brand',
+                ]}
+              >
+                {t(item.key)}
+                <Icon name="chevron" size={14} />
+              </a>
+              <div class="invisible absolute left-0 top-full min-w-56 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                {item.children.map((child) => (
+                  <a
+                    href={localizePath(child.path, lang)}
+                    class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-dark"
+                  >
+                    {t(child.key)}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              href={localizePath(item.path, lang)}
+              class:list={[
+                'rounded-md px-3 py-2 text-sm font-semibold hover:text-brand',
+                isActive(item.path) && 'text-brand',
+              ]}
+            >
+              {t(item.key)}
+            </a>
+          )
+        )
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={org.memberLoginUrl}
+        class="hidden items-center gap-1.5 rounded-pill bg-brand px-4 py-2 text-sm font-bold text-paper hover:brightness-110 sm:inline-flex"
+      >
+        <Icon name="user" size={16} />
+        {t('nav.login')}
+      </a>
+      <LangToggle />
+
+      <!-- Mobile menu toggle (CSS-only, no JS) -->
+      <input type="checkbox" id="nav-toggle" class="peer hidden" />
+      <label
+        for="nav-toggle"
+        class="inline-flex cursor-pointer items-center rounded-md p-2 lg:hidden"
+        aria-label={t('nav.menu')}
+      >
+        <Icon name="menu" size={26} class="peer-checked:hidden" />
+      </label>
+
+      <!-- Mobile drawer -->
+      <div
+        class="invisible fixed inset-x-0 top-[68px] z-40 max-h-0 overflow-hidden border-b border-line bg-paper opacity-0 transition-all duration-200 peer-checked:visible peer-checked:max-h-[calc(100vh-68px)] peer-checked:overflow-y-auto peer-checked:opacity-100 lg:hidden"
+      >
+        <nav class="container-page flex flex-col gap-1 py-4" aria-label="Mobile">
+          {
+            mainNav.map((item) => (
+              <>
+                <a
+                  href={localizePath(item.path, lang)}
+                  class="rounded-md px-3 py-3 text-base font-semibold hover:bg-paper-green"
+                >
+                  {t(item.key)}
+                </a>
+                {item.children?.map((child) => (
+                  <a
+                    href={localizePath(child.path, lang)}
+                    class="rounded-md px-6 py-2.5 text-sm text-ink-soft hover:bg-paper-green"
+                  >
+                    {t(child.key)}
+                  </a>
+                ))}
+              </>
+            ))
+          }
+          <a
+            href={org.memberLoginUrl}
+            class="mt-2 inline-flex items-center justify-center gap-2 rounded-pill bg-brand px-4 py-3 font-bold text-paper"
+          >
+            <Icon name="user" size={18} />
+            {t('nav.login')}
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>

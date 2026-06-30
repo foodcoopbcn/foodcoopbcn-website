@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import FeatureGrid from '../sections/FeatureGrid.astro';
+import CTASection from '../sections/CTASection.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    title: 'Un supermercat de totes i per a totes',
+    intro:
+      'FoodCoop BCN és un supermercat cooperatiu, participatiu i sense ànim de lucre. Ens mou la sostenibilitat, la proximitat i el tracte just amb qui produeix el que mengem.',
+    storyTitle: 'D’on venim',
+    story: [
+      'El projecte va néixer d’una trobada el 2018, inspirat en models cooperatius d’èxit com La Louve (París) o la Bees Coop (Brussel·les), que demostren que una altra manera de fer supermercat és possible.',
+      'Després d’anys de feina col·lectiva, vam obrir les portes al passatge d’Aragó. Avui som una comunitat de sòcies que decidim, treballem i comprem juntes.',
+    ],
+    govTitle: 'Com ens organitzem',
+    govIntro: 'Decidim en assemblea i ens organitzem en cercles de treball especialitzats.',
+    circles: [
+      { icon: 'user', title: 'Comunitat', text: 'Acollida, participació i vida associativa de les sòcies.' },
+      { icon: 'basket', title: 'Compres', text: 'Relació amb productores i selecció del catàleg.' },
+      { icon: 'clock', title: 'Operacions', text: 'Funcionament diari del súper i els torns.' },
+      { icon: 'vote', title: 'Finances', text: 'Gestió econòmica transparent i sostenible.' },
+      { icon: 'mail', title: 'Comunicació', text: 'Difusió, web i relació amb l’entorn.' },
+      { icon: 'leaf', title: 'Producte', text: 'Criteris de sostenibilitat i qualitat del que venem.' },
+    ],
+    membersTitle: 'Dos tipus de sòcies',
+    members: [
+      { title: 'Sòcia consumidora', text: 'Compra al súper, hi participa unes 2-2,5 h al mes i té vot a l’assemblea.' },
+      { title: 'Sòcia col·laboradora', text: 'Aporta capital al projecte sense l’obligació de fer torns.' },
+    ],
+  },
+  es: {
+    title: 'Un supermercado de todas y para todas',
+    intro:
+      'FoodCoop BCN es un supermercado cooperativo, participativo y sin ánimo de lucro. Nos mueve la sostenibilidad, la proximidad y el trato justo con quien produce lo que comemos.',
+    storyTitle: 'De dónde venimos',
+    story: [
+      'El proyecto nació de un encuentro en 2018, inspirado en modelos cooperativos de éxito como La Louve (París) o la Bees Coop (Bruselas), que demuestran que otra manera de hacer supermercado es posible.',
+      'Tras años de trabajo colectivo, abrimos las puertas en el pasaje de Aragó. Hoy somos una comunidad de socias que decidimos, trabajamos y compramos juntas.',
+    ],
+    govTitle: 'Cómo nos organizamos',
+    govIntro: 'Decidimos en asamblea y nos organizamos en círculos de trabajo especializados.',
+    circles: [
+      { icon: 'user', title: 'Comunidad', text: 'Acogida, participación y vida asociativa de las socias.' },
+      { icon: 'basket', title: 'Compras', text: 'Relación con productoras y selección del catálogo.' },
+      { icon: 'clock', title: 'Operaciones', text: 'Funcionamiento diario del súper y los turnos.' },
+      { icon: 'vote', title: 'Finanzas', text: 'Gestión económica transparente y sostenible.' },
+      { icon: 'mail', title: 'Comunicación', text: 'Difusión, web y relación con el entorno.' },
+      { icon: 'leaf', title: 'Producto', text: 'Criterios de sostenibilidad y calidad de lo que vendemos.' },
+    ],
+    membersTitle: 'Dos tipos de socias',
+    members: [
+      { title: 'Socia consumidora', text: 'Compra en el súper, participa unas 2-2,5 h al mes y tiene voto en la asamblea.' },
+      { title: 'Socia colaboradora', text: 'Aporta capital al proyecto sin la obligación de hacer turnos.' },
+    ],
+  },
+}[lang];
+---
+<BaseLayout title={t('nav.quisom')} description={c.intro}>
+  <PageHeader eyebrow={t('nav.quisom')} title={c.title} intro={c.intro} />
+
+  <Section width="narrow">
+    <h2 class="text-2xl">{c.storyTitle}</h2>
+    <div class="prose-content mt-5 text-ink-soft">
+      {c.story.map((p) => <p>{p}</p>)}
+    </div>
+  </Section>
+
+  <FeatureGrid title={c.govTitle} intro={c.govIntro} features={c.circles} tone="soft" columns={3} />
+
+  <Section>
+    <h2 class="mb-8 text-2xl">{c.membersTitle}</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {c.members.map((m) => (
+        <div class="rounded-lg bg-paper-green p-7">
+          <h3 class="text-lg text-brand-dark">{m.title}</h3>
+          <p class="mt-2 text-ink-soft">{m.text}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <CTASection
+    title={lang === 'ca' ? 'Suma-t’hi' : 'Súmate'}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: t('nav.faqs'), href: localizePath('/faqs', lang) }}
+  />
+</BaseLayout>

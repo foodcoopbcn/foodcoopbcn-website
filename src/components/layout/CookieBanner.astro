@@ -1,0 +1,52 @@
+---
+import { getLang, localizePath } from '../../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const copy = {
+  ca: {
+    text: 'Fem servir galetes tècniques i, amb el teu permís, estadístiques anònimes per millorar el web.',
+    accept: 'Accepta',
+    reject: 'Només necessàries',
+    more: 'Més informació',
+  },
+  es: {
+    text: 'Usamos cookies técnicas y, con tu permiso, estadísticas anónimas para mejorar la web.',
+    accept: 'Aceptar',
+    reject: 'Solo necesarias',
+    more: 'Más información',
+  },
+}[lang];
+---
+<div
+  id="cookie-banner"
+  hidden
+  class="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-lg border border-line bg-paper p-4 shadow-lg sm:flex sm:items-center sm:gap-4"
+>
+  <p class="text-sm text-ink-soft">
+    {copy.text}
+    <a href={localizePath('/legal/cookies', lang)} class="text-brand underline">{copy.more}</a>
+  </p>
+  <div class="mt-3 flex shrink-0 gap-2 sm:mt-0">
+    <button data-cookie="reject" class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line">
+      {copy.reject}
+    </button>
+    <button data-cookie="accept" class="rounded-pill bg-brand px-4 py-2 text-sm font-bold text-paper">
+      {copy.accept}
+    </button>
+  </div>
+</div>
+
+<script>
+  // Minimal consent memory. No third-party scripts load until "accept" is stored.
+  const KEY = 'fc-consent';
+  const banner = document.getElementById('cookie-banner');
+  if (banner && !localStorage.getItem(KEY)) banner.hidden = false;
+  banner?.querySelectorAll<HTMLButtonElement>('[data-cookie]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      localStorage.setItem(KEY, btn.dataset.cookie || 'reject');
+      banner.hidden = true;
+      if (btn.dataset.cookie === 'accept') {
+        document.dispatchEvent(new CustomEvent('consent:accepted'));
+      }
+    });
+  });
+</script>

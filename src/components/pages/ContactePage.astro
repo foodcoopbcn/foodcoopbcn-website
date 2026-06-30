@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { org, hours, social } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const action = localizePath('/gracies', lang);
+const intro =
+  lang === 'ca'
+    ? 'Tens un dubte, una proposta o vols col·laborar-hi? Escriu-nos i et respondrem ben aviat.'
+    : '¿Tienes una duda, una propuesta o quieres colaborar? Escríbenos y te responderemos pronto.';
+---
+<BaseLayout title={t('nav.contacte')} description={intro}>
+  <PageHeader eyebrow={t('nav.contacte')} title={t('nav.contacte')} intro={intro} />
+
+  <Section>
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+      <!-- Netlify form: detected from the static HTML at deploy time. -->
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action={action}
+        class="space-y-5"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden"><label>{lang === 'ca' ? 'No omplir' : 'No rellenar'}: <input name="bot-field" /></label></p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold">{t('form.name')}</span>
+            <input type="text" name="name" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold">{t('form.email')}</span>
+            <input type="email" name="email" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none" />
+          </label>
+        </div>
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">{t('form.message')}</span>
+          <textarea name="message" rows="6" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none"></textarea>
+        </label>
+        <button type="submit" class="rounded-pill bg-brand px-7 py-3 font-display font-extrabold text-paper hover:brightness-110">
+          {t('form.send')}
+        </button>
+      </form>
+
+      <aside class="space-y-6 rounded-2xl bg-paper-green p-8">
+        <div>
+          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="pin" size={18} /> {t('footer.contact')}</h2>
+          <address class="space-y-1 text-sm not-italic text-ink-soft">
+            <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
+            <p><a class="hover:text-brand" href={`tel:${org.phone}`}>{org.phoneDisplay}</a></p>
+            <p><a class="hover:text-brand" href={`mailto:${org.email}`}>{org.email}</a></p>
+          </address>
+        </div>
+        <div>
+          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="clock" size={18} /> {t('footer.hours')}</h2>
+          <dl class="space-y-1 text-sm text-ink-soft">
+            {hours.map((h) => (
+              <div class="flex justify-between"><dt>{h.day}</dt><dd class="text-muted">{h.value}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <div class="flex gap-2">
+          {social.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand hover:bg-brand hover:text-paper">
+              <Icon name={s.icon as any} size={18} />
+            </a>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

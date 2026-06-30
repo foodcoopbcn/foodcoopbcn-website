@@ -1,0 +1,20 @@
+---
+import Button from '../ui/Button.astro';
+interface Props {
+  title: string;
+  text?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+const { title, text, primaryCta, secondaryCta } = Astro.props;
+---
+<section class="section bg-brand text-paper">
+  <div class="container-narrow text-center">
+    <h2 class="text-2xl">{title}</h2>
+    {text && <p class="mx-auto mt-4 max-w-xl text-lg text-paper/85">{text}</p>}
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      {primaryCta && <Button href={primaryCta.href} size="lg" variant="accent">{primaryCta.label}</Button>}
+      {secondaryCta && <Button href={secondaryCta.href} size="lg" variant="secondary">{secondaryCta.label}</Button>}
+    </div>
+  </div>
+</section>

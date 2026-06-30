@@ -1,0 +1,63 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  highlights?: string[];
+  text?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+const { eyebrow, title, highlights = [], text, primaryCta, secondaryCta } = Astro.props;
+---
+<section class="relative overflow-hidden bg-paper-green">
+  <div class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/40 blur-3xl" aria-hidden="true"></div>
+  <div class="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-brand/20 blur-3xl" aria-hidden="true"></div>
+
+  <div class="container-page relative grid items-center gap-10 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+    <div>
+      {eyebrow && (
+        <p class="mb-4 inline-flex items-center gap-2 rounded-pill bg-paper px-4 py-1.5 text-sm font-bold text-brand-dark shadow-sm">
+          <Icon name="leaf" size={16} /> {eyebrow}
+        </p>
+      )}
+      <h1 class="text-3xl text-ink">{title}</h1>
+
+      {highlights.length > 0 && (
+        <ul class="mt-6 space-y-2">
+          {highlights.map((h) => (
+            <li class="flex items-start gap-3 text-lg font-semibold text-brand-dark">
+              <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-paper">
+                <Icon name="leaf" size={14} />
+              </span>
+              {h}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {text && <p class="mt-6 max-w-xl text-lg text-ink-soft">{text}</p>}
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        {primaryCta && <Button href={primaryCta.href} size="lg" variant="primary">{primaryCta.label}</Button>}
+        {secondaryCta && <Button href={secondaryCta.href} size="lg" variant="ghost">{secondaryCta.label}</Button>}
+      </div>
+    </div>
+
+    <!-- Illustration slot (swap for the brand illustration when available) -->
+    <div class="relative mx-auto aspect-square w-full max-w-md">
+      <div class="absolute inset-0 rounded-[2.5rem] bg-paper shadow-lg"></div>
+      <div class="absolute inset-6 grid grid-cols-2 gap-4">
+        <div class="rounded-3xl bg-brand"></div>
+        <div class="rounded-3xl bg-accent"></div>
+        <div class="rounded-3xl bg-brand-olive"></div>
+        <div class="rounded-3xl bg-danger/80"></div>
+      </div>
+      <div class="absolute inset-0 grid place-items-center">
+        <Icon name="basket" size={84} class="text-ink" />
+      </div>
+    </div>
+  </div>
+</section>

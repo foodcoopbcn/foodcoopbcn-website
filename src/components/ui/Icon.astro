@@ -1,0 +1,49 @@
+---
+/* Lightweight inline-SVG icon set. Add new paths to `icons` as needed. */
+interface Props {
+  name: keyof typeof icons;
+  size?: number;
+  class?: string;
+}
+const { name, size = 20, class: className = '' } = Astro.props;
+
+const icons = {
+  instagram:
+    '<rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />',
+  facebook:
+    '<path d="M14 9h3V5h-3a4 4 0 0 0-4 4v2H7v4h3v6h4v-6h3l1-4h-4V9a1 1 0 0 1 1-1Z" fill="currentColor" stroke="none" />',
+  telegram:
+    '<path d="M21 4 3 11l5 2 2 6 3-4 5 4 3-15Z" />',
+  mastodon:
+    '<path d="M19 13c0 4-3 5-7 5s-7-1-7-5V9a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v4Z" /><path d="M9 11v3M15 11v3" />',
+  chevron: '<path d="m6 9 6 6 6-6" />',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6" />',
+  menu: '<path d="M4 6h16M4 12h16M4 18h16" />',
+  close: '<path d="M6 6l12 12M18 6 6 18" />',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" />',
+  phone:
+    '<path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" />',
+  clock: '<circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />',
+  pin: '<path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" />',
+  globe: '<circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18" />',
+  search: '<circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />',
+  user: '<circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" />',
+  leaf: '<path d="M4 20C4 11 11 4 20 4c0 9-7 16-16 16Z" /><path d="M4 20c4-4 7-6 12-8" />',
+  heart: '<path d="M12 21S4 14.5 4 8.8A4.3 4.3 0 0 1 12 6a4.3 4.3 0 0 1 8 2.8C20 14.5 12 21 12 21Z" />',
+  vote: '<path d="m9 12 2 2 4-4" /><rect x="3" y="4" width="18" height="16" rx="2" />',
+  basket: '<path d="M3 8h18l-1.5 11a2 2 0 0 1-2 1.8H6.5a2 2 0 0 1-2-1.8L3 8Z" /><path d="M8 8 12 3l4 5" />',
+} as const;
+---
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  aria-hidden="true"
+  set:html={icons[name]}
+/>

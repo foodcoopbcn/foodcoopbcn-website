@@ -1,0 +1,52 @@
+/*
+ * Design tokens — the single source of truth for the visual identity.
+ * A future redesign should mostly mean editing values in this file.
+ * Palette extracted from the live foodcoopbcn.cat brand (green / yellow / red on ink).
+ */
+:root {
+  /* --- Brand palette --- */
+  --color-brand: #009739; /* primary green */
+  --color-brand-dark: #06402a; /* deep forest green */
+  --color-brand-olive: #8aa41f; /* secondary olive/lime */
+  --color-accent: #feec3f; /* highlight yellow */
+  --color-danger: #c8102e; /* red accent */
+
+  /* --- Neutrals --- */
+  --color-ink: #282828; /* primary text / dark sections */
+  --color-ink-soft: #5a5a5a; /* secondary text */
+  --color-muted: #949494; /* tertiary text / borders */
+  --color-line: #e6e6e6; /* hairlines */
+  --color-paper: #ffffff; /* page background */
+  --color-paper-soft: #f7f7f7; /* alternating section background */
+  --color-paper-green: #e9fbe5; /* tinted green section background */
+
+  /* --- Typography --- */
+  --font-body: 'Open Sans Variable', 'Open Sans', system-ui, -apple-system, Arial, sans-serif;
+  --font-display: 'Open Sans Variable', 'Open Sans', system-ui, sans-serif; /* swap to 'Anton' etc. for a redesign */
+  --font-weight-display: 800;
+
+  /* Fluid type scale */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --text-2xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-3xl: clamp(2.6rem, 1.8rem + 3.4vw, 4.25rem);
+
+  /* --- Spacing rhythm --- */
+  --space-section: clamp(3.5rem, 2rem + 6vw, 7rem);
+  --container-max: 1180px;
+  --container-narrow: 760px;
+
+  /* --- Shape --- */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* --- Elevation --- */
+  --shadow-sm: 0 1px 3px rgba(40, 40, 40, 0.08);
+  --shadow: 0 8px 28px rgba(40, 40, 40, 0.1);
+  --shadow-lg: 0 18px 50px rgba(40, 40, 40, 0.14);
+}

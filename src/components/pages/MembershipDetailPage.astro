@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { org } from '../../config/site';
+
+interface Props {
+  variant: 'persona' | 'entitat';
+}
+const { variant } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const content = {
+  persona: {
+    ca: {
+      title: 'Fes-te sòcia com a persona',
+      intro: 'Com a sòcia consumidora ets copropietària del súper: hi participes, hi decideixes i hi estalvies.',
+      benefitsTitle: 'Què inclou',
+      benefits: ['12% de descompte en tots els productes', 'Accés a la botiga en línia amb repartiment en bici', 'Vot i veu a l’assemblea', 'Formar part d’una comunitat de barri'],
+      commitTitle: 'Què s’espera de tu',
+      commit: ['Una aportació de capital social retornable', 'Dedicar unes 2-2,5 hores al mes a un torn', 'Participar en la vida del projecte'],
+    },
+    es: {
+      title: 'Hazte socia como persona',
+      intro: 'Como socia consumidora eres copropietaria del súper: participas, decides y ahorras.',
+      benefitsTitle: 'Qué incluye',
+      benefits: ['12% de descuento en todos los productos', 'Acceso a la tienda online con reparto en bici', 'Voto y voz en la asamblea', 'Formar parte de una comunidad de barrio'],
+      commitTitle: 'Qué se espera de ti',
+      commit: ['Una aportación de capital social retornable', 'Dedicar unas 2-2,5 horas al mes a un turno', 'Participar en la vida del proyecto'],
+    },
+  },
+  entitat: {
+    ca: {
+      title: 'Fes-te sòcia com a entitat',
+      intro: 'Cooperatives, associacions i empreses de l’economia social i solidària poden formar part del projecte.',
+      benefitsTitle: 'Per què sumar-s’hi',
+      benefits: ['Teixir aliances d’intercooperació', 'Compres col·lectives i sostenibles', 'Donar suport a un projecte de barri', 'Visibilitat dins la comunitat'],
+      commitTitle: 'Com funciona',
+      commit: ['Aportació de capital adaptada a l’entitat', 'Acord d’intercooperació a mida', 'Contacte directe amb el cercle de comunitat'],
+    },
+    es: {
+      title: 'Hazte socia como entidad',
+      intro: 'Cooperativas, asociaciones y empresas de la economía social y solidaria pueden formar parte del proyecto.',
+      benefitsTitle: 'Por qué sumarse',
+      benefits: ['Tejer alianzas de intercooperación', 'Compras colectivas y sostenibles', 'Apoyar un proyecto de barrio', 'Visibilidad dentro de la comunidad'],
+      commitTitle: 'Cómo funciona',
+      commit: ['Aportación de capital adaptada a la entidad', 'Acuerdo de intercooperación a medida', 'Contacto directo con el círculo de comunidad'],
+    },
+  },
+}[variant][lang];
+---
+<BaseLayout title={content.title} description={content.intro}>
+  <PageHeader eyebrow={t('nav.festesocia')} title={content.title} intro={content.intro} />
+  <Section>
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="text-xl">{content.benefitsTitle}</h2>
+        <ul class="mt-5 space-y-3">
+          {content.benefits.map((b) => (
+            <li class="flex items-start gap-3"><Icon name="leaf" size={20} class="mt-0.5 shrink-0 text-brand" /> {b}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-2xl bg-paper-green p-8">
+        <h2 class="text-xl text-brand-dark">{content.commitTitle}</h2>
+        <ul class="mt-5 space-y-3">
+          {content.commit.map((b) => (
+            <li class="flex items-start gap-3"><Icon name="vote" size={20} class="mt-0.5 shrink-0 text-brand" /> {b}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+  <CTASection
+    title={lang === 'ca' ? 'Comença el procés' : 'Empieza el proceso'}
+    text={org.email}
+    primaryCta={{ label: t('cta.becomeMember'), href: `mailto:${org.email}` }}
+    secondaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+  />
+</BaseLayout>

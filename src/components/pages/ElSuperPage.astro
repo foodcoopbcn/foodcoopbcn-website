@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import FeatureGrid from '../sections/FeatureGrid.astro';
+import Stats from '../sections/Stats.astro';
+import CTASection from '../sections/CTASection.astro';
+import { hours, org } from '../../config/site';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import Icon from '../ui/Icon.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    title: 'El súper',
+    intro: 'Un supermercat de barri, obert a tothom, amb més de 1.200 productes bons, sans i de proximitat.',
+    features: [
+      { icon: 'leaf', title: 'Fresc i de temporada', text: 'Fruita, verdura, pa i producte fresc de productores catalanes.' },
+      { icon: 'basket', title: 'A granel', text: 'Llegums, cereals, fruita seca i més, amb el mínim d’envàs.' },
+      { icon: 'heart', title: 'Cura i higiene', text: 'Cosmètica i higiene natural, també a granel sempre que es pot.' },
+    ],
+    shopTitle: 'Botiga en línia',
+    shopText: 'Les sòcies poden comprar en línia i rebre la comanda a casa amb repartiment en bici de la cooperativa Mensakas.',
+    hoursTitle: 'Horari i ubicació',
+    visit: 'Vine a visitar-nos',
+  },
+  es: {
+    title: 'El súper',
+    intro: 'Un supermercado de barrio, abierto a todo el mundo, con más de 1.200 productos buenos, sanos y de proximidad.',
+    features: [
+      { icon: 'leaf', title: 'Fresco y de temporada', text: 'Fruta, verdura, pan y producto fresco de productoras catalanas.' },
+      { icon: 'basket', title: 'A granel', text: 'Legumbres, cereales, frutos secos y más, con el mínimo de envase.' },
+      { icon: 'heart', title: 'Cuidado e higiene', text: 'Cosmética e higiene natural, también a granel siempre que se puede.' },
+    ],
+    shopTitle: 'Tienda online',
+    shopText: 'Las socias pueden comprar online y recibir el pedido en casa con reparto en bici de la cooperativa Mensakas.',
+    hoursTitle: 'Horario y ubicación',
+    visit: 'Ven a visitarnos',
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.title} title={c.title} intro={c.intro} />
+
+  <FeatureGrid features={c.features} columns={3} />
+
+  <Section tone="green">
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="text-2xl text-brand-dark">{c.shopTitle}</h2>
+        <p class="mt-4 text-lg text-ink-soft">{c.shopText}</p>
+        <a href={org.memberLoginUrl} class="mt-6 inline-flex items-center gap-2 rounded-pill bg-brand px-6 py-3 font-bold text-paper hover:brightness-110">
+          <Icon name="basket" size={18} /> {lang === 'ca' ? 'Vés a la botiga' : 'Ir a la tienda'}
+        </a>
+      </div>
+      <div class="rounded-2xl bg-paper p-8 shadow-sm">
+        <h3 class="mb-4 flex items-center gap-2 font-display text-lg font-bold">
+          <Icon name="clock" size={18} class="text-brand" /> {c.hoursTitle}
+        </h3>
+        <dl class="space-y-1.5 text-sm">
+          {hours.map((h) => (
+            <div class="flex justify-between border-b border-line py-1.5">
+              <dt class="font-semibold">{h.day}</dt>
+              <dd class="text-ink-soft">{h.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-4 text-sm text-ink-soft">
+          <Icon name="pin" size={16} class="inline text-brand" /> {org.address.street}, {org.address.locality}
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Stats stats={[
+    { value: '1.200+', label: lang === 'ca' ? 'Productes' : 'Productos' },
+    { value: '100%', label: lang === 'ca' ? 'Obert a tothom' : 'Abierto a todos' },
+    { value: '🚲', label: lang === 'ca' ? 'Repartiment en bici' : 'Reparto en bici' },
+  ]} />
+
+  <CTASection
+    title={c.visit}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: t('nav.productes'), href: localizePath('/productes', lang) }}
+  />
+</BaseLayout>

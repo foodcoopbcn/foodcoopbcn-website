@@ -1,0 +1,87 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../ui/Tag.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { getCategoryLabels, type PostType, type AnyPost } from '../../lib/posts';
+import { org } from '../../config/site';
+
+interface Props {
+  entry: AnyPost;
+  type: PostType;
+}
+const { entry, type } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+const labels = await getCategoryLabels(lang);
+
+const data = entry.data as any;
+const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(data.date);
+
+const isRecipe = type === 'recipes';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': isRecipe ? 'Recipe' : 'Article',
+  headline: data.title,
+  datePublished: data.date.toISOString(),
+  image: data.cover ? new URL(data.cover, Astro.site).href : undefined,
+  author: { '@type': 'Organization', name: org.name },
+  ...(isRecipe
+    ? { recipeYield: data.servings, totalTime: data.time, recipeIngredient: data.ingredients }
+    : {}),
+};
+---
+<BaseLayout title={data.title} description={data.excerpt} image={data.cover} jsonLd={jsonLd}>
+  <article data-pagefind-body data-pagefind-meta={`image:${data.cover ?? ''}`}>
+    <header class="bg-paper-green">
+      <div class="container-narrow py-12 md:py-16">
+        <a href={localizePath('/actualitat', lang)} class="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline">
+          ← {t('blog.backToList')}
+        </a>
+        <div class="mb-4 flex items-center gap-3">
+          <Tag href={localizePath(`/actualitat/categoria/${data.category}`, lang)}>
+            {labels[data.category] ?? data.category}
+          </Tag>
+          <time class="text-sm text-ink-soft">{t('blog.publishedOn')} {dateStr}</time>
+        </div>
+        <h1 class="text-3xl text-ink">{data.title}</h1>
+        <p class="mt-4 text-lg text-ink-soft">{data.excerpt}</p>
+      </div>
+    </header>
+
+    {data.cover && (
+      <div class="container-narrow -mt-2 pt-8">
+        <img src={data.cover} alt="" class="aspect-[16/9] w-full rounded-lg object-cover shadow-sm" />
+      </div>
+    )}
+
+    <div class="container-narrow py-10">
+      {isRecipe && data.ingredients?.length > 0 && (
+        <div class="mb-8 rounded-lg bg-paper-soft p-6 ring-1 ring-line">
+          <div class="mb-4 flex flex-wrap gap-6 text-sm font-semibold text-brand-dark">
+            {data.servings && <span class="inline-flex items-center gap-1.5"><Icon name="user" size={16} /> {data.servings}</span>}
+            {data.time && <span class="inline-flex items-center gap-1.5"><Icon name="clock" size={16} /> {data.time}</span>}
+          </div>
+          <h2 class="mb-3 font-display text-lg font-bold">{lang === 'ca' ? 'Ingredients' : 'Ingredientes'}</h2>
+          <ul class="grid gap-1.5 sm:grid-cols-2">
+            {data.ingredients.map((i: string) => (
+              <li class="flex items-start gap-2 text-sm">
+                <Icon name="leaf" size={16} class="mt-0.5 shrink-0 text-brand" /> {i}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div class="prose-content text-ink">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,10 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+}
+const { href, class: className = '' } = Astro.props;
+const cls = `inline-flex items-center rounded-pill bg-paper-green text-brand-dark text-xs font-semibold px-3 py-1 leading-none ${className}`;
+const Tag = href ? 'a' : 'span';
+---
+<Tag class={cls} href={href}><slot /></Tag>

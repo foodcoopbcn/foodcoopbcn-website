@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import { getLang } from '../../i18n/utils';
+import { org } from '../../config/site';
+
+type Slug = 'estatuts' | 'memoria' | 'balanc-social' | 'avis-legal' | 'privacitat' | 'cookies';
+interface Props {
+  slug: Slug;
+}
+const { slug } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+
+/** Each entry: { title, intro?, doc?, bodyHtml }. Long legal prose can be edited here or moved to a collection. */
+const data: Record<Slug, Record<'ca' | 'es', { title: string; intro?: string; doc?: string; body: string }>> = {
+  estatuts: {
+    ca: { title: 'Estatuts', intro: 'Els estatuts socials que regeixen la cooperativa.', doc: '/docs/estatuts.pdf', body: '<p>Pots consultar i descarregar els estatuts vigents de FoodCoop BCN en format PDF.</p>' },
+    es: { title: 'Estatutos', intro: 'Los estatutos sociales que rigen la cooperativa.', doc: '/docs/estatuts.pdf', body: '<p>Puedes consultar y descargar los estatutos vigentes de FoodCoop BCN en formato PDF.</p>' },
+  },
+  memoria: {
+    ca: { title: 'Memòria', intro: 'La memòria anual d’activitats del projecte.', doc: '/docs/memoria.pdf', body: '<p>Consulta la memòria anual amb el resum d’activitats, dades i comptes del darrer exercici.</p>' },
+    es: { title: 'Memoria', intro: 'La memoria anual de actividades del proyecto.', doc: '/docs/memoria.pdf', body: '<p>Consulta la memoria anual con el resumen de actividades, datos y cuentas del último ejercicio.</p>' },
+  },
+  'balanc-social': {
+    ca: { title: 'Balanç social', intro: 'L’eina de l’economia social i solidària per mesurar el nostre impacte.', body: '<p>Cada any realitzem el balanç social de la Xarxa d’Economia Solidària (XES) per avaluar el nostre impacte social, ambiental i de bon govern.</p>' },
+    es: { title: 'Balance social', intro: 'La herramienta de la economía social y solidaria para medir nuestro impacto.', body: '<p>Cada año realizamos el balance social de la Red de Economía Solidaria (XES) para evaluar nuestro impacto social, ambiental y de buen gobierno.</p>' },
+  },
+  'avis-legal': {
+    ca: { title: 'Avís legal', body: `<p>Titular: ${org.legalName}. Adreça: ${org.address.street}, ${org.address.postalCode} ${org.address.locality}. Correu: ${org.email}.</p><p>Aquest lloc web té caràcter informatiu. L’ús del web atribueix la condició d’usuari i implica l’acceptació d’aquest avís legal.</p>` },
+    es: { title: 'Aviso legal', body: `<p>Titular: ${org.legalName}. Dirección: ${org.address.street}, ${org.address.postalCode} ${org.address.locality}. Correo: ${org.email}.</p><p>Este sitio web tiene carácter informativo. El uso de la web atribuye la condición de usuario e implica la aceptación de este aviso legal.</p>` },
+  },
+  privacitat: {
+    ca: { title: 'Política de privacitat', body: `<p>Responsable del tractament: ${org.legalName} (${org.email}).</p><h2>Quines dades tractem</h2><p>Tractem les dades que ens facilites a través dels formularis de contacte i de subscripció al butlletí, amb la finalitat de respondre les teves consultes i enviar-te novetats si ho has consentit.</p><h2>Els teus drets</h2><p>Pots exercir els drets d’accés, rectificació, supressió i oposició escrivint a ${org.email}.</p>` },
+    es: { title: 'Política de privacidad', body: `<p>Responsable del tratamiento: ${org.legalName} (${org.email}).</p><h2>Qué datos tratamos</h2><p>Tratamos los datos que nos facilitas a través de los formularios de contacto y de suscripción al boletín, con la finalidad de responder tus consultas y enviarte novedades si lo has consentido.</p><h2>Tus derechos</h2><p>Puedes ejercer los derechos de acceso, rectificación, supresión y oposición escribiendo a ${org.email}.</p>` },
+  },
+  cookies: {
+    ca: { title: 'Política de cookies', body: '<p>Fem servir galetes tècniques necessàries per al funcionament del web i, amb el teu consentiment, galetes d’estadística anònima per millorar-lo. No fem servir galetes publicitàries ni de seguiment de tercers.</p><p>Pots gestionar el teu consentiment des del banner de galetes o configurant el teu navegador.</p>' },
+    es: { title: 'Política de cookies', body: '<p>Usamos cookies técnicas necesarias para el funcionamiento de la web y, con tu consentimiento, cookies de estadística anónima para mejorarla. No usamos cookies publicitarias ni de seguimiento de terceros.</p><p>Puedes gestionar tu consentimiento desde el banner de cookies o configurando tu navegador.</p>' },
+  },
+};
+
+const d = data[slug][lang];
+---
+<BaseLayout title={d.title} description={d.intro} noindex={true}>
+  <PageHeader title={d.title} intro={d.intro} tone="soft" />
+  <Section width="narrow">
+    <div class="prose-content text-ink" set:html={d.body} />
+    {d.doc && (
+      <a href={d.doc} class="mt-8 inline-flex items-center gap-2 rounded-pill bg-brand px-6 py-3 font-bold text-paper hover:brightness-110" target="_blank" rel="noopener">
+        {lang === 'ca' ? 'Descarrega el PDF' : 'Descargar el PDF'} ↓
+      </a>
+    )}
+  </Section>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  question: string;
+  open?: boolean;
+}
+const { question, open = false } = Astro.props;
+---
+<details
+  class="group border-b border-line py-1 [&[open]>summary_svg]:rotate-180"
+  open={open}
+>
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-lg font-bold marker:hidden"
+  >
+    {question}
+    <Icon name="chevron" class="shrink-0 text-brand transition-transform duration-200" />
+  </summary>
+  <div class="prose-content pb-5 text-ink-soft">
+    <slot />
+  </div>
+</details>

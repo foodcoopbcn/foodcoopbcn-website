@@ -1,0 +1,38 @@
+---
+import Card from '../ui/Card.astro';
+import Tag from '../ui/Tag.astro';
+import { getLang } from '../../i18n/utils';
+
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  excerpt: string;
+  cover?: string;
+  category?: string;
+}
+const { href, title, date, excerpt, cover, category } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(date);
+---
+<Card href={href} class="h-full">
+  <div class="aspect-[16/10] overflow-hidden bg-paper-soft">
+    {cover ? (
+      <img src={cover} alt="" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+    ) : (
+      <div class="h-full w-full bg-gradient-to-br from-paper-green to-accent/40"></div>
+    )}
+  </div>
+  <div class="p-5">
+    <div class="mb-3 flex items-center gap-2">
+      {category && <Tag>{category}</Tag>}
+      <time class="text-xs text-muted">{dateStr}</time>
+    </div>
+    <h3 class="text-lg leading-snug group-hover:text-brand">{title}</h3>
+    <p class="mt-2 line-clamp-3 text-sm text-ink-soft">{excerpt}</p>
+  </div>
+</Card>

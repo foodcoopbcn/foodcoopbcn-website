@@ -1,0 +1,24 @@
+---
+import BlogListing from '../../../components/blog/BlogListing.astro';
+import { getAllPosts, getCategoryCounts, getCategoryLabels } from '../../../lib/posts';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const counts = await getCategoryCounts('ca');
+  const labels = await getCategoryLabels('ca');
+  const posts = await getAllPosts('ca');
+  return counts.map(({ slug }) => ({
+    params: { cat: slug },
+    props: {
+      items: posts.filter((p) => p.entry.data.category === slug),
+      label: labels[slug] ?? slug,
+      cat: slug,
+    },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { items, label, cat } = Astro.props;
+const page = { data: items, url: {}, currentPage: 1, lastPage: 1 };
+---
+<BlogListing page={page} title={label} activeCategory={cat} />

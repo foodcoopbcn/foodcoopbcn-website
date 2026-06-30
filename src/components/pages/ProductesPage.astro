@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import FeatureGrid from '../sections/FeatureGrid.astro';
+import CTASection from '../sections/CTASection.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    title: 'Productes',
+    intro: 'Més de 1.200 referències triades amb cura: prioritzem productores catalanes, l’agroecologia i el granel.',
+    cats: [
+      { icon: 'leaf', title: 'Fruita i verdura', text: 'De temporada i de proximitat.' },
+      { icon: 'basket', title: 'Sec i a granel', text: 'Llegums, cereals, pasta, fruita seca.' },
+      { icon: 'heart', title: 'Làctics i ous', text: 'De petites productores.' },
+      { icon: 'clock', title: 'Forn i esmorzars', text: 'Pa, galetes, cafè i infusions.' },
+      { icon: 'vote', title: 'Begudes', text: 'Vins, cerveses i sucs cooperatius.' },
+      { icon: 'user', title: 'Cura i llar', text: 'Cosmètica i neteja natural.' },
+    ],
+    note: 'El catàleg complet i els preus estan disponibles a la botiga en línia per a sòcies.',
+  },
+  es: {
+    title: 'Productos',
+    intro: 'Más de 1.200 referencias elegidas con cuidado: priorizamos productoras catalanas, la agroecología y el granel.',
+    cats: [
+      { icon: 'leaf', title: 'Fruta y verdura', text: 'De temporada y de proximidad.' },
+      { icon: 'basket', title: 'Seco y a granel', text: 'Legumbres, cereales, pasta, frutos secos.' },
+      { icon: 'heart', title: 'Lácteos y huevos', text: 'De pequeñas productoras.' },
+      { icon: 'clock', title: 'Horno y desayunos', text: 'Pan, galletas, café e infusiones.' },
+      { icon: 'vote', title: 'Bebidas', text: 'Vinos, cervezas y zumos cooperativos.' },
+      { icon: 'user', title: 'Cuidado y hogar', text: 'Cosmética y limpieza natural.' },
+    ],
+    note: 'El catálogo completo y los precios están disponibles en la tienda online para socias.',
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.title} title={c.title} intro={c.intro} />
+  <FeatureGrid features={c.cats} columns={3} />
+  <section class="section bg-paper-soft">
+    <p class="container-narrow text-center text-lg text-ink-soft">{c.note}</p>
+  </section>
+  <CTASection
+    title={lang === 'ca' ? 'Vols veure el catàleg complet?' : '¿Quieres ver el catálogo completo?'}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: t('cta.visitShop'), href: localizePath('/el-super', lang) }}
+  />
+</BaseLayout>

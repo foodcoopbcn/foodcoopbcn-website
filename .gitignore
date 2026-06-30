@@ -1,0 +1,21 @@
+# build output
+dist/
+.netlify/
+
+# astro
+.astro/
+
+# deps
+node_modules/
+
+# keystatic local
+.keystatic/
+
+# env & logs
+.env
+.env.*
+*.log
+npm-debug.log*
+
+# os
+.DS_Store
