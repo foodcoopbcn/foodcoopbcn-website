@@ -13,6 +13,21 @@ interface Props {
 const { eyebrow, title, highlights = [], text, primaryCta, secondaryCta } = Astro.props;
 ---
 <section class="relative overflow-hidden bg-paper-green">
+  <!-- Subtle photo backdrop (members in front of the shop) -->
+  <img
+    src="/images/assets/foodcoop_hero.webp"
+    alt=""
+    aria-hidden="true"
+    loading="eager"
+    fetchpriority="high"
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
+  />
+  <!-- Left-weighted green tint keeps the heading readable while the photo stays visible -->
+  <div
+    class="absolute inset-0 bg-gradient-to-r from-paper-green via-paper-green/60 to-paper-green/15"
+    aria-hidden="true"
+  ></div>
+
   <div class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/40 blur-3xl" aria-hidden="true"></div>
   <div class="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-brand/20 blur-3xl" aria-hidden="true"></div>
 
