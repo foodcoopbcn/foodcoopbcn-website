@@ -1,7 +1,6 @@
 ---
 import { getLang, useTranslations, localizePath, stripLocale } from '../../i18n/utils';
 import { mainNav, org } from '../../config/site';
-import Logo from './Logo.astro';
 import LangToggle from '../ui/LangToggle.astro';
 import Icon from '../ui/Icon.astro';
 
@@ -14,10 +13,23 @@ function isActive(path: string) {
 }
 ---
 <header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
-  <div class="container-page flex h-[68px] items-center justify-between gap-4">
-    <a href={localizePath('/', lang)} class="flex items-center gap-2" aria-label={org.name}>
-      <Logo class="h-9 w-auto" />
+  <div class="container-page relative flex h-[68px] items-center justify-between gap-4">
+    <!-- Brand badge: sits in the navbar and bleeds below onto the hero -->
+    <a
+      href={localizePath('/', lang)}
+      class="absolute left-3 top-1.5 z-50 block"
+      aria-label={org.name}
+    >
+      <img
+        src="/logo_foodcoop.png"
+        alt={org.name}
+        width="120"
+        height="120"
+        class="h-20 w-20 drop-shadow-md md:h-[112px] md:w-[112px]"
+      />
     </a>
+    <!-- Spacer reserving the badge's horizontal room so nav doesn't slide under it -->
+    <div class="w-20 shrink-0 md:w-[112px]" aria-hidden="true"></div>
 
     <!-- Desktop nav -->
     <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
