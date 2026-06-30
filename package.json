@@ -4,9 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "ENABLE_KEYSTATIC=true astro dev",
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
+    "cms": "ENABLE_KEYSTATIC=true astro dev",
     "astro": "astro"
   },
   "devDependencies": {

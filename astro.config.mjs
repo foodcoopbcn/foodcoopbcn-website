@@ -8,11 +8,15 @@ import netlify from '@astrojs/netlify';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 
+// The Keystatic admin UI is only mounted when explicitly enabled (local editing).
+// Production builds omit it entirely — no /keystatic route, no GitHub App required.
+// The public site is unaffected: content collections read the Markdown files directly.
+const enableKeystatic = process.env.ENABLE_KEYSTATIC === 'true';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://foodcoopbcn.cat',
-  // Pages are static by default (great SEO, zero CSR). Only the Keystatic
-  // admin opts into on-demand rendering via `export const prerender = false`.
+  // Pages are static by default (great SEO, zero CSR).
   output: 'static',
   adapter: netlify(),
   i18n: {
@@ -22,7 +26,12 @@ export default defineConfig({
       prefixDefaultLocale: false, // ca at "/", es at "/es/"
     },
   },
-  integrations: [mdx(), markdoc(), react(), keystatic(), sitemap()],
+  integrations: [
+    mdx(),
+    markdoc(),
+    ...(enableKeystatic ? [react(), keystatic()] : []),
+    sitemap(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
