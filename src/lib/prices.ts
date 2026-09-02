@@ -20,8 +20,9 @@ export interface CompareCell {
   /** Price for the basket quantity, formatted. */
   price: string;
   priceValue: number;
-  /** FoodCoop only: the member price. */
+  /** FoodCoop only: the member price, as published by the shop's member tariff. */
   memberPrice?: string;
+  memberPriceValue?: number;
   name: string;
   brand: string;
   url: string;
@@ -111,7 +112,17 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
         eco: p.eco,
         mark: p.eco ? 'eco' : fcEco ? 'noeco' : null,
       };
-      if (s.id === 'foodcoop') cell.memberPrice = money(lang, priceValue * (1 - discount / 100));
+      /*
+       * The member price is READ from the shop's "Tarifa SÒCIA" list, never
+       * derived. Deriving it from `membership.discount` published figures the
+       * co-op does not charge: the shop's member tariff runs about 8.5% below
+       * its public one, not 12%. If the member list had no entry for this
+       * product we simply show no member price.
+       */
+      if (s.id === 'foodcoop' && p.memberPackPrice) {
+        cell.memberPriceValue = (p.memberPackPrice / p.packQty) * b.qty;
+        cell.memberPrice = money(lang, cell.memberPriceValue);
+      }
       return cell;
     });
     const basis = (b as { basis?: Record<Lang, string> }).basis?.[lang] ?? formatQty(lang, b.qty, b.unit as Unit);
@@ -130,7 +141,12 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
       featured: Boolean(s.featured),
       updatedAt: date(lang, oldest),
       total: total === null ? null : money(lang, total),
-      memberTotal: total === null || s.id !== 'foodcoop' ? null : money(lang, total * (1 - discount / 100)),
+      memberTotal:
+        total === null || s.id !== 'foodcoop'
+          ? null
+          : complete.every((it) => it.cells[col]!.memberPriceValue !== undefined)
+            ? money(lang, complete.reduce((sum, it) => sum + it.cells[col]!.memberPriceValue!, 0))
+            : null,
       missing: items.filter((it) => !it.cells[col]).map((it) => it.label),
     };
   });
@@ -199,7 +215,7 @@ export function pickHighlight(lang: Lang, now: Date = new Date()): PriceHighligh
     if (!rivals.length) continue;
 
     const cheapest = rivals.reduce((a, b) => (a.cell!.priceValue <= b.cell!.priceValue ? a : b));
-    const memberValue = ours.priceValue * (1 - view.discount / 100);
+    const memberValue = ours.memberPriceValue!;
     const savingPct = Math.round((1 - memberValue / cheapest.cell!.priceValue) * 100);
     if (savingPct < 1) continue;
 

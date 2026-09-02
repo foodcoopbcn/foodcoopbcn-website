@@ -14,6 +14,14 @@ export const ProductSchema = z.object({
   url: z.string().url(),
   image: z.string().url().nullable().default(null),
   packPrice: z.number().positive(),
+  /*
+   * FoodCoop only: the price from the shop's "Tarifa SÒCIA" list, read directly
+   * rather than derived. Null everywhere else, and null here too if the member
+   * list could not be read — the site then shows no member price at all instead
+   * of computing one, which is how it previously came to publish figures the
+   * co-op does not charge.
+   */
+  memberPackPrice: z.number().positive().nullable().default(null),
   packQty: z.number().positive(),
   unit: z.enum(['l', 'kg', 'unit']),
   eco: z.boolean(),

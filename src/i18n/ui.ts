@@ -105,7 +105,7 @@ export const ui = {
     'compare.method.source':
       'Preus públics de la botiga en línia de cada establiment per a Barcelona, recollits automàticament cada dia. Darrera actualització: {date}.',
     'compare.method.member':
-      'A FoodCoop BCN es mostra el preu per a sòcies ({discount} % de descompte) i, a sota, el preu públic que paga qualsevol persona.',
+      'A FoodCoop BCN mostrem els dos preus tal com surten a la nostra botiga en línia: el de la tarifa sòcia i, a sota, el públic que paga qualsevol persona. No calculem cap descompte: són els preus reals de cada tarifa.',
     'compare.method.match':
       'A cada supermercat hi ha el producte equivalent més proper i, si en té, la versió ecològica. Marca, certificació ecològica i origen poden variar: consulta el nom de cada producte.',
     'compare.method.qty':
@@ -205,7 +205,7 @@ export const ui = {
     'compare.method.source':
       'Precios públicos de la tienda en línea de cada establecimiento para Barcelona, recogidos automáticamente cada día. Última actualización: {date}.',
     'compare.method.member':
-      'En FoodCoop BCN se muestra el precio para socias ({discount} % de descuento) y, debajo, el precio público que paga cualquier persona.',
+      'En FoodCoop BCN mostramos los dos precios tal como salen en nuestra tienda en línea: el de la tarifa socia y, debajo, el público que paga cualquier persona. No calculamos ningún descuento: son los precios reales de cada tarifa.',
     'compare.method.match':
       'En cada supermercado figura el producto equivalente más cercano y, si lo tiene, la versión ecológica. Marca, certificación ecológica y origen pueden variar: consulta el nombre de cada producto.',
     'compare.method.qty':
