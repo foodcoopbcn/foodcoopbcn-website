@@ -23,6 +23,14 @@
     ],
     "ratio": 1.7778
   },
+  "banner-comunitat": {
+    "widths": [
+      768,
+      1280,
+      1920
+    ],
+    "ratio": 1.7778
+  },
   "socies-davantal": {
     "widths": [
       420,

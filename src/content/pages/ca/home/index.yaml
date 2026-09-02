@@ -59,7 +59,7 @@ sections:
       image: socies-davantal
       imageAlt: Dues sòcies amb el davantal de FoodCoop, amb bolets i verdura acabats de rebre
       reverse: false
-      tone: paper
+      tone: soft
       cta:
         label: Coneix el projecte
         href: /qui-som
@@ -127,7 +127,7 @@ sections:
     value:
       eyebrow: ''
       title: ''
-      tone: soft
+      tone: green
   - discriminant: photoCards
     value:
       title: Què pots comprar a Foodcoop
@@ -202,6 +202,24 @@ sections:
           cta:
             label: Veure criteris
             href: /productes
+  - discriminant: showcaseBand
+    value:
+      eyebrow: El projecte
+      title: '{socies} sòcies i cap accionista'
+      text: >-
+        Les decisions grosses les prenem en assemblea, oberta a totes les
+        sòcies. Aquí ningú no s’emporta el marge: el que estalviem torna al
+        preu.
+      image: banner-comunitat
+      imageAlt: Una assemblea de sòcies feta dins del súper, entre els prestatges
+      align: left
+      height: md
+      primaryCta:
+        label: Coneix el projecte
+        href: /qui-som
+      secondaryCta:
+        label: ''
+        href: /
   - discriminant: stats
     value:
       title: El 72% de la fruita i verdura és de Catalunya, i el 94% dels lactis també.

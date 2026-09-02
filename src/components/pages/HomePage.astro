@@ -12,6 +12,8 @@ import MediaSplit from '../sections/MediaSplit.astro';
 import ComparisonTable from '../sections/ComparisonTable.astro';
 import PhotoCards from '../sections/PhotoCards.astro';
 import PriceTeaser from '../sections/PriceTeaser.astro';
+import ShowcaseBand from '../sections/ShowcaseBand.astro';
+import StickySteps from '../sections/StickySteps.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { getAllPosts, getCategoryLabels } from '../../lib/posts';
 import { org, hours } from '../../config/site';
@@ -128,6 +130,19 @@ const link = (c?: { label: string; href: string }) =>
       }
       case 'priceTeaser':
         return <PriceTeaser {...s.value} />;
+      case 'showcaseBand': {
+        const { primaryCta, secondaryCta, title, ...p } = s.value;
+        return (
+          <ShowcaseBand
+            {...p}
+            title={live(title)}
+            primaryCta={link(primaryCta)}
+            secondaryCta={link(secondaryCta)}
+          />
+        );
+      }
+      case 'stickySteps':
+        return <StickySteps {...s.value} />;
       case 'ctaSection': {
         const { primaryCta, secondaryCta, ...p } = s.value;
         return <CTASection {...p} primaryCta={link(primaryCta)} secondaryCta={link(secondaryCta)} />;

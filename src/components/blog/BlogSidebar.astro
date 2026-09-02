@@ -33,7 +33,7 @@ const activeCategory = Astro.props.activeCategory as string | undefined;
               href={localizePath(`/actualitat/categoria/${c.slug}`, lang)}
               class:list={[
                 'flex items-center justify-between rounded-md px-3 py-2 text-sm hover:bg-paper-green',
-                activeCategory === c.slug ? 'bg-paper-green font-semibold text-brand-dark' : 'text-ink-soft',
+                activeCategory === c.slug ? 'bg-paper-green font-semibold text-brand-strong' : 'text-ink-soft',
               ]}
             >
               <span>{labels[c.slug] ?? c.slug}</span>

@@ -72,9 +72,12 @@
   --color-brand-ink: var(--color-brand-ink);
   --color-brand-hover: var(--color-brand-hover);
   --color-brand-dark: var(--color-brand-dark);
+  --color-brand-fill: var(--color-brand-fill);
+  --color-brand-strong: var(--color-brand-strong);
   --color-brand-olive: var(--color-brand-olive);
   --color-accent: var(--color-accent);
   --color-accent-hover: var(--color-accent-hover);
+  --color-on-accent: var(--color-on-accent);
   --color-danger: var(--color-danger);
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
@@ -164,6 +167,8 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    /* Hands scrollbars, form controls and the canvas to the browser. */
+    color-scheme: light dark;
   }
 
   /* Smooth scrolling is a comfort for most and a vestibular trigger for some. */

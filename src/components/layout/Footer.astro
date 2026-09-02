@@ -9,7 +9,7 @@ const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
 
-const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-dark';
+const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-strong';
 ---
 <footer aria-labelledby="footer-heading" class="mt-auto">
   <h2 id="footer-heading" class="sr-only">{t('footer.landmark')}</h2>
@@ -54,7 +54,7 @@ const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracki
                 target="_blank"
                 rel="noopener"
                 aria-label={s.name}
-                class="grid h-10 w-10 place-items-center rounded-full bg-paper text-ink ring-1 ring-line hover:bg-brand-ink hover:text-paper"
+                class="grid h-10 w-10 place-items-center rounded-full bg-paper text-ink ring-1 ring-line hover:bg-brand-fill hover:text-paper"
               >
                 <Icon name={s.icon as any} size={18} />
               </a>
@@ -72,7 +72,7 @@ const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracki
   </div>
 
   <!-- Documentation, legal and copyright -->
-  <div class="bg-brand-dark text-paper">
+  <div class="bg-brand-dark text-on-ink-strong">
     <div
       class="container-page flex flex-col gap-4 py-6 text-xs text-on-ink-soft lg:flex-row lg:items-center lg:justify-between"
     >

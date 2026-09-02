@@ -16,132 +16,17 @@ import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import Photo from '../ui/Photo.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { pageCopy } from '../../lib/copy';
+import type { TornsCopy } from '../../lib/copy-types';
 import { membership as m } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const signup = localizePath(m.signupPath, lang);
 
-const c = {
-  ca: {
-    eyebrow: 'Fes-te sòcia',
-    title: 'Els torns, sense lletra petita',
-    intro: `Un torn són ${m.shiftHours} hores cada ${m.shiftCycleWeeks} setmanes. No són hores setmanals: són unes dues hores i mitja al mes. I si no et va bé, hi ha dues alternatives que valen exactament igual.`,
-    cycleTitle: 'Què vol dir “cada 4 setmanes”',
-    cycleText: `Fas un torn, i el següent és quatre setmanes després. Al llarg d’un any són tretze torns d’unes dues hores i mitja: al voltant de trenta hores. Repartides, és menys temps del que molta gent passa fent la compra.`,
-    tasksTitle: 'Què s’hi fa',
-    tasks: [
-      'Reposar producte a les lleixes',
-      'Cobrar a caixa',
-      'Rebre i col·locar comandes',
-      'Endreçar i netejar la sala',
-      'Atendre les sòcies i qui entra per primer cop',
-      'Pesar i preparar el granel',
-    ],
-    tasksNote: 'No cal experiència prèvia. El primer torn el fas acompanyada d’algú que ja el coneix, i sempre hi ha una persona de l’equip contractat a la sala.',
-    typesTitle: 'Fix o mòbil: tries',
-    types: [
-      {
-        icon: 'clock',
-        t: 'Torn fix',
-        d: 'Sempre el mateix dia de la setmana i la mateixa franja. Si tens una rutina estable, és el més còmode: t’oblides de pensar-hi.',
-      },
-      {
-        icon: 'user',
-        t: 'Torn mòbil',
-        d: 'Tries el dia cada cicle, segons com tinguis el mes. Va bé si treballes a torns o tens una agenda que canvia.',
-      },
-      {
-        icon: 'heart',
-        t: 'Torn en tàndem',
-        d: 'Si viviu juntes, podeu compartir un mateix torn i repartir-vos-el entre les dues.',
-      },
-    ],
-    flexTitle: 'I si un mes no hi puc anar?',
-    flex: [
-      { q: 'Puc canviar un torn de dia?', a: `Sí. Tens ${m.flexibleChanges} canvis flexibles l’any, sense haver de donar explicacions.` },
-      { q: 'Puc intercanviar-lo amb una altra sòcia?', a: 'Sí. És la via més habitual quan et sorgeix alguna cosa: t’ho canvies amb algú i llestos.' },
-      { q: 'I si m’oblido o em poso malalta?', a: 'Es recupera més endavant. Això és una cooperativa de persones, no una fàbrica: el que necessitem és que el súper funcioni, no comptar-te les hores.' },
-      { q: 'Hi ha excepcions?', a: 'Sí. Si tens més de 65 anys, mobilitat reduïda, una malaltia o estàs de maternitat o paternitat, el torn no és obligatori. Parla’n amb el cercle de comunitat i ho arreglem.' },
-    ],
-    circlesTitle: 'L’alternativa: un cercle de treball',
-    circlesText: 'Si el que et costa és el torn a la sala però tens ganes i temps, pots dedicar les mateixes hores a un dels cercles que fan funcionar la cooperativa. Bona part de la feina es fa des de casa.',
-    circles: [
-      { t: 'Compres', d: 'Relació amb productores i selecció del catàleg.' },
-      { t: 'Comunicació', d: 'Xarxes, web, butlletí i relació amb els mitjans.' },
-      { t: 'Finances', d: 'Comptabilitat, tresoreria i control pressupostari.' },
-      { t: 'IT', d: 'Sistemes, botiga en línia i eines internes.' },
-      { t: 'Operacions', d: 'Funcionament diari del súper i organització dels torns.' },
-      { t: 'Comunitat i cures', d: 'Acollida de sòcies noves, participació i vida associativa.' },
-      { t: 'Governança', d: 'Assemblees, estatuts i presa de decisions.' },
-      { t: 'Local', d: 'Manteniment i millores de l’espai.' },
-    ],
-    quotaTitle: 'L’altra alternativa: la quota',
-    quotaText: `Si ara mateix no pots dedicar-hi temps, pagues una quota trimestral i mantens absolutament tots els avantatges de sòcia: el ${m.discount}% de descompte, la botiga en línia i el vot a l’assemblea.`,
-    quotaLink: 'Veure preus i quotes',
-    finalTitle: 'Et fem un torn de prova?',
-    finalText: 'Vine a una sessió informativa i t’ensenyem la sala, els torns i com s’organitza tot abans de decidir res.',
-  },
-  es: {
-    eyebrow: 'Hazte socia',
-    title: 'Los turnos, sin letra pequeña',
-    intro: `Un turno son ${m.shiftHours} horas cada ${m.shiftCycleWeeks} semanas. No son horas semanales: son unas dos horas y media al mes. Y si no te va bien, hay dos alternativas que valen exactamente igual.`,
-    cycleTitle: 'Qué quiere decir “cada 4 semanas”',
-    cycleText: 'Haces un turno, y el siguiente es cuatro semanas después. A lo largo de un año son trece turnos de unas dos horas y media: alrededor de treinta horas. Repartidas, es menos tiempo del que mucha gente pasa haciendo la compra.',
-    tasksTitle: 'Qué se hace',
-    tasks: [
-      'Reponer producto en las estanterías',
-      'Cobrar en caja',
-      'Recibir y colocar pedidos',
-      'Ordenar y limpiar la sala',
-      'Atender a las socias y a quien entra por primera vez',
-      'Pesar y preparar el granel',
-    ],
-    tasksNote: 'No hace falta experiencia previa. El primer turno lo haces acompañada de alguien que ya lo conoce, y siempre hay una persona del equipo contratado en la sala.',
-    typesTitle: 'Fijo o móvil: eliges',
-    types: [
-      {
-        icon: 'clock',
-        t: 'Turno fijo',
-        d: 'Siempre el mismo día de la semana y la misma franja. Si tienes una rutina estable, es lo más cómodo: te olvidas de pensar en ello.',
-      },
-      {
-        icon: 'user',
-        t: 'Turno móvil',
-        d: 'Eliges el día cada ciclo, según cómo tengas el mes. Va bien si trabajas a turnos o tienes una agenda que cambia.',
-      },
-      {
-        icon: 'heart',
-        t: 'Turno en tándem',
-        d: 'Si vivís juntas, podéis compartir un mismo turno y repartíroslo entre las dos.',
-      },
-    ],
-    flexTitle: '¿Y si un mes no puedo ir?',
-    flex: [
-      { q: '¿Puedo cambiar un turno de día?', a: `Sí. Tienes ${m.flexibleChanges} cambios flexibles al año, sin tener que dar explicaciones.` },
-      { q: '¿Puedo intercambiarlo con otra socia?', a: 'Sí. Es la vía más habitual cuando te surge algo: te lo cambias con alguien y listo.' },
-      { q: '¿Y si se me olvida o me pongo enferma?', a: 'Se recupera más adelante. Esto es una cooperativa de personas, no una fábrica: lo que necesitamos es que el súper funcione, no contarte las horas.' },
-      { q: '¿Hay excepciones?', a: 'Sí. Si tienes más de 65 años, movilidad reducida, una enfermedad o estás de maternidad o paternidad, el turno no es obligatorio. Háblalo con el círculo de comunidad y lo arreglamos.' },
-    ],
-    circlesTitle: 'La alternativa: un círculo de trabajo',
-    circlesText: 'Si lo que te cuesta es el turno en la sala pero tienes ganas y tiempo, puedes dedicar las mismas horas a uno de los círculos que hacen funcionar la cooperativa. Buena parte del trabajo se hace desde casa.',
-    circles: [
-      { t: 'Compras', d: 'Relación con productoras y selección del catálogo.' },
-      { t: 'Comunicación', d: 'Redes, web, boletín y relación con los medios.' },
-      { t: 'Finanzas', d: 'Contabilidad, tesorería y control presupuestario.' },
-      { t: 'IT', d: 'Sistemas, tienda online y herramientas internas.' },
-      { t: 'Operaciones', d: 'Funcionamiento diario del súper y organización de los turnos.' },
-      { t: 'Comunidad y cuidados', d: 'Acogida de socias nuevas, participación y vida asociativa.' },
-      { t: 'Gobernanza', d: 'Asambleas, estatutos y toma de decisiones.' },
-      { t: 'Local', d: 'Mantenimiento y mejoras del espacio.' },
-    ],
-    quotaTitle: 'La otra alternativa: la cuota',
-    quotaText: `Si ahora mismo no puedes dedicarle tiempo, pagas una cuota trimestral y mantienes absolutamente todas las ventajas de socia: el ${m.discount}% de descuento, la tienda online y el voto en la asamblea.`,
-    quotaLink: 'Ver precios y cuotas',
-    finalTitle: '¿Te enseñamos un turno?',
-    finalText: 'Ven a una sesión informativa y te enseñamos la sala, los turnos y cómo se organiza todo antes de decidir nada.',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/torns.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<TornsCopy>(lang, 'torns');
 ---
 <BaseLayout title={c.title} description={c.intro}>
   <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
@@ -158,7 +43,7 @@ const c = {
         <li
           class:list={[
             'rounded-lg p-4 text-center text-sm font-semibold',
-            i === 0 ? 'bg-brand-ink text-paper' : 'bg-paper-soft text-muted',
+            i === 0 ? 'bg-brand-fill text-paper' : 'bg-paper-soft text-muted',
           ]}
         >
           {lang === 'ca' ? 'Set.' : 'Sem.'} {i + 1}
@@ -229,12 +114,12 @@ const c = {
   </Section>
 
   <Section tone="green">
-    <h2 class="text-2xl text-brand-dark">{c.circlesTitle}</h2>
+    <h2 class="text-2xl text-brand-strong">{c.circlesTitle}</h2>
     <p class="mt-3 max-w-2xl text-lg">{c.circlesText}</p>
     <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {c.circles.map((ci) => (
         <li class="rounded-lg bg-paper p-5">
-          <h3 class="text-base text-brand-dark">{ci.t}</h3>
+          <h3 class="text-base text-brand-strong">{ci.t}</h3>
           <p class="mt-1 text-sm text-ink-soft">{ci.d}</p>
         </li>
       ))}

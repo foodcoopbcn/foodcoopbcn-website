@@ -64,6 +64,10 @@ const PHOTOS = [
      mostly glass. This portrait cut keeps the doorway and a person in shot. */
   { slug: 'hero-entrada-tall', src: `${M}/_F1A5337.jpg`, ratio: 4 / 5, widths: [480, 720, 960], position: 'centre' },
   { slug: 'banner-assemblea', src: `${A}/035.jpg`, ratio: 16 / 9, widths: [768, 1280, 1920], position: 'attention' },
+  /* The assembly, held inside the shop among the shelves. One frame that says
+     the people who buy here are the people who decide here, which is what the
+     full-bleed band on the homepage is for. */
+  { slug: 'banner-comunitat', src: `${A}/008.jpg`, ratio: 16 / 9, widths: [768, 1280, 1920], position: 'centre' },
 
   // --- Half-width editorial images ------------------------------------------
   { slug: 'socies-davantal', src: `${B}/Super-01.tif`, ratio: 4 / 5, widths: [420, 720], position: 'attention' },

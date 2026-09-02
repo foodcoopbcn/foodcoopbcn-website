@@ -6,8 +6,21 @@
  * The data comes from src/data/prices.json (refreshed daily by scripts/fetch-prices.mjs)
  * through buildCompareView(), which has already dropped anything stale. This component only
  * lays it out: a real <table> on desktop, one card per product on phones (a five-column
- * table cannot shrink to 375 px). It never says which shop is cheaper — the figures,
+ * table cannot shrink to 375 px). It never says which shop is cheaper: the figures,
  * product names and eco marks are there for the reader to judge.
+ *
+ * That stance is why the bars behind the prices are all one colour. They encode
+ * magnitude — how this price sits against the dearest in its own row — and
+ * nothing else. A red/green "cheaper/dearer" scale would be the component
+ * telling the reader what to conclude, which is exactly what this page refuses
+ * to do, and it would read as self-serving on the rows where the co-op is
+ * dearer.
+ *
+ * The like-for-like organic view is the other half of the same idea. Comparing
+ * an organic pack against a conventional one is the biggest confounder here and
+ * the first thing a sceptical reader points at, so both baskets are on the page
+ * and the reader picks. The toggle is two radio inputs and sibling selectors —
+ * no JavaScript, which the no-CSR rule requires.
  */
 import Section from './Section.astro';
 import PriceCompareCell from './PriceCompareCell.astro';
@@ -38,11 +51,23 @@ const labels = {
 };
 const list = (items: string[]) => new Intl.ListFormat(lang === 'ca' ? 'ca' : 'es', { type: 'conjunction' }).format(items);
 
+/*
+ * Bar width: this price as a share of the dearest price in its own row. The
+ * comparison is within the row only — across rows the products differ, so a
+ * shared scale would be meaningless.
+ */
+const rowMax = data.items.map((it) =>
+  Math.max(...it.cells.map((c) => (c ? (c.memberPriceValue ?? c.priceValue) : 0))),
+);
+
+const hasLikeView = data.comparableCount > 0;
+
 const notes = [
   fill(t('compare.method.source'), { date: data.updatedAt }),
   fill(t('compare.method.member'), { discount: data.discount }),
   t('compare.method.match'),
   t('compare.method.qty'),
+  ...(hasLikeView ? [t('compare.viewNote')] : []),
   ...(data.hiddenStores.length ? [fill(t('compare.method.hidden'), { stores: list(data.hiddenStores) })] : []),
   ...data.stores
     .filter((s) => s.missing.length)
@@ -50,10 +75,79 @@ const notes = [
 ];
 ---
 <Section tone={tone} id={id}>
+  <div class="compare">
   <div class="mx-auto mb-10 max-w-2xl text-center">
     {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-ink">{eyebrow}</p>}
     <h2 class="text-2xl">{title}</h2>
     {intro && <p class="mt-4 text-lg opacity-80">{intro}</p>}
+  </div>
+
+  <!--
+    The basket headline. The five-column table answers "what does each product
+    cost where"; it never answered the question people actually arrive with,
+    which is "what does my shop cost". That number existed only in the table's
+    own <tfoot>, at the bottom, at body size.
+  -->
+  <div class="basket reveal mx-auto mb-8 max-w-5xl rounded-lg bg-paper p-6 shadow-sm ring-1 ring-line sm:p-8">
+    <div class="flex flex-wrap items-baseline justify-between gap-3">
+      <div>
+        <h3 class="font-display text-lg font-bold">{t('compare.basket')}</h3>
+        <p class="mt-1 text-sm text-muted">
+          <span class="when-all">{fill(t('compare.basketNote'), { n: data.totalCount })}</span>
+          {hasLikeView && (
+            <span class="when-like">{fill(t('compare.basketNote'), { n: data.comparableCount })}</span>
+          )}
+        </p>
+      </div>
+
+      {hasLikeView && (
+        <fieldset class="views flex shrink-0 rounded-pill bg-paper-soft p-1 ring-1 ring-line">
+          <legend class="sr-only">{t('compare.viewNote')}</legend>
+          <label class="cursor-pointer">
+            <input type="radio" name="basket-view" value="all" class="peer sr-only" checked />
+            <span class="block rounded-pill px-4 py-1.5 text-xs font-bold transition-colors duration-[var(--duration-fast)] ease-out-soft peer-checked:bg-brand-fill peer-checked:text-paper peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand">
+              {fill(t('compare.viewAll'), { n: data.totalCount })}
+            </span>
+          </label>
+          <label class="cursor-pointer">
+            <input type="radio" name="basket-view" value="like" class="peer sr-only" />
+            <span class="block rounded-pill px-4 py-1.5 text-xs font-bold transition-colors duration-[var(--duration-fast)] ease-out-soft peer-checked:bg-brand-fill peer-checked:text-paper peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand">
+              {fill(t('compare.viewLike'), { n: data.comparableCount })}
+            </span>
+          </label>
+        </fieldset>
+      )}
+    </div>
+
+    <dl class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        data.stores.map((st) => (
+          <div
+            class:list={[
+              'rounded-lg px-4 py-3 text-center',
+              st.featured ? 'bg-paper-green ring-1 ring-brand/30' : 'ring-1 ring-line',
+            ]}
+          >
+            <dt class="text-xs font-bold uppercase tracking-wide text-ink-soft">{st.label}</dt>
+            <dd class="mt-1">
+              <span class="when-all block whitespace-nowrap font-display text-xl font-extrabold tabular-nums">
+                {st.memberTotal ?? st.total ?? '—'}
+              </span>
+              {hasLikeView && (
+                <span class="when-like whitespace-nowrap font-display text-xl font-extrabold tabular-nums">
+                  {st.comparableMemberTotal ?? st.comparableTotal ?? '—'}
+                </span>
+              )}
+              {st.featured && (st.memberTotal || st.comparableMemberTotal) && (
+                <span class="mt-0.5 block text-xs font-semibold text-brand-strong">
+                  {t('compare.member')}
+                </span>
+              )}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
   </div>
 
   <!-- Desktop: one table, products down, shops across -->
@@ -70,7 +164,7 @@ const notes = [
                 scope="col"
                 class:list={[
                   'px-4 py-4 text-center align-bottom',
-                  s.featured ? 'bg-paper-green text-brand-dark' : 'text-ink-soft',
+                  s.featured ? 'bg-paper-green text-brand-strong' : 'text-ink-soft',
                 ]}
               >
                 <span class="block text-sm font-bold uppercase tracking-wide">{s.label}</span>
@@ -84,8 +178,8 @@ const notes = [
       </thead>
       <tbody>
         {
-          data.items.map((it) => (
-            <tr class="border-b border-line align-top last:border-0">
+          data.items.map((it, r) => (
+            <tr class="row border-b border-line align-top last:border-0" data-like={String(it.comparable)}>
               <th scope="row" class="px-5 py-4 text-sm font-semibold">
                 {it.label}
                 <span class="block text-xs font-normal text-muted">{it.basis}</span>
@@ -95,6 +189,13 @@ const notes = [
                   class:list={['px-4 py-4 text-center text-sm', data.stores[i].featured && 'bg-paper-green/50']}
                 >
                   <PriceCompareCell cell={c} labels={labels} />
+                  {c && rowMax[r] > 0 && (
+                    <span
+                      class="bar mt-2 block h-1 rounded-pill bg-line"
+                      aria-hidden="true"
+                      style={`--w:${Math.round(((c.memberPriceValue ?? c.priceValue) / rowMax[r]) * 100)}%`}
+                    />
+                  )}
                 </td>
               ))}
             </tr>
@@ -112,9 +213,16 @@ const notes = [
           {
             data.stores.map((s) => (
               <td class:list={['px-4 py-4 text-center', s.featured && 'bg-paper-green/50']}>
-                <span class="font-display text-xl font-extrabold tabular-nums">{s.memberTotal ?? s.total ?? '—'}</span>
+                <span class="when-all font-display text-xl font-extrabold tabular-nums">
+                  {s.memberTotal ?? s.total ?? '—'}
+                </span>
+                {hasLikeView && (
+                  <span class="when-like font-display text-xl font-extrabold tabular-nums">
+                    {s.comparableMemberTotal ?? s.comparableTotal ?? '—'}
+                  </span>
+                )}
                 {s.memberTotal && (
-                  <span class="block text-xs font-semibold text-brand-dark">
+                  <span class="when-all block text-xs font-semibold text-brand-strong">
                     {t('compare.public')}: <span class="tabular-nums">{s.total}</span>
                   </span>
                 )}
@@ -130,7 +238,7 @@ const notes = [
   <div class="grid gap-4 md:hidden">
     {
       data.items.map((it) => (
-        <div class="rounded-lg bg-paper p-5 shadow-sm ring-1 ring-line">
+        <div class="row rounded-lg bg-paper p-5 shadow-sm ring-1 ring-line" data-like={String(it.comparable)}>
           <h3 class="text-base font-bold">
             {it.label} <span class="text-sm font-normal text-muted">· {it.basis}</span>
           </h3>
@@ -152,33 +260,54 @@ const notes = [
         </div>
       ))
     }
-    <div class="rounded-lg bg-paper p-5 shadow-sm ring-2 ring-brand">
-      <h3 class="text-base font-bold">{t('compare.total')}</h3>
-      <p class="text-xs text-muted">{fill(t('compare.totalNote'), { n: data.totalCount })}</p>
-      <dl class="mt-3 divide-y divide-line">
-        {
-          data.stores.map((s) => (
-            <div class="flex items-start justify-between gap-4 py-2.5">
-              <dt class="text-sm font-semibold">{s.label}</dt>
-              <dd class="text-right">
-                <span class="font-display text-lg font-extrabold tabular-nums">{s.memberTotal ?? s.total ?? '—'}</span>
-                {s.memberTotal && (
-                  <span class="block text-xs font-semibold text-brand-dark">
-                    {t('compare.public')}: <span class="tabular-nums">{s.total}</span>
-                  </span>
-                )}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </div>
-
   <div class="mx-auto mt-8 max-w-3xl text-sm text-ink-soft">
     <h3 class="text-sm font-bold uppercase tracking-wide text-ink">{t('compare.method.title')}</h3>
     <ul class="mt-2 list-disc space-y-1 pl-5">
       {notes.map((n) => <li>{n}</li>)}
     </ul>
   </div>
+  </div>
 </Section>
+
+<style>
+  /*
+   * The basket view switch. Two radios and :has() — no script, which the no-CSR
+   * rule requires. Browsers without :has() simply stay on the full basket, which
+   * is the default and the honest one.
+   */
+  .when-like {
+    display: none;
+  }
+
+  .compare:has(input[name='basket-view'][value='like']:checked) .when-all {
+    display: none;
+  }
+
+  .compare:has(input[name='basket-view'][value='like']:checked) .when-like {
+    display: inline;
+  }
+
+  /* Rows that are not a like-for-like organic comparison drop out of the table. */
+  .compare:has(input[name='basket-view'][value='like']:checked) .row[data-like='false'] {
+    display: none;
+  }
+
+  /*
+   * Magnitude bar. One colour for every shop on purpose — see the note at the
+   * top of this file. It encodes the price against the dearest in its own row
+   * and passes no judgement on it.
+   */
+  .bar {
+    position: relative;
+    width: 100%;
+  }
+
+  .bar::after {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--w);
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--color-brand-ink) 55%, transparent);
+  }
+</style>

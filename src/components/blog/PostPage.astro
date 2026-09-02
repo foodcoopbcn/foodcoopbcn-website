@@ -101,7 +101,7 @@ const jsonLd = graph(organization(lang), post, crumbs);
     <div class="container-narrow py-10">
       {isRecipe && data.ingredients?.length > 0 && (
         <div class="mb-8 rounded-lg bg-paper-soft p-6 ring-1 ring-line">
-          <div class="mb-4 flex flex-wrap gap-6 text-sm font-semibold text-brand-dark">
+          <div class="mb-4 flex flex-wrap gap-6 text-sm font-semibold text-brand-strong">
             {data.servings && <span class="inline-flex items-center gap-1.5"><Icon name="user" size={16} /> {data.servings}</span>}
             {data.time && <span class="inline-flex items-center gap-1.5"><Icon name="clock" size={16} /> {data.time}</span>}
           </div>

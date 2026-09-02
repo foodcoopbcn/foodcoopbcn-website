@@ -12,8 +12,10 @@ const { tone = 'paper', width = 'page', id, tight = false, class: className = ''
 const tones = {
   paper: 'bg-paper text-ink',
   soft: 'bg-paper-soft text-ink',
-  green: 'bg-paper-green text-brand-dark',
-  ink: 'bg-brand-dark text-paper',
+  green: 'bg-paper-green text-brand-strong',
+  /* A surface that is dark in BOTH themes, so its text comes from the on-ink
+     ramp rather than from --color-paper, which flips. */
+  ink: 'bg-brand-dark text-on-ink-strong',
 };
 const container = width === 'narrow' ? 'container-narrow' : 'container-page';
 ---

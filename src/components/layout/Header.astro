@@ -29,7 +29,7 @@ const ext = (item: { external?: boolean }) =>
 const ctaItem = mainNav.find((item) => item.highlight);
 
 const pill =
-  'inline-flex items-center gap-1.5 rounded-pill bg-brand-ink px-4 py-2 text-sm font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2';
+  'inline-flex items-center gap-1.5 rounded-pill bg-brand-fill px-4 py-2 text-sm font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2';
 ---
 <header class="site-header sticky top-0 z-40 lg:top-[-2.25rem]">
   <!-- Utility row: scrolls away, only the main bar below stays pinned -->
@@ -73,7 +73,15 @@ const pill =
       <!-- Desktop nav -->
       <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
         {
-          mainNav.map((item) => {
+          mainNav.map((item, i) => {
+            /*
+             * The last menu opens leftwards. `left-0` on the rightmost item put
+             * a 240px panel past the right edge of the viewport, and because an
+             * `invisible` element still counts towards scrollWidth, every page
+             * on the site had a horizontal scrollbar because of a menu nobody
+             * had opened.
+             */
+            const opensLeft = i === mainNav.length - 1;
             const active = !item.external && isActive(item.path);
             const aria = active ? { 'aria-current': 'page' as const } : {};
             const cls = item.highlight
@@ -91,12 +99,15 @@ const pill =
                   <Icon name="chevron" size={14} />
                 </a>
                 <div
-                  class="invisible absolute left-0 top-full min-w-60 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow-lg transition-all duration-[var(--duration-fast)] ease-out-soft before:absolute before:-top-2 before:left-0 before:h-2 before:w-full before:content-[''] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                  class:list={[
+                    "invisible absolute top-full min-w-60 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow-lg transition-all duration-[var(--duration-fast)] ease-out-soft before:absolute before:-top-2 before:left-0 before:h-2 before:w-full before:content-[''] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                    opensLeft ? "right-0" : "left-0",
+                  ]}
                 >
                   {item.children.map((child) => (
                     <a
                       href={localizePath(child.path, lang)}
-                      class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-dark"
+                      class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-strong"
                     >
                       {t(child.key)}
                     </a>
@@ -133,7 +144,7 @@ const pill =
           ctaItem && (
             <a
               href={hrefOf(ctaItem)}
-              class="hidden items-center whitespace-nowrap rounded-pill bg-brand-ink px-3.5 py-2 text-xs font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 min-[360px]:inline-flex sm:text-sm"
+              class="hidden items-center whitespace-nowrap rounded-pill bg-brand-fill px-3.5 py-2 text-xs font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 min-[360px]:inline-flex sm:text-sm"
             >
               {t(ctaItem.key)}
             </a>
@@ -184,7 +195,7 @@ const pill =
                     href={hrefOf(item)}
                     class:list={[
                       'rounded-md px-3 py-3 text-base font-semibold hover:bg-paper-green',
-                      item.highlight && 'text-brand-dark',
+                      item.highlight && 'text-brand-strong',
                     ]}
                     {...ext(item)}
                   >

@@ -40,15 +40,37 @@ export interface CompareStore {
   updatedAt: string;
   total: string | null;
   memberTotal: string | null;
+  /*
+   * The same two totals over the like-for-like subset: the basket rows where
+   * every shown shop is selling the same KIND of product, organic or
+   * conventional. Organic-against-conventional is the single biggest confounder
+   * on this page and the first thing a sceptical reader points at, so both
+   * baskets are on the page and the reader picks.
+   *
+   * Note this subset does not flatter the co-op. On today's data it resolves to
+   * the seven all-conventional rows, which is precisely where the co-op cannot
+   * appeal to how the product was grown. That is the point of offering it.
+   */
+  comparableTotal: string | null;
+  comparableMemberTotal: string | null;
   /** Basket items this store has no fresh price for (labels). */
   missing: string[];
 }
 
 export interface CompareView {
   stores: CompareStore[];
-  items: { id: string; label: string; basis: string; cells: (CompareCell | null)[] }[];
+  items: {
+    id: string;
+    label: string;
+    basis: string;
+    cells: (CompareCell | null)[];
+    /** Every shown shop sells the same kind here, so the row compares like with like. */
+    comparable: boolean;
+  }[];
   /** How many items the totals add up (those present in every shown store). */
   totalCount: number;
+  /** How many of those compare like with like. */
+  comparableCount: number;
   /** Stores hidden because their data is too old or absent. */
   hiddenStores: string[];
   /** Newest data point shown, formatted. */
@@ -126,11 +148,25 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
       return cell;
     });
     const basis = (b as { basis?: Record<Lang, string> }).basis?.[lang] ?? formatQty(lang, b.qty, b.unit as Unit);
-    return { id: b.id, label: b.label[lang], basis, cells };
+    /* Like-for-like means the shops agree on the kind of product, not that it is organic. */
+    const comparable = cells.every((c) => c !== null && c.eco === cells[0]!.eco);
+    return { id: b.id, label: b.label[lang], basis, cells, comparable };
   });
 
   /* Totals only over items every shown store has, so columns add up the same list. */
   const complete = items.filter((it) => it.cells.every(Boolean));
+  const completeLike = complete.filter((it) => it.comparable);
+
+  /** Sum one column over a row set, or null when a member price is missing anywhere. */
+  const sum = (rows: typeof complete, col: number, member: boolean) => {
+    if (!rows.length) return null;
+    if (member && !rows.every((it) => it.cells[col]!.memberPriceValue !== undefined)) return null;
+    return rows.reduce(
+      (acc, it) => acc + (member ? it.cells[col]!.memberPriceValue! : it.cells[col]!.priceValue),
+      0,
+    );
+  };
+
   const stores: CompareStore[] = shown.map((s, col) => {
     const fresh = BASKET.map((b) => data.stores[s.id]?.items[b.id]).filter((p) => p && isFresh(p.fetchedAt, now));
     const oldest = fresh.map((p) => p!.fetchedAt).sort()[0];
@@ -144,9 +180,21 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
       memberTotal:
         total === null || s.id !== 'foodcoop'
           ? null
-          : complete.every((it) => it.cells[col]!.memberPriceValue !== undefined)
-            ? money(lang, complete.reduce((sum, it) => sum + it.cells[col]!.memberPriceValue!, 0))
-            : null,
+          : (() => {
+              const v = sum(complete, col, true);
+              return v === null ? null : money(lang, v);
+            })(),
+      comparableTotal: (() => {
+        const v = sum(completeLike, col, false);
+        return v === null ? null : money(lang, v);
+      })(),
+      comparableMemberTotal:
+        s.id !== 'foodcoop'
+          ? null
+          : (() => {
+              const v = sum(completeLike, col, true);
+              return v === null ? null : money(lang, v);
+            })(),
       missing: items.filter((it) => !it.cells[col]).map((it) => it.label),
     };
   });
@@ -161,6 +209,7 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
     stores,
     items,
     totalCount: complete.length,
+    comparableCount: completeLike.length,
     hiddenStores: STORES.filter((s) => !shown.some((x) => x.id === s.id)).map((s) => s.label),
     updatedAt: date(lang, newest),
     discount,

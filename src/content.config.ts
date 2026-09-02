@@ -230,6 +230,28 @@ const priceTeaserSection = block('priceTeaser', {
   tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
 });
 
+const showcaseBandSection = block('showcaseBand', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  text: optionalText(),
+  image: z.string(),
+  imageAlt: optionalText(),
+  align: z.enum(['left', 'centre']).catch('left'),
+  height: z.enum(['md', 'lg']).catch('md'),
+  primaryCta: cta,
+  secondaryCta: cta,
+});
+
+const stickyStepsSection = block('stickySteps', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  steps: z
+    .array(z.object({ icon: optionalText(), title: z.string(), text: z.string() }))
+    .default([]),
+});
+
 const ctaSectionSchema = block('ctaSection', {
   title: z.string(),
   text: optionalText(),
@@ -262,6 +284,8 @@ const pages = defineCollection({
           photoCardsSection,
           newsTeaserSection,
           priceTeaserSection,
+          showcaseBandSection,
+          stickyStepsSection,
           ctaSectionSchema,
         ]),
       )
@@ -269,5 +293,26 @@ const pages = defineCollection({
   }),
 });
 
+/*
+ * Editor-owned page copy: one file per page per language, addressed as
+ * "<lang>/<slug>" the same way faqs and pages are. Shapes live in
+ * ./copy-shapes.ts, mirroring the Keystatic singletons in keystatic.copy.ts.
+ */
+const copy = defineCollection({
+  loader: glob({
+    pattern: '**/*.{yaml,yml}',
+    base: './src/content/copy',
+    generateId: ({ entry }) => entry.replace(/\.ya?ml$/, ''),
+  }),
+  /*
+   * Deliberately permissive. Thirteen pages have thirteen different shapes, and
+   * the posture here is the same as for the section blocks: an editor's mistake
+   * should be able to look wrong, never to fail the deploy. The shape each
+   * component actually relies on is enforced at the call site by the types in
+   * src/lib/copy-types.ts.
+   */
+  schema: z.record(z.string(), z.any()),
+});
+
 export const collections = {
-  faqs, news, recipes, categories, pages };
+  faqs, news, recipes, categories, pages, copy };

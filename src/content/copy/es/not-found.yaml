@@ -1,0 +1,15 @@
+'title': 'Esta página no está'
+'text': 'Puede que la hayamos cambiado de sitio al estrenar la web nueva, o que el enlace esté mal. Aquí tienes por dónde seguir.'
+'links':
+  - 'label': 'Volver al inicio'
+    'href': '/'
+    'primary': true
+  - 'label': 'Hazte socia'
+    'href': '/fes-te-socia'
+  - 'label': 'Horario y cómo llegar'
+    'href': '/el-super'
+  - 'label': 'Actualidad'
+    'href': '/actualitat'
+'searchLabel': 'O busca lo que necesitas'
+'searchCta': 'Buscar en la web'
+'visit': '¿Y si te pasas a vernos?'

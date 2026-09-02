@@ -60,7 +60,7 @@ sections:
       image: socies-davantal
       imageAlt: Dos socias con el delantal de FoodCoop, con setas y verdura recién recibidas
       reverse: false
-      tone: paper
+      tone: soft
       cta:
         label: Conoce el proyecto
         href: /qui-som
@@ -128,7 +128,7 @@ sections:
     value:
       eyebrow: ''
       title: ''
-      tone: soft
+      tone: green
   - discriminant: photoCards
     value:
       title: Qué puedes comprar en Foodcoop
@@ -203,6 +203,24 @@ sections:
           cta:
             label: Ver criterios
             href: /productes
+  - discriminant: showcaseBand
+    value:
+      eyebrow: El proyecto
+      title: '{socias} socias y ningún accionista'
+      text: >-
+        Las decisiones grandes las tomamos en asamblea, abierta a todas las
+        socias. Aquí nadie se lleva el margen: lo que ahorramos vuelve al
+        precio.
+      image: banner-comunitat
+      imageAlt: Una asamblea de socias hecha dentro del súper, entre las estanterías
+      align: left
+      height: md
+      primaryCta:
+        label: Conoce el proyecto
+        href: /qui-som
+      secondaryCta:
+        label: ''
+        href: /
   - discriminant: stats
     value:
       title: El 72% de la fruta y la verdura es de Cataluña, y el 94% de los lácteos también.

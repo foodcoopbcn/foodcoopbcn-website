@@ -13,45 +13,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Accordion from '../ui/Accordion.astro';
-import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { getLang, useTranslations } from '../../i18n/utils';
+import { copyTokens, fillText } from '../../lib/copy';
 import { getEntry } from 'astro:content';
-import { membership as m, org, hours, dayKey, formatRanges } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-/* Rendered into the "what are your hours?" answer so it can never contradict the footer. */
-const hoursLine = hours
-  .map((h) => `${t(dayKey(h.day))} ${formatRanges(h.ranges, lang === 'ca' ? 'tancat' : 'cerrado')}`)
-  .join('; ');
-
 /*
  * Content lives in src/content/faqs/{ca,es}/index.yaml so editors can change it
- * without touching code. Figures stay as tokens there and are substituted here,
- * so a number can never be typed into an answer and then drift from config.
+ * without touching code.
  */
 const entry = await getEntry('faqs', lang);
 if (!entry) throw new Error(`Missing src/content/faqs/${lang}/index.yaml`);
 
-const tokens: Record<string, string | number> = {
-  capital: m.capital,
-  discount: m.discount,
-  entityCapital: m.entityCapital,
-  entityStaffDiscount: m.entityStaffDiscount,
-  shiftHours: m.shiftHours,
-  shiftCycleWeeks: m.shiftCycleWeeks,
-  flexibleChanges: m.flexibleChanges,
-  quotaStandard: m.quota.standard,
-  quotaReduced: m.quota.reduced,
-  deliveryThreshold: m.delivery.threshold,
-  deliveryCheap: String(m.delivery.cheap).replace('.', ','),
-  deliveryStandard: m.delivery.standard,
-  street: org.address.street,
-  postalCode: org.address.postalCode,
-  hours: hoursLine,
-};
-const fill = (text: string) =>
-  text.replace(/\{(\w+)\}/g, (whole, key) => String(tokens[key] ?? whole));
+/*
+ * Figures stay as {tokens} in the YAML and are substituted here, so a number can
+ * never be typed into an answer and then drift from config. The table is shared
+ * with the interior pages' copy — see src/lib/copy.ts — so the FAQs and the
+ * pages cannot disagree about what a quota costs.
+ */
+const fill = (text: string) => fillText(text, copyTokens(lang));
 
 const groups = entry.data.groups.map((g) => ({
   title: g.title,

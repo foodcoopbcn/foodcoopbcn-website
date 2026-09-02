@@ -5,108 +5,17 @@ import Section from '../sections/Section.astro';
 import FeatureGrid from '../sections/FeatureGrid.astro';
 import CTASection from '../sections/CTASection.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { org } from '../../config/site';
+import { pageCopy } from '../../lib/copy';
+import type { QuiSomCopy } from '../../lib/copy-types';
+
 import Photo from '../ui/Photo.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const c = {
-  ca: {
-    title: 'Un supermercat de totes i per a totes',
-    intro:
-      'FoodCoop BCN és un supermercat cooperatiu, participatiu i sense ànim de lucre. Ens mou la sostenibilitat, la proximitat i el tracte just amb qui produeix el que mengem.',
-    valuesTitle: 'Els nostres valors',
-    valuesIntro: 'Un model just per a les persones, les productores i el planeta.',
-    values: [
-      { icon: 'leaf', title: 'Sostenible i de proximitat', text: 'Prioritzem productores locals catalanes i productes agroecològics, a granel i amb poc envàs.' },
-      { icon: 'vote', title: 'Transparència total', text: 'Decisions preses en assemblea i marges visibles. Sense ànim de lucre: cap benefici privat.' },
-      { icon: 'heart', title: 'Sa i assequible', text: 'Més de 1.200 productes de qualitat a un preu just, perquè menjar bé sigui per a tothom.' },
-      { icon: 'user', title: 'Comunitat', text: 'Un projecte fet entre totes: les sòcies hi dediquen unes hores al mes i en decideixen el rumb.' },
-    ],
-    factsTitle: 'Dades clau',
-    facts: [
-      { k: 'Nom legal', v: 'Foodcoop Barcelona SCCL' },
-      { k: 'Obertura', v: '8 de febrer de 2022' },
-      { k: 'On som', v: 'Passatge d’Aragó, 9 · Esquerra de l’Eixample' },
-      { k: 'Superfície', v: '240 m²' },
-      { k: 'Referències', v: 'Més de 1.200' },
-      { k: 'Sòcies', v: `${org.members.toLocaleString('ca-ES')}` },
-      { k: 'Descompte sòcies', v: '12%' },
-      { k: 'Participació', v: '2-2,5 h cada 4 setmanes, cercle o quota' },
-    ],
-    storyTitle: 'D’on venim',
-    story: [
-      'El projecte va néixer d’una trobada el 2018, inspirat en models cooperatius d’èxit com La Louve (París) o la Bees Coop (Brussel·les), que demostren que una altra manera de fer supermercat és possible.',
-      'Després d’anys de feina col·lectiva, vam obrir les portes al passatge d’Aragó. Avui som una comunitat de sòcies que decidim, treballem i comprem juntes.',
-    ],
-    govTitle: 'Com ens organitzem',
-    govIntro: 'Decidim en assemblea i ens organitzem en cercles de treball especialitzats.',
-    /* The eight circles the cooperative actually runs. The list used to name a
-       "Producte" circle that does not exist and to omit IT, Governança and Local. */
-    circles: [
-      { icon: 'user', title: 'Comunitat i cures', text: 'Acollida de sòcies noves, participació i vida associativa.' },
-      { icon: 'basket', title: 'Compres', text: 'Relació amb productores, criteris i selecció del catàleg.' },
-      { icon: 'clock', title: 'Operacions', text: 'Funcionament diari del súper i organització dels torns.' },
-      { icon: 'vote', title: 'Finances', text: 'Comptabilitat, tresoreria i control pressupostari.' },
-      { icon: 'mail', title: 'Comunicació', text: 'Xarxes, web, butlletí i relació amb els mitjans.' },
-      { icon: 'globe', title: 'IT', text: 'Sistemes, botiga en línia i eines internes.' },
-      { icon: 'check', title: 'Governança', text: 'Assemblees, estatuts i presa de decisions.' },
-      { icon: 'pin', title: 'Local', text: 'Manteniment i millores de l’espai del passatge d’Aragó.' },
-    ],
-    membersTitle: 'Dos tipus de sòcies',
-    members: [
-      { title: 'Sòcia consumidora', text: 'Compra al súper, hi participa unes 2-2,5 h al mes i té vot a l’assemblea.' },
-      { title: 'Sòcia col·laboradora', text: 'Aporta capital al projecte sense l’obligació de fer torns.' },
-    ],
-  },
-  es: {
-    title: 'Un supermercado de todas y para todas',
-    intro:
-      'FoodCoop BCN es un supermercado cooperativo, participativo y sin ánimo de lucro. Nos mueve la sostenibilidad, la proximidad y el trato justo con quien produce lo que comemos.',
-    valuesTitle: 'Nuestros valores',
-    valuesIntro: 'Un modelo justo para las personas, las productoras y el planeta.',
-    values: [
-      { icon: 'leaf', title: 'Sostenible y de proximidad', text: 'Priorizamos productoras locales catalanas y productos agroecológicos, a granel y con poco envase.' },
-      { icon: 'vote', title: 'Transparencia total', text: 'Decisiones tomadas en asamblea y márgenes visibles. Sin ánimo de lucro: ningún beneficio privado.' },
-      { icon: 'heart', title: 'Sano y asequible', text: 'Más de 1.200 productos de calidad a un precio justo, para que comer bien sea para todo el mundo.' },
-      { icon: 'user', title: 'Comunidad', text: 'Un proyecto hecho entre todas: las socias le dedican unas horas al mes y deciden su rumbo.' },
-    ],
-    factsTitle: 'Datos clave',
-    facts: [
-      { k: 'Nombre legal', v: 'Foodcoop Barcelona SCCL' },
-      { k: 'Apertura', v: '8 de febrero de 2022' },
-      { k: 'Dónde estamos', v: 'Passatge d’Aragó, 9 · Esquerra de l’Eixample' },
-      { k: 'Superficie', v: '240 m²' },
-      { k: 'Referencias', v: 'Más de 1.200' },
-      { k: 'Socias', v: `${org.members.toLocaleString('es-ES')}` },
-      { k: 'Descuento socias', v: '12%' },
-      { k: 'Participación', v: '2-2,5 h cada 4 semanas, círculo o cuota' },
-    ],
-    storyTitle: 'De dónde venimos',
-    story: [
-      'El proyecto nació de un encuentro en 2018, inspirado en modelos cooperativos de éxito como La Louve (París) o la Bees Coop (Bruselas), que demuestran que otra manera de hacer supermercado es posible.',
-      'Tras años de trabajo colectivo, abrimos las puertas en el pasaje de Aragó. Hoy somos una comunidad de socias que decidimos, trabajamos y compramos juntas.',
-    ],
-    govTitle: 'Cómo nos organizamos',
-    govIntro: 'Decidimos en asamblea y nos organizamos en círculos de trabajo especializados.',
-    circles: [
-      { icon: 'user', title: 'Comunidad y cuidados', text: 'Acogida de socias nuevas, participación y vida asociativa.' },
-      { icon: 'basket', title: 'Compras', text: 'Relación con productoras, criterios y selección del catálogo.' },
-      { icon: 'clock', title: 'Operaciones', text: 'Funcionamiento diario del súper y organización de los turnos.' },
-      { icon: 'vote', title: 'Finanzas', text: 'Contabilidad, tesorería y control presupuestario.' },
-      { icon: 'mail', title: 'Comunicación', text: 'Redes, web, boletín y relación con los medios.' },
-      { icon: 'globe', title: 'IT', text: 'Sistemas, tienda online y herramientas internas.' },
-      { icon: 'check', title: 'Gobernanza', text: 'Asambleas, estatutos y toma de decisiones.' },
-      { icon: 'pin', title: 'Local', text: 'Mantenimiento y mejoras del espacio del pasaje de Aragó.' },
-    ],
-    membersTitle: 'Dos tipos de socias',
-    members: [
-      { title: 'Socia consumidora', text: 'Compra en el súper, participa unas 2-2,5 h al mes y tiene voto en la asamblea.' },
-      { title: 'Socia colaboradora', text: 'Aporta capital al proyecto sin la obligación de hacer turnos.' },
-    ],
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/qui-som.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<QuiSomCopy>(lang, 'qui-som');
 ---
 <BaseLayout title={t('nav.quisom')} description={c.intro}>
   <PageHeader eyebrow={t('nav.quisom')} title={c.title} intro={c.intro} />
@@ -163,7 +72,7 @@ const c = {
     <div class="grid gap-6 md:grid-cols-2">
       {c.members.map((m) => (
         <div class="rounded-lg bg-paper-green p-7">
-          <h3 class="text-lg text-brand-dark">{m.title}</h3>
+          <h3 class="text-lg text-brand-strong">{m.title}</h3>
           <p class="mt-2 text-ink-soft">{m.text}</p>
         </div>
       ))}

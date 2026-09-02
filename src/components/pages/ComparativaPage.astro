@@ -16,78 +16,16 @@ import CTASection from '../sections/CTASection.astro';
 import PriceCompare from '../sections/PriceCompare.astro';
 import { buildCompareView } from '../../lib/prices';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { membership as m } from '../../config/site';
+import { pageCopy } from '../../lib/copy';
+import type { ComparativaCopy } from '../../lib/copy-types';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const compare = buildCompareView(lang);
 
-const c = {
-  ca: {
-    eyebrow: 'Preus',
-    title: 'Compara’ns amb altres supermercats',
-    /* The table's own heading. It used to reuse `title`, so the page printed the
-       same sentence twice, as an h1 and then as an h2 right underneath it. */
-    tableTitle: 'La cistella d’avui, producte a producte',
-    intro:
-      'Els preus d’avui d’una selecció de productes bàsics a FoodCoop BCN i a quatre supermercats de Barcelona. Els recollim automàticament cada dia de les botigues en línia de cadascun.',
-    unavailableTitle: 'Avui no podem mostrar la comparativa',
-    unavailableText:
-      'Les dades de preus són massa antigues o no s’han pogut recollir. Preferim no ensenyar-te números que potser ja no són certs. Torna-ho a provar d’aquí a unes hores.',
-    honestTitle: 'Per què publiquem això',
-    honest: [
-      {
-        t: 'No sempre som els més barats',
-        d: 'I no ho amaguem. En producte fresc i de proximitat acostumem a estar-hi bé; en marques blanques industrials, no hi competim. La taula ho ensenya tot, inclosos els productes on perdem.',
-      },
-      {
-        t: 'Comparem el que és comparable',
-        d: 'Cada fila busca el producte equivalent més proper a cada botiga i, si en té, la versió ecològica. Quan una cosa és eco i l’altra no, ho marquem, perquè no és el mateix producte.',
-      },
-      {
-        t: 'Els preus són els públics de cada botiga',
-        d: 'Es recullen de les botigues en línia de cada establiment per a Barcelona, cada dia, de manera automàtica. No triem el moment ni la selecció segons ens convingui.',
-      },
-      {
-        t: 'Les dues tarifes, totes dues a la vista',
-        d: 'A FoodCoop mostrem el preu de la tarifa sòcia i, a sota, el preu públic que paga qualsevol persona que entri. Són els dos preus tal com surten a la nostra botiga en línia; no en calculem cap.',
-      },
-    ],
-    finalTitle: 'Val la pena fer-se’n sòcia?',
-    finalText: 'Depèn del que compris. Amb la tarifa de sòcia la resposta acostuma a ser que sí, però els números els tens aquí sobre: mira-te’ls tu mateixa.',
-  },
-  es: {
-    eyebrow: 'Precios',
-    title: 'Compáranos con otros supermercados',
-    tableTitle: 'La cesta de hoy, producto a producto',
-    intro:
-      'Los precios de hoy de una selección de productos básicos en FoodCoop BCN y en cuatro supermercados de Barcelona. Los recogemos automáticamente cada día de las tiendas en línea de cada uno.',
-    unavailableTitle: 'Hoy no podemos mostrar la comparativa',
-    unavailableText:
-      'Los datos de precios son demasiado antiguos o no se han podido recoger. Preferimos no enseñarte números que quizá ya no sean ciertos. Vuelve a probar dentro de unas horas.',
-    honestTitle: 'Por qué publicamos esto',
-    honest: [
-      {
-        t: 'No siempre somos los más baratos',
-        d: 'Y no lo escondemos. En producto fresco y de proximidad solemos estar bien; en marcas blancas industriales, no competimos. La tabla lo enseña todo, incluidos los productos donde perdemos.',
-      },
-      {
-        t: 'Comparamos lo que es comparable',
-        d: 'Cada fila busca el producto equivalente más cercano en cada tienda y, si lo tiene, la versión ecológica. Cuando una cosa es eco y la otra no, lo marcamos, porque no es el mismo producto.',
-      },
-      {
-        t: 'Los precios son los públicos de cada tienda',
-        d: 'Se recogen de las tiendas en línea de cada establecimiento para Barcelona, cada día, de forma automática. No elegimos el momento ni la selección según nos convenga.',
-      },
-      {
-        t: 'Las dos tarifas, ambas a la vista',
-        d: 'En FoodCoop mostramos el precio de la tarifa socia y, debajo, el precio público que paga cualquier persona que entre. Son los dos precios tal como salen en nuestra tienda en línea; no calculamos ninguno.',
-      },
-    ],
-    finalTitle: '¿Vale la pena hacerse socia?',
-    finalText: 'Depende de lo que compres. Con la tarifa de socia la respuesta suele ser que sí, pero los números los tienes aquí arriba: míratelos tú misma.',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/comparativa.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<ComparativaCopy>(lang, 'comparativa');
 ---
 <BaseLayout title={c.title} description={c.intro}>
   <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
