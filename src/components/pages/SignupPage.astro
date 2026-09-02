@@ -18,71 +18,18 @@ import Section from '../sections/Section.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { membership as m, org } from '../../config/site';
+import { pageCopy } from '../../lib/copy';
+import type { SignupCopy } from '../../lib/copy-types';
+import { org } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const action = localizePath('/gracies-alta', lang);
 const privacy = localizePath('/legal/privacitat', lang);
 
-const c = {
-  ca: {
-    eyebrow: 'Fes-te sòcia',
-    title: 'Comença l’alta',
-    intro: `Deixa’ns les teves dades i et contactem per tancar l’alta: l’aportació de ${m.capital} € i la sessió de benvinguda de ${m.welcomeSessionMinutes} minuts. No et comprometes a res fins que hi hagis vingut.`,
-    how: 'Com prefereixes participar?',
-    howNote: 'Ho pots canviar més endavant. Si encara no ho tens clar, tria l’última opció.',
-    ways: [
-      { v: 'torn', l: `Un torn al súper (${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes)` },
-      { v: 'cercle', l: 'Un cercle de treball (unes 2,5 h al mes)' },
-      { v: 'quota', l: `Una quota trimestral (des de ${m.quota.reduced} €)` },
-      { v: 'entitat', l: 'Represento una entitat' },
-      { v: 'nosecret', l: 'Encara no ho sé, expliqueu-m’ho' },
-    ],
-    name: 'Nom i cognoms',
-    phone: 'Telèfon (opcional)',
-    comments: 'Alguna cosa que vulguis dir-nos? (opcional)',
-    consent: 'He llegit i accepto la política de privacitat.',
-    consentNote: 'Farem servir les teves dades només per gestionar l’alta. Res més.',
-    submit: 'Envia l’alta',
-    asideTitle: 'Què passa després',
-    steps: [
-      'Rebem les teves dades i et responem en 2-3 dies feiners.',
-      `Et diem com fer l’aportació de ${m.capital} € (transferència o al mateix súper).`,
-      `Tries dia per a la sessió de benvinguda: ${m.welcomeSessionMinutes} minuts, presencial.`,
-      'Estrenes la targeta i comences a comprar amb descompte.',
-    ],
-    prefer: 'Prefereixes parlar-ne abans?',
-  },
-  es: {
-    eyebrow: 'Hazte socia',
-    title: 'Empezar el alta',
-    intro: `Déjanos tus datos y te contactamos para cerrar el alta: la aportación de ${m.capital} € y la sesión de bienvenida de ${m.welcomeSessionMinutes} minutos. No te comprometes a nada hasta que hayas venido.`,
-    how: '¿Cómo prefieres participar?',
-    howNote: 'Lo puedes cambiar más adelante. Si aún no lo tienes claro, elige la última opción.',
-    ways: [
-      { v: 'torn', l: `Un turno en el súper (${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas)` },
-      { v: 'cercle', l: 'Un círculo de trabajo (unas 2,5 h al mes)' },
-      { v: 'quota', l: `Una cuota trimestral (desde ${m.quota.reduced} €)` },
-      { v: 'entitat', l: 'Represento a una entidad' },
-      { v: 'nosecret', l: 'Todavía no lo sé, explicádmelo' },
-    ],
-    name: 'Nombre y apellidos',
-    phone: 'Teléfono (opcional)',
-    comments: '¿Algo que quieras contarnos? (opcional)',
-    consent: 'He leído y acepto la política de privacidad.',
-    consentNote: 'Usaremos tus datos solo para gestionar el alta. Nada más.',
-    submit: 'Enviar el alta',
-    asideTitle: 'Qué pasa después',
-    steps: [
-      'Recibimos tus datos y te respondemos en 2-3 días laborables.',
-      `Te decimos cómo hacer la aportación de ${m.capital} € (transferencia o en el mismo súper).`,
-      `Eliges día para la sesión de bienvenida: ${m.welcomeSessionMinutes} minutos, presencial.`,
-      'Estrenas la tarjeta y empiezas a comprar con descuento.',
-    ],
-    prefer: '¿Prefieres hablarlo antes?',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/signup.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<SignupCopy>(lang, 'signup');
 
 const field =
   'w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40';

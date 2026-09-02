@@ -1,0 +1,15 @@
+'title': 'Aquesta pàgina no hi és'
+'text': 'Pot ser que l’haguem canviat de lloc en estrenar el web nou, o que l’enllaç estigui malament. Aquí tens per on continuar.'
+'links':
+  - 'label': 'Torna a l’inici'
+    'href': '/'
+    'primary': true
+  - 'label': 'Fes-te sòcia'
+    'href': '/fes-te-socia'
+  - 'label': 'Horari i com arribar-hi'
+    'href': '/el-super'
+  - 'label': 'Actualitat'
+    'href': '/actualitat'
+'searchLabel': 'O busca el que necessites'
+'searchCta': 'Cerca al web'
+'visit': 'I si passaves a veure’ns?'

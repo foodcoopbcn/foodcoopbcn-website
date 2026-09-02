@@ -6,44 +6,15 @@ import CTASection from '../sections/CTASection.astro';
 import Button from '../ui/Button.astro';
 import { org } from '../../config/site';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { pageCopy } from '../../lib/copy';
+import type { ProductesCopy } from '../../lib/copy-types';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const c = {
-  ca: {
-    title: 'Productes',
-    heading: 'Més de 1.200 productes triats amb criteri',
-    intro: 'Més de 1.200 referències triades amb cura: prioritzem productores catalanes, l’agroecologia i el granel.',
-    cats: [
-      { icon: 'apple', title: 'Fruita i verdura', text: 'De temporada i de proximitat.' },
-      { icon: 'jar', title: 'Sec i a granel', text: 'Llegums, cereals, pasta, fruita seca.' },
-      { icon: 'milk', title: 'Làctics i ous', text: 'De petites productores.' },
-      { icon: 'bread', title: 'Forn i esmorzars', text: 'Pa, galetes, cafè i infusions.' },
-      { icon: 'bottle', title: 'Begudes', text: 'Vins, cerveses i sucs cooperatius.' },
-      { icon: 'soap', title: 'Cura i llar', text: 'Cosmètica i neteja natural.' },
-    ],
-    noteTitle: 'Els preus, a la vista',
-    note: 'Apliquem el mateix criteri de marge a tot el catàleg i el fem públic: no hi ha productes reclam ni ofertes ganxo. El catàleg complet, amb preus, és a la botiga en línia de les sòcies. I al súper ho tens tot a la lleixa, obert a tothom.',
-    noteCta: 'Com decidim els preus',
-  },
-  es: {
-    title: 'Productos',
-    heading: 'Más de 1.200 productos elegidos con criterio',
-    intro: 'Más de 1.200 referencias elegidas con cuidado: priorizamos productoras catalanas, la agroecología y el granel.',
-    cats: [
-      { icon: 'apple', title: 'Fruta y verdura', text: 'De temporada y de proximidad.' },
-      { icon: 'jar', title: 'Seco y a granel', text: 'Legumbres, cereales, pasta, frutos secos.' },
-      { icon: 'milk', title: 'Lácteos y huevos', text: 'De pequeñas productoras.' },
-      { icon: 'bread', title: 'Horno y desayunos', text: 'Pan, galletas, café e infusiones.' },
-      { icon: 'bottle', title: 'Bebidas', text: 'Vinos, cervezas y zumos cooperativos.' },
-      { icon: 'soap', title: 'Cuidado y hogar', text: 'Cosmética y limpieza natural.' },
-    ],
-    noteTitle: 'Los precios, a la vista',
-    note: 'Aplicamos el mismo criterio de margen a todo el catálogo y lo hacemos público: no hay productos reclamo ni ofertas gancho. El catálogo completo, con precios, está en la tienda online de las socias. Y en el súper lo tienes todo en la estantería, abierto a todo el mundo.',
-    noteCta: 'Cómo decidimos los precios',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/productes.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<ProductesCopy>(lang, 'productes');
 ---
 <BaseLayout title={c.title} description={c.intro}>
   <PageHeader eyebrow={t('nav.productes')} title={c.heading} intro={c.intro} />

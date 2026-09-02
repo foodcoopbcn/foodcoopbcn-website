@@ -1,4 +1,5 @@
 import { config, fields, collection, singleton } from '@keystatic/core';
+import { copySingletons } from './keystatic.copy';
 
 /**
  * Tiny git-based CMS. Content is committed to the repo as Markdown — no database.
@@ -431,6 +432,12 @@ export default config({
     },
     homeCa: homePage('ca', 'Inici (CA)'),
     homeEs: homePage('es', 'Inicio (ES)'),
+    /*
+     * One singleton per interior page per language. This is the copy that used
+     * to be a `const c = { ca: {...}, es: {...} }` object in each component,
+     * which meant a typo needed a developer and a deploy to fix.
+     */
+    ...copySingletons,
   },
   collections: {
     newsCa: collection({

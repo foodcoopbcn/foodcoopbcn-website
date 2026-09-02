@@ -5,6 +5,8 @@ import Section from '../sections/Section.astro';
 import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { pageCopy } from '../../lib/copy';
+import type { ContacteCopy } from '../../lib/copy-types';
 import { org, hours, dayKey, formatRanges, social } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
@@ -36,20 +38,9 @@ const topics =
         'Otros',
       ];
 
-const c = {
-  ca: {
-    topic: 'Sobre què ens escrius?',
-    consent: 'He llegit i accepto la política de privacitat.',
-    consentNote: 'Només farem servir el teu correu per respondre’t.',
-    read: 'Llegeix-la',
-  },
-  es: {
-    topic: '¿Sobre qué nos escribes?',
-    consent: 'He leído y acepto la política de privacidad.',
-    consentNote: 'Solo usaremos tu correo para responderte.',
-    read: 'Léela',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/contacte.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<ContacteCopy>(lang, 'contacte');
 ---
 <BaseLayout title={t('nav.contacte')} description={intro}>
   <PageHeader

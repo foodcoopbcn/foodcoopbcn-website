@@ -15,6 +15,8 @@ import Section from '../sections/Section.astro';
 import CTASection from '../sections/CTASection.astro';
 import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { pageCopy } from '../../lib/copy';
+import type { PremsaCopy } from '../../lib/copy-types';
 import { org } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
@@ -108,40 +110,9 @@ const coverage = [
   },
 ];
 
-const c = {
-  ca: {
-    eyebrow: 'Premsa',
-    title: 'N’han parlat',
-    intro: 'Recull d’articles, guies i fitxes institucionals que parlen de FoodCoop BCN. Si ets periodista i necessites material, escriu-nos.',
-    kinds: { premsa: 'Premsa', institucio: 'Institucional', guia: 'Guies i directoris' },
-    contactTitle: 'Contacte de premsa',
-    contactText: 'Per a entrevistes, dades del projecte o fer fotos al súper, escriu al cercle de comunicació.',
-    materialTitle: 'Material descarregable',
-    materials: [
-      { label: 'Estatuts de la cooperativa (PDF)', href: '/docs/estatuts.pdf' },
-      { label: 'Memòria d’activitats (PDF)', href: '/docs/memoria.pdf' },
-      { label: 'Balanç social (PDF)', href: '/docs/balanc-social.pdf' },
-    ],
-    finalTitle: 'Vols escriure sobre nosaltres?',
-    finalText: 'Et passem dades, context i et posem en contacte amb sòcies que t’ho puguin explicar de primera mà.',
-  },
-  es: {
-    eyebrow: 'Prensa',
-    title: 'Han hablado de nosotras',
-    intro: 'Recopilación de artículos, guías y fichas institucionales que hablan de FoodCoop BCN. Si eres periodista y necesitas material, escríbenos.',
-    kinds: { premsa: 'Prensa', institucio: 'Institucional', guia: 'Guías y directorios' },
-    contactTitle: 'Contacto de prensa',
-    contactText: 'Para entrevistas, datos del proyecto o hacer fotos en el súper, escribe al círculo de comunicación.',
-    materialTitle: 'Material descargable',
-    materials: [
-      { label: 'Estatutos de la cooperativa (PDF)', href: '/docs/estatuts.pdf' },
-      { label: 'Memoria de actividades (PDF)', href: '/docs/memoria.pdf' },
-      { label: 'Balance social (PDF)', href: '/docs/balanc-social.pdf' },
-    ],
-    finalTitle: '¿Quieres escribir sobre nosotras?',
-    finalText: 'Te pasamos datos, contexto y te ponemos en contacto con socias que te lo puedan explicar de primera mano.',
-  },
-}[lang];
+/* Editor-owned: src/content/copy/{ca,es}/premsa.yaml, edited at /keystatic.
+   Figures stay as {tokens} and are substituted by pageCopy. */
+const c = await pageCopy<PremsaCopy>(lang, 'premsa');
 
 const order = ['premsa', 'institucio', 'guia'] as const;
 ---
