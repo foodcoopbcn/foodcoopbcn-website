@@ -59,12 +59,13 @@ jobs:
       - name: Check for broken internal links
         uses: lycheeverse/lychee-action@v2
         with:
-          # --base is what lets root-relative hrefs like /el-super resolve to
-          # dist/el-super/; without it lychee reports every internal link as
-          # unresolvable rather than checking it.
+          # --root-dir (absolute) is what lets root-relative hrefs like
+          # /el-super resolve to dist/el-super/. Without it lychee reports every
+          # internal link as unresolvable and checks nothing; --base is for URLs,
+          # not local directories.
           args: >-
-            --offline --no-progress --base dist --include-fragments
-            'dist/**/*.html'
+            --offline --no-progress --root-dir "$GITHUB_WORKSPACE/dist"
+            --include-fragments 'dist/**/*.html'
           fail: true
 
   deploy:
