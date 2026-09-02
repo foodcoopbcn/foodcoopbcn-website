@@ -36,4 +36,117 @@ const categories = defineCollection({
   }),
 });
 
-export const collections = { news, recipes, categories };
+/*
+ * Composed pages — an ordered list of sections editors add/remove/reorder in Keystatic.
+ *
+ * This schema MIRRORS keystatic.config.ts and must not drift from it. Keystatic's
+ * `fields.blocks` is array(conditional(select, schema)), so each section is stored as
+ * `{ discriminant, value }`; `fields.select` only supports string values, which is why
+ * `columns` arrives as '4' rather than 4.
+ *
+ * Two rules keep a volunteer's edit from breaking the production deploy:
+ *  - `.nullish()`, never `.optional()`, on anything clearable — a cleared field can arrive
+ *    as null, and `.optional()` rejects null.
+ *  - `.catch()` on every enum/number, so a bad value degrades to a default instead of failing
+ *    the build. Required strings are deliberately left uncaught — a missing title should be loud.
+ */
+const optionalText = () => z.string().nullish().transform((v) => v ?? '');
+
+/** Keystatic always writes the CTA object; an empty label is how an editor hides the button. */
+const cta = z
+  .object({ label: z.string().nullish(), href: z.string().nullish() })
+  .nullish()
+  .transform((c) => (c?.label ? { label: c.label, href: c.href || '/' } : undefined));
+
+const block = <T extends string, S extends z.ZodRawShape>(discriminant: T, value: S) =>
+  z.object({ discriminant: z.literal(discriminant), value: z.object(value) });
+
+const heroSection = block('hero', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  highlights: z.array(z.string()).default([]),
+  text: optionalText(),
+  primaryCta: cta,
+  secondaryCta: cta,
+});
+
+const featureGridSection = block('featureGrid', {
+  eyebrow: optionalText(),
+  title: optionalText(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  columns: z
+    .enum(['2', '3', '4'])
+    .catch('3')
+    .transform((v) => Number(v) as 2 | 3 | 4),
+  features: z
+    .array(z.object({ icon: optionalText(), title: z.string(), text: z.string() }))
+    .default([]),
+});
+
+const splitCardsSection = block('splitCards', {
+  eyebrow: optionalText(),
+  title: optionalText(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
+  options: z
+    .array(
+      z.object({
+        badge: optionalText(),
+        title: z.string(),
+        text: z.string(),
+        points: z.array(z.string()).default([]),
+        cta,
+        featured: z.boolean().catch(false),
+      }),
+    )
+    .default([]),
+});
+
+const statsSection = block('stats', {
+  tone: z.enum(['paper', 'soft', 'green', 'ink']).catch('ink'),
+  stats: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+});
+
+/** Post cards are generated from the news/recipes collections — only the heading is editable. */
+const newsTeaserSection = block('newsTeaser', {
+  title: z.string(),
+  limit: z.number().int().min(1).max(6).catch(3),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+});
+
+const ctaSectionSchema = block('ctaSection', {
+  title: z.string(),
+  text: optionalText(),
+  primaryCta: cta,
+  secondaryCta: cta,
+});
+
+/**
+ * Keystatic singletons write to <path>/index.yaml, so files live at
+ * src/content/pages/{ca,es}/home/index.yaml. generateId strips the /index suffix to keep
+ * ids as `<lang>/<page>`, matching the folder-based lang convention used by news/recipes.
+ */
+const pages = defineCollection({
+  loader: glob({
+    pattern: '**/index.yaml',
+    base: './src/content/pages',
+    generateId: ({ entry }) => entry.replace(/\/index\.yaml$/, ''),
+  }),
+  schema: z.object({
+    sections: z
+      .array(
+        z.discriminatedUnion('discriminant', [
+          heroSection,
+          featureGridSection,
+          splitCardsSection,
+          statsSection,
+          newsTeaserSection,
+          ctaSectionSchema,
+        ]),
+      )
+      .default([]),
+  }),
+});
+
+export const collections = { news, recipes, categories, pages };

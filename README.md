@@ -30,6 +30,43 @@ The blog CMS lives at **`/keystatic`** (local mode in dev). For production, swit
 `keystatic.config.ts` `storage` to `{ kind: 'github', repo: {...} }` so editors
 authenticate with GitHub and edits land as commits/PRs.
 
+## The homepage section builder
+
+Non-technical editors compose the homepage at **`/keystatic`** → *Pàgines* → *Inici (CA)* /
+*Inicio (ES)*: add, remove, drag-to-reorder sections, and edit their text. No visual canvas —
+it's a form with drag handles; preview via the Netlify deploy preview on the PR.
+
+- Content: `src/content/pages/{ca,es}/home/index.yaml` — an ordered `sections` array.
+- **Two files define the section types and must not drift**: `keystatic.config.ts` (what
+  editors see) and `src/content.config.ts` (the Zod schema Astro validates).
+  `src/components/pages/HomePage.astro` renders them.
+- Adding a section type = a `fields.blocks` entry + a Zod variant + a `case` in the renderer.
+
+Keystatic's `fields.blocks` is `array(conditional(select, schema))`, so each section is stored
+as `{ discriminant, value }`. Two consequences that will bite otherwise:
+
+- **`fields.select` only supports string values**, so `columns` round-trips as `'4'`, not `4`.
+  The Zod schema coerces it back.
+- **Keystatic omits empty strings on save**, so optional text fields must be `.nullish()`, not
+  `.optional()` — `.optional()` would still pass here, but a cleared field can also arrive as
+  `null`, which `.optional()` rejects and which would fail the production build.
+
+Guardrails, because a volunteer's typo must never break the deploy:
+
+- Every enum/number uses `.catch(default)` — a bad `tone` degrades instead of failing the build.
+  Required strings are deliberately left uncaught: a missing title should be loud.
+- CTA `href`s are a `select` of real routes (no free text → no 404s), stored as canonical `ca`
+  paths and localised by `localizePath()` at render, so an ES page cannot link to a CA route.
+- Icons are a `select` scoped to the real keys in `Icon.astro`.
+- An empty CTA label hides the button — the renderer drops CTAs with no label.
+- CI builds and runs `./scripts/check-no-client-js.sh` before deploying, so a schema-invalid
+  edit or a stray `<script>` fails the PR instead of production.
+
+**CTA labels are editable copy and live in the content files; `t()` still owns nav/footer
+chrome.** So "Fes-te sòcia" exists in both `home/index.yaml` and `src/i18n/ui.ts` — renaming the
+hero button will not rename the nav button. That's intended (different surfaces), but worth
+saying out loud when handing over to editors.
+
 ## Project structure
 
 - `src/styles/tokens.css` — **design tokens**; a redesign mostly means editing this file.
