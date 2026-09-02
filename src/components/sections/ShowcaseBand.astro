@@ -1,0 +1,136 @@
+---
+/*
+ * A full-bleed photographic band.
+ *
+ * Every other section on this site is the same object: a tinted rectangle with a
+ * centred container inside it. That is a fine default and a poor rhythm — after
+ * three of them the eye stops registering the boundaries, and the page reads as
+ * one long column of text regardless of how the tones alternate.
+ *
+ * This is the counterweight. The photograph is the background rather than a
+ * column beside the copy, so the band interrupts the stack instead of
+ * continuing it. Use it sparingly: once on a page, at the point where the
+ * argument needs a breath.
+ *
+ * It is deliberately NOT a second Hero. The hero is the LCP element, loads
+ * eagerly at high priority and carries the page's h1; this loads lazily and
+ * carries an h2, because it always has something above it.
+ */
+import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  /** A slug from src/data/photos.json, or a path under public/. */
+  image: string;
+  imageAlt?: string;
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  /** `left` sets the copy in a column; `centre` stacks it mid-band. */
+  align?: 'left' | 'centre';
+  height?: 'md' | 'lg';
+  id?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  text,
+  image,
+  imageAlt = '',
+  primaryCta,
+  secondaryCta,
+  align = 'left',
+  height = 'md',
+  id,
+} = Astro.props;
+
+const heights = {
+  md: 'min-h-[58svh] md:min-h-[62svh]',
+  lg: 'min-h-[72svh] md:min-h-[78svh]',
+};
+---
+<section
+  id={id}
+  class:list={[
+    'relative isolate flex items-center overflow-hidden bg-brand-dark',
+    heights[height],
+  ]}
+>
+  <Photo
+    src={image}
+    alt={imageAlt}
+    sizes="100vw"
+    loading="lazy"
+    class="absolute inset-0 -z-10 h-full w-full object-cover object-center"
+  />
+
+  <!--
+    The scrim is built from --color-brand-dark rather than a literal rgba(), so
+    retinting the brand cannot leave this band behind. It runs dense under the
+    copy and clears the far side, which keeps the photograph readable as a
+    photograph instead of flattening it to a texture.
+  -->
+  <div class:list={['scrim absolute inset-0 -z-10', align === 'centre' && 'scrim-centre']} aria-hidden="true"></div>
+
+  <div class="container-page relative w-full py-20 md:py-28">
+    <div class:list={['reveal max-w-2xl', align === 'centre' && 'mx-auto text-center']}>
+      {eyebrow && (
+        <p class="mb-4 text-sm font-bold uppercase tracking-widest text-accent">{eyebrow}</p>
+      )}
+
+      <h2 class="text-2xl text-paper">{title}</h2>
+
+      {text && <p class="mt-5 text-lg text-on-ink-base">{text}</p>}
+
+      {(primaryCta || secondaryCta) && (
+        <div
+          class:list={[
+            'mt-8 flex flex-wrap gap-3',
+            align === 'centre' && 'justify-center',
+          ]}
+        >
+          {primaryCta && (
+            <Button href={primaryCta.href} variant="accent" size="lg">{primaryCta.label}</Button>
+          )}
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="secondary" size="lg">{secondaryCta.label}</Button>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrim {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-brand-dark) 90%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-dark) 72%, transparent) 45%,
+      color-mix(in srgb, var(--color-brand-dark) 40%, transparent) 100%
+    );
+  }
+
+  .scrim-centre {
+    background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--color-brand-dark) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-dark) 70%, transparent) 60%,
+      color-mix(in srgb, var(--color-brand-dark) 55%, transparent) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .scrim {
+      background: linear-gradient(
+        95deg,
+        color-mix(in srgb, var(--color-brand-dark) 90%, transparent) 0%,
+        color-mix(in srgb, var(--color-brand-dark) 70%, transparent) 48%,
+        color-mix(in srgb, var(--color-brand-dark) 28%, transparent) 100%
+      );
+    }
+  }
+</style>

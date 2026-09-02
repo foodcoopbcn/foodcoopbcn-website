@@ -39,7 +39,11 @@ const ROUTES = [
 ];
 
 /** Scoped to the real keys in src/components/ui/Icon.astro — an unknown name renders empty. */
-const ICONS = ['leaf', 'heart', 'vote', 'user', 'basket', 'clock', 'pin', 'globe', 'mail', 'phone'];
+const ICONS = [
+  'leaf', 'heart', 'vote', 'user', 'basket', 'clock', 'pin', 'globe', 'mail', 'phone',
+  // Product and document vocabulary — see the second group in Icon.astro.
+  'apple', 'jar', 'milk', 'bread', 'bottle', 'soap', 'doc', 'chart', 'scale',
+];
 
 const opts = (values: string[]) => values.map((v) => ({ label: v, value: v }));
 
@@ -255,6 +259,57 @@ const sectionBlocks = {
       eyebrow: fields.text({ label: 'Etiqueta', description: 'Deixa-ho buit per al text per defecte.' }),
       title: fields.text({ label: 'Títol', description: 'Deixa-ho buit per al text per defecte.' }),
       tone: toneField(['paper', 'soft', 'green'], 'soft'),
+    }),
+  },
+  showcaseBand: {
+    label: 'Banda amb foto a tota amplada',
+    itemLabel: (props: any) => `Banda amb foto — ${props.fields.title.value || 'sense títol'}`,
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      text: fields.text({ label: 'Text', multiline: true }),
+      image: imageField('Fotografia de fons'),
+      imageAlt: fields.text({ label: 'Text alternatiu' }),
+      align: fields.select({
+        label: 'Posició del text',
+        options: [
+          { label: 'A l’esquerra', value: 'left' },
+          { label: 'Centrat', value: 'centre' },
+        ],
+        defaultValue: 'left',
+      }),
+      height: fields.select({
+        label: 'Alçada',
+        options: [
+          { label: 'Mitjana', value: 'md' },
+          { label: 'Alta', value: 'lg' },
+        ],
+        defaultValue: 'md',
+      }),
+      primaryCta: cta('Botó principal'),
+      secondaryCta: cta('Botó secundari'),
+    }),
+  },
+  stickySteps: {
+    label: 'Passos (títol fix)',
+    itemLabel: (props: any) => `Passos — ${props.fields.title.value || 'sense títol'}`,
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      intro: fields.text({ label: 'Introducció', multiline: true }),
+      tone: toneField(['paper', 'soft', 'green'], 'paper'),
+      steps: fields.array(
+        fields.object({
+          icon: fields.select({ label: 'Icona', options: opts(ICONS), defaultValue: 'basket' }),
+          title: fields.text({ label: 'Títol' }),
+          text: fields.text({ label: 'Text', multiline: true }),
+        }),
+        {
+          label: 'Passos',
+          description: 'Els números es generen sols: si els reordenes, es renumeren.',
+          itemLabel: (props) => props.fields.title.value,
+        },
+      ),
     }),
   },
   ctaSection: {

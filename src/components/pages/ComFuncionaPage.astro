@@ -9,6 +9,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
+import StickySteps from '../sections/StickySteps.astro';
 import CTASection from '../sections/CTASection.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
@@ -25,22 +26,20 @@ const c = {
     title: 'Un supermercat que és de qui hi compra',
     intro: 'FoodCoop BCN no té amo ni inversors. Les persones que hi compren en són les propietàries: decidim què venem, a quin preu i què fem amb el que sobra. Això és tot el que cal saber.',
     stepsTitle: 'En tres passos',
+    stepsIntro: 'De menys a més. Pots quedar-te al primer pas tant de temps com vulguis.',
     steps: [
       {
         icon: 'basket',
-        n: '1',
         t: 'Entra i compra',
         d: 'El súper és obert a tothom des del 2023. No cal carnet, ni quota, ni fer-se sòcia de res. Vine, mira, compra el que vulguis a preu públic.',
       },
       {
         icon: 'heart',
-        n: '2',
         t: 'Si t’agrada, fes-te’n sòcia',
         d: `Una aportació de ${m.capital} € al capital social (que és teva i te la tornem si pleges) i passes a tenir un ${m.discount}% de descompte en tot, per sempre.`,
       },
       {
         icon: 'vote',
-        n: '3',
         t: 'Tria com hi participes',
         d: `Un torn de ${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes, un cercle de treball des de casa, o una quota trimestral des de ${m.quota.reduced} €. Les tres valen igual.`,
       },
@@ -88,22 +87,20 @@ const c = {
     title: 'Un supermercado que es de quien compra en él',
     intro: 'FoodCoop BCN no tiene dueño ni inversores. Las personas que compran en él son sus propietarias: decidimos qué vendemos, a qué precio y qué hacemos con lo que sobra. Esto es todo lo que hay que saber.',
     stepsTitle: 'En tres pasos',
+    stepsIntro: 'De menos a más. Puedes quedarte en el primer paso todo el tiempo que quieras.',
     steps: [
       {
         icon: 'basket',
-        n: '1',
         t: 'Entra y compra',
         d: 'El súper está abierto a todo el mundo desde 2023. No hace falta carnet, ni cuota, ni hacerse socia de nada. Ven, mira, compra lo que quieras a precio público.',
       },
       {
         icon: 'heart',
-        n: '2',
         t: 'Si te gusta, hazte socia',
         d: `Una aportación de ${m.capital} € al capital social (que es tuya y te la devolvemos si lo dejas) y pasas a tener un ${m.discount}% de descuento en todo, para siempre.`,
       },
       {
         icon: 'vote',
-        n: '3',
         t: 'Elige cómo participas',
         d: `Un turno de ${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas, un círculo de trabajo desde casa, o una cuota trimestral desde ${m.quota.reduced} €. Las tres valen igual.`,
       },
@@ -158,23 +155,17 @@ const em = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
     <Button href={signup} size="lg" variant="ghost">{t('cta.becomeMember')}</Button>
   </PageHeader>
 
-  <Section>
-    <h2 class="mb-10 text-2xl">{c.stepsTitle}</h2>
-    <ol class="grid gap-6 md:grid-cols-3">
-      {c.steps.map((s) => (
-        <li class="rounded-lg bg-paper-green p-8">
-          <span class="grid h-12 w-12 place-items-center rounded-full bg-brand-ink text-paper">
-            <Icon name={s.icon as any} size={22} />
-          </span>
-          <p class="mt-5 text-sm font-bold uppercase tracking-widest text-brand-dark">
-            {lang === 'ca' ? 'Pas' : 'Paso'} {s.n}
-          </p>
-          <h3 class="mt-1 text-lg text-brand-dark">{s.t}</h3>
-          <p class="mt-2 text-ink-soft">{s.d}</p>
-        </li>
-      ))}
-    </ol>
-  </Section>
+  <!--
+    The three steps were a flat 3-up grid, which reads as three equal options
+    rather than a sequence you move through. StickySteps holds the heading in
+    place while the steps travel past it, so the order is the point. The numerals
+    come from a CSS counter, so `n` is no longer typed into the copy.
+  -->
+  <StickySteps
+    title={c.stepsTitle}
+    intro={c.stepsIntro}
+    steps={c.steps.map((s) => ({ icon: s.icon, title: s.t, text: s.d }))}
+  />
 
   <Section tone="soft">
     <h2 class="mb-10 text-2xl">{c.whyTitle}</h2>
