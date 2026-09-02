@@ -1,7 +1,7 @@
 sections:
   - discriminant: hero
     value:
-      eyebrow: Passatge d’Aragó, 9 · Esquerra de l’Eixample
+      eyebrow: ''
       title: El súper del barri que és de les seves clientes
       highlights:
         - Obert a tothom, també si no ets sòcia
@@ -14,7 +14,7 @@ sections:
       image: /images/assets/home-hero.svg
       imageAlt: Sòcies de FoodCoop BCN davant del supermercat
       primaryCta:
-        label: "Fes-te sòcia: 40 €, retornables"
+        label: Fes-te sòcia
         href: /fes-te-socia
       secondaryCta:
         label: Vine a comprar

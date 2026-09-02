@@ -171,6 +171,16 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
+    key: 'nav.actualitat',
+    path: '/actualitat',
+    children: [
+      { key: 'nav.actualitat.noticies', path: '/actualitat' },
+      { key: 'nav.actualitat.receptes', path: '/actualitat/categoria/receptes' },
+    ],
+  },
+  /* The shop is a destination, not a section: marked external so it opens out. */
+  { key: 'nav.botiga', path: org.shopUrl, external: true },
+  {
     key: 'nav.festesocia',
     path: '/fes-te-socia',
     highlight: true,
@@ -181,16 +191,6 @@ export const mainNav: NavItem[] = [
       { key: 'nav.festesocia.preus', path: '/fes-te-socia/preus' },
     ],
   },
-  {
-    key: 'nav.actualitat',
-    path: '/actualitat',
-    children: [
-      { key: 'nav.actualitat.noticies', path: '/actualitat' },
-      { key: 'nav.actualitat.receptes', path: '/actualitat/categoria/receptes' },
-    ],
-  },
-  /* The shop is a destination, not a section: marked external so it opens out. */
-  { key: 'nav.botiga', path: org.shopUrl, external: true },
 ];
 
 /**

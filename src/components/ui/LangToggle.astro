@@ -1,48 +1,76 @@
 ---
 /*
- * CA / ES switch.
+ * Language switch, built as a segmented control over every locale the site is
+ * built in — it reads `languages` from src/i18n/ui.ts, so adding English makes
+ * a third segment appear with no change here.
  *
- * It resolves the target through `alternateOf`, the same lookup the hreflang tags
- * use, because blog posts have different slugs per language: swapping the /es
- * prefix on an article URL produced a link straight to a 404. When a post has no
- * counterpart the switch degrades to the news index in the other language rather
- * than to a broken page.
+ * The version it replaces showed a single link with the *target* code, which
+ * works for exactly two languages and becomes ambiguous the moment there is a
+ * third: "CA · ES" gave no clue which one you were reading.
+ *
+ * The active locale is rendered as plain text with aria-current, not as a link
+ * to itself. Destinations resolve through `alternateOf`, the same lookup the
+ * hreflang tags use, because blog slugs differ per language and mirroring the
+ * path there produces a 404.
  */
-import { getLang, otherLang, localizePath, stripLocale } from '../../i18n/utils';
+import { getLang, otherLangs, localizePath, stripLocale, allLangs } from '../../i18n/utils';
+import { languages } from '../../i18n/ui';
 import { alternateOf } from '../../lib/posts';
 
 const lang = getLang(Astro.currentLocale);
-const target = otherLang(lang);
 const canonicalPath = stripLocale(Astro.url.pathname);
 
-/*
- * On the 404 page there is nothing to translate, and Astro emits the Catalan one
- * as /404.html rather than /404/, so mirroring the path produces a link that
- * itself 404s. Send people to the other language's home instead.
- */
-const mirrored =
-  canonicalPath.replace(/\/$/, '') === '/404'
-    ? localizePath('/', target)
-    : localizePath(canonicalPath, target);
-const resolved = await alternateOf(Astro.url.pathname, mirrored);
-/* No translated post: the closest honest destination is that language's index. */
-const href = resolved ?? localizePath('/actualitat', target);
+/* Nothing to translate on the 404, and Astro emits the default one as
+   /404.html rather than /404/, so mirroring the path would link to a 404. */
+const isNotFound = canonicalPath.replace(/\/$/, '') === '/404';
 
-const label = {
-  ca: { ca: 'Veure aquesta pàgina en català', es: 'Veure aquesta pàgina en castellà' },
-  es: { ca: 'Ver esta página en catalán', es: 'Ver esta página en castellano' },
-}[lang][target];
+const targets = await Promise.all(
+  otherLangs(lang).map(async (target) => {
+    const mirrored = isNotFound
+      ? localizePath('/', target)
+      : localizePath(canonicalPath, target);
+    const resolved = await alternateOf(Astro.url.pathname, mirrored);
+    return {
+      lang: target,
+      /* No translated post: that language's news index is the closest honest
+         destination, and it is never a broken link. */
+      href: resolved ?? localizePath('/actualitat', target),
+      name: languages[target],
+    };
+  }),
+);
+
+const label = { ca: 'Idioma', es: 'Idioma' }[lang] ?? 'Idioma';
+const seeIn = {
+  ca: (name: string) => `Veure aquesta pàgina en ${name.toLowerCase()}`,
+  es: (name: string) => `Ver esta página en ${name.toLowerCase()}`,
+}[lang];
+
+const segment = 'px-2.5 py-1 text-sm font-bold uppercase leading-none transition-colors';
 ---
-<a
-  href={href}
-  class="inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-sm font-semibold ring-1 ring-ink/25 hover:text-brand-ink hover:ring-brand"
-  hreflang={target}
-  lang={target}
+<div
+  class="inline-flex items-center overflow-hidden rounded-md ring-1 ring-ink/20"
+  role="group"
   aria-label={label}
 >
-  <!-- Both codes are shown so the control reads as a pair; the one you would
-       switch TO is the emphasised half. -->
-  <span aria-hidden="true" class="text-muted">{lang.toUpperCase()}</span>
-  <span aria-hidden="true" class="text-muted">·</span>
-  <span>{target.toUpperCase()}</span>
-</a>
+  {
+    allLangs.map((code) => {
+      const target = targets.find((t) => t.lang === code);
+      return target ? (
+        <a
+          href={target.href}
+          hreflang={code}
+          lang={code}
+          title={seeIn(target.name)}
+          class:list={[segment, 'text-ink-soft hover:bg-paper-soft hover:text-brand-ink']}
+        >
+          {code}
+        </a>
+      ) : (
+        <span aria-current="true" class:list={[segment, 'bg-brand-ink text-paper']}>
+          {code}
+        </span>
+      );
+    })
+  }
+</div>
