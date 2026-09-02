@@ -1,49 +1,111 @@
 ---
+/*
+ * FAQs — grouped, and deliberately long.
+ *
+ * These answer the questions people actually ask at the till, and they are the
+ * single highest-value page for both featured snippets and AI answer engines:
+ * each answer states the fact in its first sentence, then elaborates. The
+ * FAQPage JSON-LD below is generated from the same array, so it can never drift.
+ *
+ * Figures come from `membership` (src/config/site.ts) — never retype them.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Accordion from '../ui/Accordion.astro';
-import { getLang, useTranslations } from '../../i18n/utils';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { getEntry } from 'astro:content';
+import { membership as m, org, hours, dayKey, formatRanges } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const faqs = {
-  ca: [
-    { q: 'Cal ser sòcia per comprar?', a: 'No. El súper està obert a tothom. Les sòcies, però, gaudeixen del 12% de descompte, la botiga en línia i el vot a l’assemblea.' },
-    { q: 'Quant costa fer-se sòcia?', a: 'Es fa una aportació de capital social retornable. És una inversió que et fa copropietària del projecte, no una despesa.' },
-    { q: 'Quantes hores he de dedicar-hi?', a: 'Les sòcies consumidores dediquen unes 2-2,5 hores al mes a un torn per fer funcionar el súper.' },
-    { q: 'Què és el capital social?', a: 'És l’aportació econòmica que fa cada sòcia a la cooperativa. Si un dia te’n dones de baixa, se’t retorna.' },
-    { q: 'Com funciona la botiga en línia?', a: 'És exclusiva per a sòcies. Pots fer la comanda en línia i rebre-la a casa amb repartiment en bici de la cooperativa Mensakas.' },
-    { q: 'Una entitat pot fer-se sòcia?', a: 'Sí. Cooperatives, associacions i empreses de l’economia social poden formar-ne part mitjançant acords d’intercooperació.' },
-  ],
-  es: [
-    { q: '¿Hay que ser socia para comprar?', a: 'No. El súper está abierto a todo el mundo. Las socias, eso sí, disfrutan del 12% de descuento, la tienda online y el voto en la asamblea.' },
-    { q: '¿Cuánto cuesta hacerse socia?', a: 'Se hace una aportación de capital social retornable. Es una inversión que te hace copropietaria del proyecto, no un gasto.' },
-    { q: '¿Cuántas horas tengo que dedicar?', a: 'Las socias consumidoras dedican unas 2-2,5 horas al mes a un turno para hacer funcionar el súper.' },
-    { q: '¿Qué es el capital social?', a: 'Es la aportación económica que hace cada socia a la cooperativa. Si algún día te das de baja, se te devuelve.' },
-    { q: '¿Cómo funciona la tienda online?', a: 'Es exclusiva para socias. Puedes hacer el pedido online y recibirlo en casa con reparto en bici de la cooperativa Mensakas.' },
-    { q: '¿Una entidad puede hacerse socia?', a: 'Sí. Cooperativas, asociaciones y empresas de la economía social pueden formar parte mediante acuerdos de intercooperación.' },
-  ],
-}[lang];
+/* Rendered into the "what are your hours?" answer so it can never contradict the footer. */
+const hoursLine = hours
+  .map((h) => `${t(dayKey(h.day))} ${formatRanges(h.ranges, lang === 'ca' ? 'tancat' : 'cerrado')}`)
+  .join('; ');
 
+/*
+ * Content lives in src/content/faqs/{ca,es}/index.yaml so editors can change it
+ * without touching code. Figures stay as tokens there and are substituted here,
+ * so a number can never be typed into an answer and then drift from config.
+ */
+const entry = await getEntry('faqs', lang);
+if (!entry) throw new Error(`Missing src/content/faqs/${lang}/index.yaml`);
+
+const tokens: Record<string, string | number> = {
+  capital: m.capital,
+  discount: m.discount,
+  entityCapital: m.entityCapital,
+  entityStaffDiscount: m.entityStaffDiscount,
+  shiftHours: m.shiftHours,
+  shiftCycleWeeks: m.shiftCycleWeeks,
+  flexibleChanges: m.flexibleChanges,
+  quotaStandard: m.quota.standard,
+  quotaReduced: m.quota.reduced,
+  deliveryThreshold: m.delivery.threshold,
+  deliveryCheap: String(m.delivery.cheap).replace('.', ','),
+  deliveryStandard: m.delivery.standard,
+  street: org.address.street,
+  postalCode: org.address.postalCode,
+  hours: hoursLine,
+};
+const fill = (text: string) =>
+  text.replace(/\{(\w+)\}/g, (whole, key) => String(tokens[key] ?? whole));
+
+const groups = entry.data.groups.map((g) => ({
+  title: g.title,
+  faqs: g.faqs.map((f) => ({ q: fill(f.q), a: fill(f.a) })),
+}));
+
+const all = groups.flatMap((g) => g.faqs);
+
+/* Same array, so the rich result can never disagree with the visible page. */
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
+  mainEntity: all.map((f) => ({
     '@type': 'Question',
     name: f.q,
     acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 };
+
+/* Slug for a per-question anchor, so an answer can be linked to directly. */
+const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60);
 ---
-<BaseLayout title={t('nav.faqs')} jsonLd={jsonLd}>
-  <PageHeader eyebrow={t('nav.faqs')} title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'} />
+<BaseLayout
+  title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'}
+  description={lang === 'ca'
+    ? `Quant costa fer-se sòcia, quantes hores demana un torn, si cal ser sòcia per comprar-hi i la resta de dubtes freqüents sobre FoodCoop BCN.`
+    : `Cuánto cuesta hacerse socia, cuántas horas pide un turno, si hay que ser socia para comprar y el resto de dudas frecuentes sobre FoodCoop BCN.`}
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    eyebrow={t('nav.faqs')}
+    title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'}
+    intro={lang === 'ca'
+      ? 'Les que ens arriben més sovint, agrupades. Si no hi trobes la teva, escriu-nos.'
+      : 'Las que nos llegan más a menudo, agrupadas. Si no encuentras la tuya, escríbenos.'}
+  />
+
   <Section width="narrow">
-    {faqs.map((f, i) => (
-      <Accordion question={f.q} open={i === 0}>
-        <p>{f.a}</p>
-      </Accordion>
+    {groups.map((g, gi) => (
+      <div class="mb-12 last:mb-0">
+        <h2 class="mb-4 text-xl">{g.title}</h2>
+        {g.faqs.map((f, i) => (
+          <Accordion question={f.q} id={slug(f.q)} open={gi === 0 && i === 0}>
+            <p>{f.a}</p>
+          </Accordion>
+        ))}
+      </div>
     ))}
   </Section>
 </BaseLayout>

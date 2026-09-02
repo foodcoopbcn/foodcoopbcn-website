@@ -20,15 +20,23 @@ rendering), bilingual (Catalan / Spanish), and easy to redesign or extend.
 ## Develop
 
 ```bash
-npm install
-npm run dev          # http://localhost:4321
-npm run build        # astro build + pagefind index → dist/
-npm run preview
+pnpm install
+pnpm run dev          # http://localhost:4321
+pnpm run build        # astro build + pagefind index → dist/
+pnpm run check        # astro check (types)
+pnpm run preview
 ```
 
-The blog CMS lives at **`/keystatic`** (local mode in dev). For production, switch
-`keystatic.config.ts` `storage` to `{ kind: 'github', repo: {...} }` so editors
-authenticate with GitHub and edits land as commits/PRs.
+**pnpm, not npm.** The repo carried both lockfiles for a while: CI installed with
+`npm ci` from `package-lock.json` while Netlify auto-detected `pnpm-lock.yaml`,
+so the two could resolve different trees. `package-lock.json` is gone.
+
+The CMS lives at **`/keystatic`** and is **local-only**: `astro.config.mjs` omits
+the integration unless `ENABLE_KEYSTATIC=true`, and CI never sets it, so there is
+no `/keystatic` route in production. Editors run `pnpm run cms` and preview their
+change on the pull request's Netlify deploy. (The `github` storage branch in
+`keystatic.config.ts` is therefore unreachable today; wire the route into the
+production build before relying on it.)
 
 ## The homepage section builder
 
@@ -88,6 +96,22 @@ saying out loud when handing over to editors.
   `src/config/site.ts`.
 - **A new section type**: add a component under `src/components/sections/`.
 
+## Price comparison ("Compara FoodCoop BCN amb altres supermercats")
+
+The homepage `priceCompare` block renders `src/data/prices.json`, which
+`scripts/fetch-prices.mjs` regenerates every morning from `.github/workflows/prices.yml`
+(cron + `workflow_dispatch`; the run commits the file and dispatches `deploy.yml`).
+
+- Basket and pinned product ids per shop: `scripts/lib/basket.mjs`. Find a product to pin
+  with `node scripts/find.mjs <store> "<query>"`.
+- Shop adapters: `scripts/stores/*.mjs` (FoodCoop's Odoo shop, Mercadona, Bonpreu/Esclat,
+  Ametller Origen, Condis). Carrefour is not included: its site blocks plain HTTP clients.
+- `npm run prices` collects and writes; `npm run prices -- --dry-run` only reports;
+  `npm run prices:test` runs the offline parser tests (also part of CI).
+- A shop that cannot be read keeps its last good value; `src/lib/prices.ts` hides any figure
+  older than 7 days and the whole block if FoodCoop's own prices are stale. Bonpreu sits
+  behind AWS WAF and may challenge a runner — check the workflow's step summary.
+
 ## Content migration from WordPress
 
 ```bash
@@ -104,6 +128,35 @@ Review categories/slugs, then add 301 redirects from old permalinks in `netlify.
   (`org.memberLoginUrl` in `src/config/site.ts`); the site links out to them.
 - Content pages ship **no external JS**; only `/keystatic` (admin) and the search
   page load JS. Verify with “disable JavaScript” — navigation and content still work.
-- Replace placeholders before launch: `public/favicon.svg`, `public/og-default.svg`,
-  `src/components/layout/Logo.astro`, the blog cover images, and the PDFs under
-  `public/docs/` (estatuts, memòria).
+- **Still placeholders**: the illustrated SVGs under `public/images/assets/`.
+  `docs/brief-fotografia.md` says exactly which photographs replace them and how
+  they should look. The favicon, touch icon and Open Graph card are generated
+  from the real badge by `scripts/gen-social-assets.mjs`, and the PDFs under
+  `public/docs/` are the real ones.
+
+## Live data
+
+Two figures come from systems rather than from a page, so they cannot go stale
+unnoticed:
+
+- **Member count** — `scripts/fetch-members.mjs` reads it from the co-op's Odoo
+  and caches it in `src/data/members.json`. Needs `ODOO_URL`, `ODOO_DB`,
+  `ODOO_USER` and `ODOO_API_KEY`; without them the cached value stands. Refreshed
+  on every deploy and weekly by `.github/workflows/refresh-members.yml`.
+  The homepage stats band writes `{socies}` and the renderer substitutes it.
+- **Prices** — `scripts/fetch-prices.mjs` collects the daily basket into
+  `src/data/prices.json`. For FoodCoop it reads **both** of the shop's price
+  lists (public and member) rather than deriving the member price: the member
+  tariff is a real list, roughly 8.5% under the public one, not the advertised
+  12%, and deriving it published figures the co-op does not charge.
+
+## Guardrails
+
+`./scripts/check-no-client-js.sh` runs in CI after the build. It scans every
+page, counts executable inline scripts (JSON-LD is data and does not count),
+caps the inline weight per page, and rejects any external script. The one
+documented exception is `/actualitat/cerca`, which loads Pagefind's UI.
+
+CI also runs `astro check` and a link check over `dist/`, which is the class of
+bug that shipped here twice: hreflang tags pointing at slugs that do not exist,
+and download buttons wired to missing PDFs.

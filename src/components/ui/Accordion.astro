@@ -1,22 +1,37 @@
 ---
+/*
+ * Disclosure built on <details> — no JavaScript, works with the keyboard for free.
+ *
+ * The question is wrapped in a real heading so FAQ pages contribute to the
+ * document outline (search engines and screen-reader "list headings" both use
+ * it); `id` puts an anchor on the item so a single answer can be linked to.
+ */
 import Icon from './Icon.astro';
 interface Props {
   question: string;
   open?: boolean;
+  /** Anchor target, so /faqs#quant-costa-fer-se-socia works. */
+  id?: string;
+  /** Heading level for the question. Match the surrounding outline. */
+  as?: 'h2' | 'h3' | 'h4';
 }
-const { question, open = false } = Astro.props;
+const { question, open = false, id, as: Heading = 'h3' } = Astro.props;
 ---
-<details
-  class="group border-b border-line py-1 [&[open]>summary_svg]:rotate-180"
-  open={open}
->
+<details id={id} class="group border-b border-line py-1 [&[open]>summary_svg]:rotate-180" open={open}>
   <summary
-    class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-display text-lg font-bold marker:hidden"
+    class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 marker:hidden"
   >
-    {question}
-    <Icon name="chevron" class="shrink-0 text-brand transition-transform duration-200" />
+    <Heading class="font-display text-lg font-bold">{question}</Heading>
+    <Icon name="chevron" class="shrink-0 text-brand-ink transition-transform duration-200" />
   </summary>
   <div class="prose-content pb-5 text-ink-soft">
     <slot />
   </div>
 </details>
+
+<style>
+  /* Safari still paints its own disclosure triangle without this. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

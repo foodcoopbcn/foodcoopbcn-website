@@ -1,10 +1,76 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/open-sans';
+
+/*
+ * Open Sans, self-hosted, Latin only.
+ *
+ * The package's own entry point ships ten unicode subsets — Cyrillic, Greek,
+ * Hebrew, Vietnamese, maths symbols — about 290 KB of font files and ten
+ * @font-face blocks in the render-blocking stylesheet. A Catalan and Spanish
+ * site needs two of them: `latin` and `latin-ext` (the latter carries ç, l·l and
+ * the accented capitals). That is 83 KB, and only the first is normally fetched.
+ *
+ * Files are copied into public/fonts/ so they can be preloaded and cached
+ * immutably; refresh them with `npm run fonts`.
+ */
+/*
+ * Archivo, the display face.
+ *
+ * Headings were set in Open Sans 800, a humanist sans with open apertures and
+ * soft terminals — at 68px it reads soft and generic. The co-op's own printed
+ * identity uses a tight, heavy grotesque; Archivo is the closest open equivalent
+ * and is variable, so one file covers every weight.
+ *
+ * To go back to a single-typeface site, point --font-display at --font-body in
+ * tokens.css. Nothing else needs to change.
+ */
+@font-face {
+  font-family: 'Archivo Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 800;
+  src: url('/fonts/archivo-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Archivo Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 800;
+  src: url('/fonts/archivo-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Open Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url('/fonts/open-sans-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Open Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 800;
+  src: url('/fonts/open-sans-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+    U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
 @import './tokens.css';
 
 /* Map design tokens into Tailwind's theme so utilities (bg-brand, text-ink, etc.) are generated. */
 @theme inline {
   --color-brand: var(--color-brand);
+  --color-brand-ink: var(--color-brand-ink);
+  --color-brand-hover: var(--color-brand-hover);
   --color-brand-dark: var(--color-brand-dark);
   --color-brand-olive: var(--color-brand-olive);
   --color-accent: var(--color-accent);
@@ -16,9 +82,42 @@
   --color-paper: var(--color-paper);
   --color-paper-soft: var(--color-paper-soft);
   --color-paper-green: var(--color-paper-green);
+  --color-on-ink-strong: var(--on-ink-strong);
+  --color-on-ink-base: var(--on-ink-base);
+  --color-on-ink-soft: var(--on-ink-soft);
 
   --font-body: var(--font-body);
   --font-display: var(--font-display);
+
+  /*
+   * Sizes AND their leading.
+   *
+   * tokens.css redefined --text-* but not the --text-*--line-height companions,
+   * so every `text-2xl`/`text-3xl` utility took Tailwind's default leading —
+   * 1.2 to 1.33 — and silently overrode the `line-height: 1.08` set on h1-h4 in
+   * the base layer. Every heading on the site was set at body leading. Declaring
+   * both halves here is what makes that base rule effective again.
+   *
+   * 4xl and 5xl are declared too: Tailwind's defaults are 2.25rem and 3rem,
+   * which are SMALLER than our --text-3xl, so the scale used to run backwards
+   * past 3xl for anyone who reached for them.
+   */
+  --text-xs: var(--text-xs);
+  --text-xs--line-height: 1.5;
+  --text-sm: var(--text-sm);
+  --text-sm--line-height: 1.55;
+  --text-base: var(--text-base);
+  --text-base--line-height: 1.65;
+  --text-lg: var(--text-lg);
+  --text-lg--line-height: 1.35;
+  --text-xl: var(--text-xl);
+  --text-xl--line-height: 1.15;
+  --text-2xl: var(--text-2xl);
+  --text-2xl--line-height: 1.04;
+  --text-3xl: var(--text-3xl);
+  --text-3xl--line-height: 0.98;
+  --text-4xl: var(--text-4xl);
+  --text-4xl--line-height: 0.95;
 
   --radius-sm: var(--radius-sm);
   --radius-DEFAULT: var(--radius);
@@ -29,7 +128,30 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+  }
+
+  /* Smooth scrolling is a comfort for most and a vestibular trigger for some. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Honour the OS setting everywhere, including utility-class transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* The main nav bar is pinned, so an anchored heading would otherwise land underneath it. */
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
 
   body {
@@ -47,8 +169,7 @@
   h4 {
     font-family: var(--font-display);
     font-weight: var(--font-weight-display);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
+    letter-spacing: var(--tracking-display);
     text-wrap: balance;
   }
 
@@ -88,6 +209,20 @@
     padding-block: var(--space-section);
   }
 
+  /*
+   * Every section had identical padding above and below, so two adjacent ones
+   * left 14rem of gap and nothing on the page read as belonging together.
+   * `.section-tight` closes that gap for siblings that are one idea.
+   *
+   * It stays symmetric on purpose. An earlier version zeroed the top padding
+   * when following another section, which pushed the content flush against the
+   * top edge of its own background band — the cards looked jammed in, with all
+   * the breathing room below them and none above.
+   */
+  .section-tight {
+    padding-block: var(--space-section-tight);
+  }
+
   /* Long-form content (legal pages, blog posts) */
   .prose-content {
     max-width: var(--container-narrow);
@@ -104,7 +239,7 @@
     margin-top: 1.4em;
   }
   .prose-content a {
-    color: var(--color-brand);
+    color: var(--color-brand-ink);
     text-decoration: underline;
     text-underline-offset: 3px;
   }

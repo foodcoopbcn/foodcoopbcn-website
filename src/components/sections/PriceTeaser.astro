@@ -1,0 +1,113 @@
+---
+/*
+ * Homepage teaser for the price comparison, which lives in full at /comparativa.
+ *
+ * It shows a single product — the one where the member price beats the other
+ * shops by the widest margin today, chosen from live data by pickHighlight().
+ * That is a favourable example by construction, so the copy says so plainly and
+ * sends people to the whole table rather than letting one number stand in for it.
+ *
+ * If nothing is cheaper today, pickHighlight() returns null and this renders
+ * nothing at all. Better a missing section than a claim that has quietly expired.
+ */
+import Section from './Section.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { pickHighlight } from '../../lib/prices';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  tone?: 'paper' | 'soft' | 'green';
+}
+const { eyebrow, title, tone = 'soft' } = Astro.props;
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const h = pickHighlight(lang);
+
+const c = {
+  ca: {
+    eyebrow: 'Preus',
+    title: 'Quant costa comprar-hi?',
+    example: 'Un exemple d’avui',
+    ours: 'Preu sòcia a FoodCoop',
+    publicIs: 'Preu públic',
+    cheaper: 'més barat',
+    than: 'que a',
+    caveat:
+      'Aquest és un dels productes on sortim més ben parats. N’hi ha d’altres on no. Ho publiquem tot: mira la comparativa sencera i jutja-la tu.',
+    cta: 'Veure la comparativa sencera',
+    secondary: 'Preus i quotes',
+    updated: 'Dades del',
+  },
+  es: {
+    eyebrow: 'Precios',
+    title: '¿Cuánto cuesta comprar aquí?',
+    example: 'Un ejemplo de hoy',
+    ours: 'Precio socia en FoodCoop',
+    publicIs: 'Precio público',
+    cheaper: 'más barato',
+    than: 'que en',
+    caveat:
+      'Este es uno de los productos donde salimos mejor parados. Hay otros donde no. Lo publicamos todo: mira la comparativa entera y júzgala tú.',
+    cta: 'Ver la comparativa entera',
+    secondary: 'Precios y cuotas',
+    updated: 'Datos del',
+  },
+}[lang];
+---
+{
+  h && (
+    <Section tone={tone}>
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-ink">{eyebrow || c.eyebrow}</p>
+        <h2 class="text-2xl">{title || c.title}</h2>
+
+        <div class="mt-8 rounded-2xl bg-paper p-8 shadow-sm ring-1 ring-line">
+          <p class="text-sm font-bold uppercase tracking-wide text-muted">{c.example}</p>
+          <h3 class="mt-2 text-xl">
+            {h.label}
+            <span class="block text-base font-normal text-ink-soft">{h.basis}</span>
+          </h3>
+
+          {/* No items-end here: the default stretch makes both boxes the same
+              height, and top-aligning the contents puts the two prices on the
+              same line even though only the member card carries a third line. */}
+          <div class="mt-6 grid gap-6 sm:grid-cols-2">
+            <div class="flex flex-col rounded-lg bg-paper-green p-5">
+              <p class="text-xs font-bold uppercase tracking-wide text-brand-dark">{c.ours}</p>
+              <p class="mt-1 font-display text-3xl font-extrabold tabular-nums text-brand-dark">
+                {h.memberPrice}
+              </p>
+              <p class="mt-1 text-xs text-ink-soft">
+                {`${c.publicIs}: `}<span class="tabular-nums">{h.publicPrice}</span>
+              </p>
+            </div>
+            <div class="flex flex-col rounded-lg p-5 ring-1 ring-line">
+              <p class="text-xs font-bold uppercase tracking-wide text-muted">{h.rivalLabel}</p>
+              <p class="mt-1 font-display text-3xl font-extrabold tabular-nums text-ink-soft">
+                {h.rivalPrice}
+              </p>
+            </div>
+          </div>
+
+          <p class="mt-6 inline-flex items-center gap-2 rounded-pill bg-brand-ink px-4 py-2 font-bold text-paper">
+            <Icon name="check" size={16} />
+            {`${h.savingPct}% ${c.cheaper} ${c.than} ${h.rivalLabel}`}
+          </p>
+        </div>
+
+        {/* Says out loud that this is a cherry-picked example. */}
+        <p class="mx-auto mt-6 max-w-2xl text-sm text-ink-soft">{c.caveat}</p>
+        <p class="mt-2 text-xs text-muted">{`${c.updated} ${h.updatedAt}`}</p>
+
+        <div class="mt-7 flex flex-wrap justify-center gap-3">
+          <Button href={localizePath('/comparativa', lang)} variant="primary">{c.cta}</Button>
+          <Button href={localizePath('/fes-te-socia/preus', lang)} variant="ghost">{c.secondary}</Button>
+        </div>
+      </div>
+    </Section>
+  )
+}

@@ -35,14 +35,24 @@ const data: Record<Slug, Record<'ca' | 'es', { title: string; intro?: string; do
     es: { title: 'Política de privacidad', body: `<p>Responsable del tratamiento: ${org.legalName} (${org.email}).</p><h2>Qué datos tratamos</h2><p>Tratamos los datos que nos facilitas a través de los formularios de contacto y de suscripción al boletín, con la finalidad de responder tus consultas y enviarte novedades si lo has consentido.</p><h2>Tus derechos</h2><p>Puedes ejercer los derechos de acceso, rectificación, supresión y oposición escribiendo a ${org.email}.</p>` },
   },
   cookies: {
-    ca: { title: 'Política de cookies', body: '<p>Fem servir galetes tècniques necessàries per al funcionament del web i, amb el teu consentiment, galetes d’estadística anònima per millorar-lo. No fem servir galetes publicitàries ni de seguiment de tercers.</p><p>Pots gestionar el teu consentiment des del banner de galetes o configurant el teu navegador.</p>' },
-    es: { title: 'Política de cookies', body: '<p>Usamos cookies técnicas necesarias para el funcionamiento de la web y, con tu consentimiento, cookies de estadística anónima para mejorarla. No usamos cookies publicitarias ni de seguimiento de terceros.</p><p>Puedes gestionar tu consentimiento desde el banner de cookies o configurando tu navegador.</p>' },
+    ca: { title: 'Política de cookies', body: '<p><strong>Aquest web no fa servir galetes.</strong> Ni de publicitat, ni de seguiment, ni d’estadística. Tampoc carrega res de tercers: ni tipografies externes, ni mapes incrustats, ni botons de xarxes socials que et puguin seguir.</p><p>Per això no et mostrem cap finestra de consentiment: no hi ha res a consentir. Si algun dia hi afegim una eina de mesura d’audiència, ho explicarem aquí i, si aquella eina fes servir galetes, et demanarem permís abans.</p><p>El teu navegador pot desar preferències tècniques del propi web (per exemple l’idioma) al teu dispositiu. Aquesta informació no surt del teu ordinador i no ens arriba.</p>' },
+    es: { title: 'Política de cookies', body: '<p><strong>Esta web no usa cookies.</strong> Ni de publicidad, ni de seguimiento, ni de estadística. Tampoco carga nada de terceros: ni tipografías externas, ni mapas incrustados, ni botones de redes sociales que te puedan seguir.</p><p>Por eso no te mostramos ninguna ventana de consentimiento: no hay nada que consentir. Si algún día añadimos una herramienta de medición de audiencia, lo explicaremos aquí y, si esa herramienta usara cookies, te pediríamos permiso antes.</p><p>Tu navegador puede guardar preferencias técnicas de la propia web (por ejemplo el idioma) en tu dispositivo. Esa información no sale de tu ordenador y no nos llega.</p>' },
   },
 };
 
 const d = data[slug][lang];
+
+/*
+ * noindex was applied to all six pages alike. But the statutes, the annual report
+ * and the social audit are not boilerplate: they are the evidence behind every
+ * transparency claim the site makes, and exactly the kind of page that earns
+ * trust in search and gets cited by AI assistants. Only the true boilerplate —
+ * legal notice, privacy, cookies — stays out of the index.
+ */
+const boilerplate: Slug[] = ['avis-legal', 'privacitat', 'cookies'];
+const noindex = boilerplate.includes(slug);
 ---
-<BaseLayout title={d.title} description={d.intro} noindex={true}>
+<BaseLayout title={d.title} description={d.intro} noindex={noindex}>
   <PageHeader title={d.title} intro={d.intro} tone="soft" />
   <Section width="narrow">
     <div class="prose-content text-ink" set:html={d.body} />

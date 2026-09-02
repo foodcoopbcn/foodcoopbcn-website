@@ -27,7 +27,7 @@ const labels = await getCategoryLabels(lang);
 <BaseLayout title={title} description={description}>
   <section class="bg-paper-green">
     <div class="container-page py-12 md:py-16">
-      <p class="text-sm font-bold uppercase tracking-widest text-brand">{t('blog.title')}</p>
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-ink">{t('blog.title')}</p>
       <h1 class="mt-2 text-3xl text-ink">{title}</h1>
     </div>
   </section>
@@ -42,6 +42,7 @@ const labels = await getCategoryLabels(lang);
             date={entry.data.date}
             excerpt={entry.data.excerpt}
             cover={entry.data.cover}
+          coverAlt={entry.data.coverAlt}
             category={labels[entry.data.category] ?? entry.data.category}
           />
         ))}

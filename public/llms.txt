@@ -1,0 +1,42 @@
+# FoodCoop BCN
+
+> El primer supermercat cooperatiu, participatiu i sense ànim de lucre de
+> Barcelona. Obert a tothom des del 2023. Passatge d'Aragó, 9, 08011 Barcelona
+> (l'Antiga Esquerra de l'Eixample). Raó social: Foodcoop Barcelona SCCL.
+> Va obrir el 8 de febrer de 2022.
+
+Les persones que hi compren en són les propietàries: decideixen en assemblea què
+es ven, a quin preu i què es fa amb els excedents. No hi ha inversors ni
+beneficis privats.
+
+## Dades bàsiques
+
+- Adreça: Passatge d'Aragó, 9, 08011 Barcelona
+- Telèfon: 930 32 24 96 · Correu: hola@foodcoopbcn.cat
+- Obert a qualsevol persona, sense ser sòcia, a preu públic
+- Aportació per fer-se sòcia: 40 €, una sola vegada i retornable
+- Descompte de sòcia: 12 %
+- Participació: un torn de 2-2,5 h cada 4 setmanes, un cercle de treball, o una
+  quota trimestral des de 10 €. Les tres opcions donen els mateixos avantatges
+- Més de 1.200 productes, agroecològics i de proximitat, molts a granel
+- Repartiment a domicili en bici (Mensakas, Les Mercedes) en 24-48 h
+
+## Pàgines
+
+- [Inici](https://foodcoopbcn.cat/)
+- [Com funciona](https://foodcoopbcn.cat/com-funciona): el model cooperatiu en llenguatge planer
+- [El súper](https://foodcoopbcn.cat/el-super): horari, ubicació i com arribar-hi
+- [Productes](https://foodcoopbcn.cat/productes): què s'hi ven i amb quins criteris
+- [Comparativa de preus](https://foodcoopbcn.cat/comparativa): preus diaris contra quatre supermercats
+- [Fes-te sòcia](https://foodcoopbcn.cat/fes-te-socia): condicions i com donar-se d'alta
+- [Torns i cercles](https://foodcoopbcn.cat/fes-te-socia/torns): què implica participar-hi
+- [Preus i quotes](https://foodcoopbcn.cat/fes-te-socia/preus): tots els imports
+- [Qui som](https://foodcoopbcn.cat/qui-som): història, valors i organització
+- [Transparència](https://foodcoopbcn.cat/qui-som/transparencia): estatuts, memòria i balanç social
+- [Preguntes freqüents](https://foodcoopbcn.cat/faqs)
+- [Premsa](https://foodcoopbcn.cat/premsa)
+- [Contacte](https://foodcoopbcn.cat/contacte)
+
+## En castellà
+
+Tot el web existeix també en castellà sota https://foodcoopbcn.cat/es/

@@ -1,0 +1,216 @@
+---
+/*
+ * Press coverage — restored from the old site's /actualitat-premsa/.
+ *
+ * Every link here was checked live before being added. It doubles as the site's
+ * only third-party credibility signal: a stranger deciding whether a cooperative
+ * supermarket is a real, functioning thing reads this, not our own claims.
+ *
+ * Adding an item: check the URL responds, then add it below. Keep it in
+ * reverse-chronological order where the date is known.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { org } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+/** outlet = who published it; kind separates journalism from institutional listings. */
+const coverage = [
+  {
+    outlet: 'Ajuntament de Barcelona',
+    kind: 'institucio',
+    title: {
+      ca: 'Segon aniversari de Foodcoop BCN, el primer supermercat cooperatiu i participatiu de Barcelona',
+      es: 'Segundo aniversario de Foodcoop BCN, el primer supermercado cooperativo y participativo de Barcelona',
+    },
+    href: 'https://ajuntament.barcelona.cat/economia-social-solidaria/ca/actualitat/noticies/segon-aniversari-de-foodcoop-bcn-el-primer-supermercat-cooperatiu-i-participatiu-de-barcelona-1376781',
+    year: '2024',
+  },
+  {
+    outlet: 'El Crític',
+    kind: 'premsa',
+    title: {
+      ca: 'Descompte del 5% al supermercat cooperatiu Foodcoop BCN',
+      es: 'Descuento del 5% en el supermercado cooperativo Foodcoop BCN',
+    },
+    href: 'https://www.elcritic.cat/mes/la-comunitat-de-critic/descompte-del-5-al-supermercat-cooperatiu-foodcoop-bcn-192795',
+    year: '2024',
+  },
+  {
+    outlet: 'Tot Barcelona',
+    kind: 'premsa',
+    title: {
+      ca: 'Obre el primer supermercat cooperatiu de Barcelona',
+      es: 'Abre el primer supermercado cooperativo de Barcelona',
+    },
+    href: 'https://www.totbarcelona.cat/societat/obre-primer-supermercat-cooperatiu-barcelona-170917/',
+    year: '2022',
+  },
+  {
+    outlet: 'Barcelona Secreta',
+    kind: 'premsa',
+    title: {
+      ca: 'Food Coop BCN, el primer supermercat cooperatiu de la ciutat',
+      es: 'Food Coop BCN, el primer supermercado cooperativo de la ciudad',
+    },
+    href: 'https://barcelonasecreta.com/food-coop-bcn-el-primer-supermercado-cooperativo-de-la-ciudad/',
+    year: '2022',
+  },
+  {
+    outlet: 'Sóc Petit',
+    kind: 'premsa',
+    title: {
+      ca: 'Food Coop BCN, el primer supermercat cooperatiu i participatiu de Barcelona',
+      es: 'Food Coop BCN, el primer supermercado cooperativo y participativo de Barcelona',
+    },
+    href: 'https://www.socpetit.cat/food-coop-bcn-el-primer-supermercat-cooperatiu-i-participatiu-de-barcelona/',
+    year: '2022',
+  },
+  {
+    outlet: 'betevé',
+    kind: 'premsa',
+    title: {
+      ca: 'El primer supermercat cooperatiu de Barcelona obrirà a finals d’any',
+      es: 'El primer supermercado cooperativo de Barcelona abrirá a finales de año',
+    },
+    href: 'https://beteve.cat/economia/presentacio-supermercat-cooperatiu-barcelona/',
+    year: '2021',
+  },
+  {
+    outlet: 'Time Out Barcelona',
+    kind: 'guia',
+    title: { ca: 'Food Coop BCN', es: 'Food Coop BCN' },
+    href: 'https://www.timeout.cat/barcelona/ca/botigues/food-cop-bcn',
+  },
+  {
+    outlet: 'Diputació de Barcelona',
+    kind: 'institucio',
+    title: { ca: 'Cooperativa Food Coop BCN', es: 'Cooperativa Food Coop BCN' },
+    href: 'https://www.diba.cat/ca/web/comerc/-/cooperativa-food-coop-bcn',
+  },
+  {
+    outlet: 'Barcelona + Sostenible',
+    kind: 'institucio',
+    title: { ca: 'Foodcoop BCN al mapa Barcelona + Sostenible', es: 'Foodcoop BCN en el mapa Barcelona + Sostenible' },
+    href: 'https://www.bcnsostenible.cat/web/punt/foodcoop-bnc',
+  },
+  {
+    outlet: 'Viquipèdia',
+    kind: 'guia',
+    title: { ca: 'Foodcoop BCN', es: 'Foodcoop BCN' },
+    href: 'https://ca.wikipedia.org/wiki/Foodcoop_BCN',
+  },
+];
+
+const c = {
+  ca: {
+    eyebrow: 'Premsa',
+    title: 'N’han parlat',
+    intro: 'Recull d’articles, guies i fitxes institucionals que parlen de FoodCoop BCN. Si ets periodista i necessites material, escriu-nos.',
+    kinds: { premsa: 'Premsa', institucio: 'Institucional', guia: 'Guies i directoris' },
+    contactTitle: 'Contacte de premsa',
+    contactText: 'Per a entrevistes, dades del projecte o fer fotos al súper, escriu al cercle de comunicació.',
+    materialTitle: 'Material descarregable',
+    materials: [
+      { label: 'Estatuts de la cooperativa (PDF)', href: '/docs/estatuts.pdf' },
+      { label: 'Memòria d’activitats (PDF)', href: '/docs/memoria.pdf' },
+      { label: 'Balanç social (PDF)', href: '/docs/balanc-social.pdf' },
+    ],
+    finalTitle: 'Vols escriure sobre nosaltres?',
+    finalText: 'Et passem dades, context i et posem en contacte amb sòcies que t’ho puguin explicar de primera mà.',
+  },
+  es: {
+    eyebrow: 'Prensa',
+    title: 'Han hablado de nosotras',
+    intro: 'Recopilación de artículos, guías y fichas institucionales que hablan de FoodCoop BCN. Si eres periodista y necesitas material, escríbenos.',
+    kinds: { premsa: 'Prensa', institucio: 'Institucional', guia: 'Guías y directorios' },
+    contactTitle: 'Contacto de prensa',
+    contactText: 'Para entrevistas, datos del proyecto o hacer fotos en el súper, escribe al círculo de comunicación.',
+    materialTitle: 'Material descargable',
+    materials: [
+      { label: 'Estatutos de la cooperativa (PDF)', href: '/docs/estatuts.pdf' },
+      { label: 'Memoria de actividades (PDF)', href: '/docs/memoria.pdf' },
+      { label: 'Balance social (PDF)', href: '/docs/balanc-social.pdf' },
+    ],
+    finalTitle: '¿Quieres escribir sobre nosotras?',
+    finalText: 'Te pasamos datos, contexto y te ponemos en contacto con socias que te lo puedan explicar de primera mano.',
+  },
+}[lang];
+
+const order = ['premsa', 'institucio', 'guia'] as const;
+---
+<BaseLayout title={c.eyebrow} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
+
+  <Section>
+    <div class="grid gap-12 lg:grid-cols-[1.6fr_1fr]">
+      <div>
+        {order.map((kind) => (
+          <div class="mb-10 last:mb-0">
+            <h2 class="mb-4 text-xl">{c.kinds[kind]}</h2>
+            <ul class="divide-y divide-line border-y border-line">
+              {coverage
+                .filter((i) => i.kind === kind)
+                .map((i) => (
+                  <li>
+                    <a
+                      href={i.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="group flex items-baseline justify-between gap-4 py-4 hover:text-brand-ink"
+                    >
+                      <span>
+                        <span class="block text-sm font-bold uppercase tracking-wide text-brand-ink">
+                          {i.outlet}{i.year ? ` · ${i.year}` : ''}
+                        </span>
+                        <span class="mt-1 block">{i.title[lang]}</span>
+                      </span>
+                      <Icon name="arrow" size={18} class="mt-1 shrink-0 -rotate-45 opacity-40 group-hover:opacity-100" />
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <aside class="space-y-8 self-start">
+        <div class="rounded-2xl bg-paper-green p-8">
+          <h2 class="flex items-center gap-2 font-display text-lg font-bold text-brand-dark">
+            <Icon name="mail" size={18} /> {c.contactTitle}
+          </h2>
+          <p class="mt-3 text-sm text-ink-soft">{c.contactText}</p>
+          <p class="mt-4 text-sm">
+            <a href={`mailto:${org.email}`} class="font-semibold text-brand-ink underline">{org.email}</a>
+          </p>
+        </div>
+
+        <div class="rounded-2xl p-8 ring-1 ring-line">
+          <h2 class="font-display text-lg font-bold">{c.materialTitle}</h2>
+          <ul class="mt-4 space-y-2 text-sm">
+            {c.materials.map((mt) => (
+              <li>
+                <a href={mt.href} class="inline-flex items-center gap-2 text-brand-ink underline">
+                  <Icon name="arrow" size={16} class="rotate-90" /> {mt.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </Section>
+
+  <CTASection
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+    secondaryCta={{ label: t('nav.quisom'), href: localizePath('/qui-som', lang) }}
+  />
+</BaseLayout>

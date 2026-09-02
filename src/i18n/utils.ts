@@ -1,4 +1,7 @@
-import { ui, defaultLang, type Lang, type UiKey } from './ui';
+import { ui, languages, defaultLang, type Lang, type UiKey } from './ui';
+
+/** Every locale the site is built in, default first. */
+export const allLangs = Object.keys(languages) as Lang[];
 
 /** Resolve the active language from Astro.currentLocale (falls back to default). */
 export function getLang(currentLocale: string | undefined): Lang {
@@ -14,22 +17,40 @@ export function useTranslations(lang: Lang) {
 }
 
 /**
- * Build a locale-aware path. ca (default) has no prefix; es is prefixed with /es.
- * localizePath('/qui-som', 'es') -> '/es/qui-som'
+ * Build a locale-aware path. The default locale has no prefix; every other one is
+ * prefixed with its code.
+ *
+ *   localizePath('/qui-som', 'es') -> '/es/qui-som'
+ *
+ * Derived from `languages` rather than hard-coded, so adding a third locale is a
+ * one-line change there plus the entry in astro.config.mjs.
  */
 export function localizePath(path: string, lang: Lang): string {
   const clean = '/' + path.replace(/^\/+/, '');
   if (lang === defaultLang) return clean === '/' ? '/' : clean;
-  return clean === '/' ? '/es/' : `/es${clean}`;
+  return clean === '/' ? `/${lang}/` : `/${lang}${clean}`;
 }
+
+/** Matches any non-default locale prefix, e.g. /es or /en. */
+const localePrefix = new RegExp(
+  `^/(${allLangs.filter((l) => l !== defaultLang).join('|')})(?=/|$)`,
+);
 
 /** Strip the locale prefix from a pathname to get the canonical route key. */
 export function stripLocale(pathname: string): string {
-  const p = pathname.replace(/^\/es(?=\/|$)/, '');
+  const p = pathname.replace(localePrefix, '');
   return p === '' ? '/' : p;
 }
 
-/** The opposite locale, for the language toggle. */
+/** Every locale except this one, in declared order. */
+export function otherLangs(lang: Lang): Lang[] {
+  return allLangs.filter((l) => l !== lang);
+}
+
+/**
+ * The next locale, for anything that still assumes exactly two.
+ * Prefer `otherLangs` in new code — this returns only the first alternative.
+ */
 export function otherLang(lang: Lang): Lang {
-  return lang === 'ca' ? 'es' : 'ca';
+  return otherLangs(lang)[0] ?? lang;
 }

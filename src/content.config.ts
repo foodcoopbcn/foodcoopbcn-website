@@ -6,8 +6,20 @@ const postBase = z.object({
   date: z.coerce.date(),
   excerpt: z.string(),
   cover: z.string().optional(),
+  /** Alt text for the cover. Without it a decorative alt="" is used. */
+  coverAlt: z.string().optional(),
   category: z.string(),
   draft: z.boolean().default(false),
+  /*
+   * Ties the Catalan and Spanish versions of one post together.
+   *
+   * Slugs differ per language ("millores-2025" / "mejoras-2025"), so the site
+   * cannot guess the counterpart by string-swapping the locale prefix — doing
+   * that produced hreflang links and a language switcher that 404'd on every
+   * article. Give both files the same key and the pair resolves properly; leave
+   * it out and the post is simply treated as untranslated.
+   */
+  translationKey: z.string().optional(),
 });
 
 /** News posts. Files live in src/content/news/{ca,es}/*.md (lang from folder). */
@@ -23,6 +35,36 @@ const recipes = defineCollection({
     servings: z.string().optional(),
     time: z.string().optional(),
     ingredients: z.array(z.string()).default([]),
+  }),
+});
+
+/**
+ * FAQs, one file per language.
+ *
+ * They were 25 question/answer pairs per locale hard-coded in a TypeScript object
+ * inside FaqsPage.astro — the content that changes most often, and the content
+ * search engines and AI assistants quote most, locked behind a code change.
+ *
+ * Answers may contain `{capital}`, `{discount}`, `{hours}` and friends; the page
+ * substitutes them from src/config/site.ts at render, so an editor never retypes
+ * a figure that could then drift.
+ */
+const faqs = defineCollection({
+  loader: glob({
+    pattern: '**/*.{yaml,yml}',
+    base: './src/content/faqs',
+    /* ca/index.yaml -> "ca", matching how the pages collection is addressed. */
+    generateId: ({ entry }) => entry.replace(/\/index\.ya?ml$/, ''),
+  }),
+  schema: z.object({
+    groups: z
+      .array(
+        z.object({
+          title: z.string(),
+          faqs: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+        }),
+      )
+      .default([]),
   }),
 });
 
@@ -66,6 +108,8 @@ const heroSection = block('hero', {
   title: z.string(),
   highlights: z.array(z.string()).default([]),
   text: optionalText(),
+  image: optionalText(),
+  imageAlt: optionalText(),
   primaryCta: cta,
   secondaryCta: cta,
 });
@@ -104,8 +148,67 @@ const splitCardsSection = block('splitCards', {
 });
 
 const statsSection = block('stats', {
+  title: optionalText(),
   tone: z.enum(['paper', 'soft', 'green', 'ink']).catch('ink'),
-  stats: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+  stats: z
+    .array(z.object({ value: z.string(), label: z.string(), icon: optionalText() }))
+    .default([]),
+  cta,
+});
+
+const infoStripSection = block('infoStrip', {
+  addressLabel: optionalText(),
+});
+
+const mediaSplitSection = block('mediaSplit', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  text: optionalText(),
+  image: optionalText(),
+  imageAlt: optionalText(),
+  reverse: z.boolean().catch(false),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  cta,
+});
+
+const comparisonTableSection = block('comparisonTable', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
+  columns: z
+    .array(z.object({ label: z.string(), featured: z.boolean().catch(false) }))
+    .default([]),
+  rows: z
+    .array(z.object({ label: z.string(), values: z.array(z.string()).default([]) }))
+    .default([]),
+  primaryCta: cta,
+  secondaryCta: cta,
+});
+
+const photoCardsSection = block('photoCards', {
+  eyebrow: optionalText(),
+  title: optionalText(),
+  intro: optionalText(),
+  layout: z.enum(['tile', 'card']).catch('card'),
+  columns: z
+    .enum(['2', '3', '4', '6'])
+    .catch('3')
+    .transform((v) => Number(v) as 2 | 3 | 4 | 6),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  items: z
+    .array(
+      z.object({
+        image: optionalText(),
+        imageAlt: optionalText(),
+        title: z.string(),
+        text: optionalText(),
+        cta,
+      }),
+    )
+    .default([]),
+  /** Pulls this block up against the one above it, for two grids that are one idea. */
+  tight: z.boolean().catch(false),
 });
 
 /** Post cards are generated from the news/recipes collections — only the heading is editable. */
@@ -113,6 +216,18 @@ const newsTeaserSection = block('newsTeaser', {
   title: z.string(),
   limit: z.number().int().min(1).max(6).catch(3),
   tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+});
+
+/*
+ * A teaser for the price comparison, which lives on its own page at /comparativa.
+ * The full five-column table used to sit on the homepage; it is ~70 KB of HTML and
+ * far more detail than a first visit needs. Only the heading is editable — the
+ * product shown is chosen from live data by pickHighlight().
+ */
+const priceTeaserSection = block('priceTeaser', {
+  eyebrow: optionalText(),
+  title: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
 });
 
 const ctaSectionSchema = block('ctaSection', {
@@ -141,7 +256,12 @@ const pages = defineCollection({
           featureGridSection,
           splitCardsSection,
           statsSection,
+          infoStripSection,
+          mediaSplitSection,
+          comparisonTableSection,
+          photoCardsSection,
           newsTeaserSection,
+          priceTeaserSection,
           ctaSectionSchema,
         ]),
       )
@@ -149,4 +269,5 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { news, recipes, categories, pages };
+export const collections = {
+  faqs, news, recipes, categories, pages };

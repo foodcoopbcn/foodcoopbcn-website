@@ -1,94 +1,222 @@
 sections:
   - discriminant: hero
     value:
-      eyebrow: Supermercado cooperativo de Barcelona
-      title: Buenos productos para ti y para la tierra
+      eyebrow: ''
+      title: El súper del barrio que es de sus clientas
       highlights:
-        - Decisiones y márgenes transparentes
-        - Productos sostenibles y de proximidad
-        - Buen ambiente y comunidad
+        - Abierto a todo el mundo, también si no eres socia
+        - 12% de descuento para las socias
+        - Agroecológico, de proximidad y a granel
       text: >-
-        El primer supermercado cooperativo, participativo y sin ánimo de lucro de
-        Barcelona. Productos buenos, sanos y a un precio justo, sin márgenes para
-        nadie.
+        Somos el primer supermercado cooperativo, participativo y sin ánimo de
+        lucro de Barcelona. Más de 1.200 productos a un precio justo, porque
+        aquí nadie se lleva el margen.
+      image: hero-entrada
+      imageAlt: Socias de FoodCoop BCN entrando y saliendo del súper en el pasaje de Aragó
       primaryCta:
         label: Hazte socia
         href: /fes-te-socia
       secondaryCta:
-        label: Visita el súper
+        label: Ven a comprar
         href: /el-super
+  - discriminant: infoStrip
+    value:
+      addressLabel: ''
   - discriminant: featureGrid
     value:
-      eyebrow: ''
-      title: ¿Por qué FoodCoop?
-      intro: Un modelo justo para las personas, los productores y el planeta.
+      eyebrow: Cómo funciona
+      title: Un súper cooperativo, en tres pasos
+      intro: >-
+        No hace falta decidir nada hoy. Este es todo el compromiso que hay, de
+        menos a más.
       tone: paper
-      columns: '4'
+      columns: '3'
       features:
-        - icon: leaf
-          title: Sostenible y de proximidad
+        - icon: basket
+          title: 1. Entra y compra
           text: >-
-            Priorizamos productores locales catalanes y productos agroecológicos, a
-            granel y con poco envase.
-        - icon: vote
-          title: Transparencia total
-          text: >-
-            Decisiones tomadas en asamblea y márgenes visibles. Sin ánimo de lucro:
-            ningún beneficio privado.
+            El súper está abierto a todo el mundo desde 2023. Sin carnet, sin
+            cuota y sin hacerte socia de nada. Ven, mira y compra a precio
+            público.
         - icon: heart
-          title: Sano y asequible
+          title: 2. Si te gusta, hazte socia
           text: >-
-            Más de 1.200 productos de calidad a un precio justo, para que comer bien
-            sea para todo el mundo.
-        - icon: user
-          title: Comunidad
+            Una aportación de 40 € que es tuya y te devolvemos si lo dejas. A
+            cambio, un 12% de descuento en todo, para siempre.
+        - icon: vote
+          title: 3. Elige cómo participas
           text: >-
-            Un proyecto hecho entre todas: las socias dedican unas horas al mes y
-            deciden su rumbo.
-  - discriminant: splitCards
+            Un turno de 2,5 h cada 4 semanas, un círculo de trabajo desde casa o
+            una cuota trimestral desde 10 €. Las tres valen igual.
+  - discriminant: mediaSplit
+    value:
+      eyebrow: Quiénes somos
+      title: Un súper que es de quien compra en él
+      text: >-
+        Somos una cooperativa de consumo sin ánimo de lucro. Las socias son sus
+        propietarias, le dedican unas horas al mes y deciden su rumbo en
+        asamblea. Ni inversores, ni beneficios privados: solo buena comida a un
+        precio justo.
+      image: socies-davantal
+      imageAlt: Dos socias con el delantal de FoodCoop, con setas y verdura recién recibidas
+      reverse: false
+      tone: paper
+      cta:
+        label: Conoce el proyecto
+        href: /qui-som
+  - discriminant: stats
+    value:
+      title: ''
+      tone: ink
+      stats:
+        - value: '{socies}'
+          label: Socias
+          icon: user
+        - value: '2022'
+          label: Abierto desde
+          icon: clock
+        - value: 1.200+
+          label: Productos
+          icon: basket
+        - value: 12%
+          label: Descuento socias
+          icon: heart
+      cta:
+        label: ''
+        href: /
+  - discriminant: comparisonTable
     value:
       eyebrow: FoodCoop BCN
       title: Dos maneras de comprar
-      intro: Puedes comprar sin ser socia, o formar parte y disfrutar de todas las ventajas.
+      intro: >-
+        Puedes comprar sin ser socia, o formar parte del proyecto y disfrutar de
+        todas las ventajas.
       tone: soft
-      options:
-        - badge: Abierto a todos
-          title: Compra pública
-          text: >-
-            No hace falta ser socia para comprar en el súper. Ven y descubre
-            nuestros productos.
-          points:
-            - Sin cuota ni compromiso
-            - Productos a granel y de proximidad
-            - Horario amplio de lunes a sábado
+      columns:
+        - label: Público general
           featured: false
-          cta:
-            label: Visita el súper
-            href: /el-super
-        - badge: Recomendado
-          title: Hazte socia
-          text: Forma parte del proyecto, decide y ahorra.
-          points:
-            - 12% de descuento en todos los productos
-            - Acceso a la tienda online con reparto en bici
-            - Voto en las asambleas
-            - Participación de unas 2-2,5 h al mes
+        - label: Socias
           featured: true
+      rows:
+        - label: Comprar en la tienda
+          values:
+            - 'yes'
+            - 'yes'
+        - label: Precio general
+          values:
+            - 'yes'
+            - 'yes'
+        - label: Precio socia (12% dto.)
+          values:
+            - 'no'
+            - 'yes'
+        - label: Tienda online
+          values:
+            - 'no'
+            - 'yes'
+        - label: Participación en el proyecto
+          values:
+            - 'no'
+            - 'yes'
+      primaryCta:
+        label: Quiero comprar
+        href: 'https://botiga.foodcoopbcn.cat/'
+      secondaryCta:
+        label: Hazte socia
+        href: /fes-te-socia
+  - discriminant: priceTeaser
+    value:
+      eyebrow: ''
+      title: ''
+      tone: soft
+  - discriminant: photoCards
+    value:
+      title: Qué puedes comprar en Foodcoop
+      intro: >-
+        Más de 1.200 productos con criterios de proximidad, sostenibilidad y
+        precio justo.
+      layout: tile
+      columns: '6'
+      tone: paper
+      items:
+        - image: fam-fruita-verdura
+          imageAlt: Ciruelas de temporada en el mostrador de fruta
+          title: Fruta y verdura
           cta:
-            label: Hazte socia
-            href: /fes-te-socia
+            label: Ver fruta y verdura
+            href: /productes
+        - image: fam-frescos
+          imageAlt: Nevera de producto fresco del súper
+          title: Frescos
+          cta:
+            label: Ver frescos
+            href: /productes
+        - image: fam-rebost
+          imageAlt: Estantes de conservas y tarros de cristal
+          title: Despensa
+          cta:
+            label: Ver despensa
+            href: /productes
+        - image: fam-granel
+          imageAlt: Tarros y dispensadores de la zona de granel
+          title: Granel
+          cta:
+            label: Ver granel
+            href: /productes
+        - image: fam-llar-cura
+          imageAlt: Pasillo de droguería y productos de limpieza
+          title: Hogar y cuidado
+          cta:
+            label: Ver hogar y cuidado
+            href: /productes
+        - image: fam-forn
+          imageAlt: Panes de masa madre en un estante
+          title: Horno y pan
+          cta:
+            label: Ver horno y pan
+            href: /productes
+  - discriminant: photoCards
+    value:
+      layout: card
+      columns: '3'
+      tight: true
+      tone: soft
+      items:
+        - image: card-cistella
+          imageAlt: Socia eligiendo verdura con la cesta amarilla del súper
+          title: Cesta básica
+          text: 55 productos esenciales a precios accesibles.
+          cta:
+            label: Ver cesta
+            href: /comparativa
+        - image: card-proveidors
+          imageAlt: Reparto de pan con bici de carga en la puerta del súper
+          title: Proveedores
+          text: Conoce a las personas y proyectos que hay detrás de los productos.
+          cta:
+            label: Ver proveedores
+            href: /productes
+        - image: card-criteris
+          imageAlt: Mapa ilustrado del origen de los productos que vendemos
+          title: Los criterios
+          text: Así decidimos qué vendemos y con qué principios trabajamos.
+          cta:
+            label: Ver criterios
+            href: /productes
   - discriminant: stats
     value:
-      tone: ink
+      title: El 72% de la fruta y la verdura es de Cataluña, y el 94% de los lácteos también.
+      tone: green
       stats:
-        - value: '1.200+'
-          label: Productos
-        - value: '12%'
-          label: Descuento socias
-        - value: '100%'
-          label: Sin ánimo de lucro
-        - value: '0'
-          label: Márgenes privados
+        - value: 72%
+          label: Fruta y verdura de Cataluña
+          icon: leaf
+        - value: 94%
+          label: Lácteos de Cataluña
+          icon: heart
+      cta:
+        label: Saber más
+        href: /productes
   - discriminant: newsTeaser
     value:
       title: Actualidad del proyecto
@@ -96,13 +224,13 @@ sections:
       limit: 3
   - discriminant: ctaSection
     value:
-      title: ¿Quieres formar parte del proyecto?
+      title: Empieza por venir un día
       text: >-
-        Hazte socia y ayúdanos a construir otra manera de alimentarnos en
-        Barcelona.
+        No hace falta decidir nada hoy. Ven, curiosea y pregúntale a quien esté
+        en caja. Si te gusta, ya hablaremos.
       primaryCta:
-        label: Hazte socia
-        href: /fes-te-socia
+        label: Horario y cómo llegar
+        href: /el-super
       secondaryCta:
-        label: Contacto
-        href: /contacte
+        label: Hacerme socia
+        href: /fes-te-socia

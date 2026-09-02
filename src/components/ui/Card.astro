@@ -4,7 +4,7 @@ interface Props {
   class?: string;
 }
 const { href, class: className = '' } = Astro.props;
-const cls = `group block bg-paper rounded-lg shadow-sm ring-1 ring-line overflow-hidden transition-shadow hover:shadow ${className}`;
+const cls = `group block bg-paper rounded-lg shadow-sm ring-1 ring-line overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow ${className}`;
 const Tag = href ? 'a' : 'div';
 ---
 <Tag class={cls} href={href}><slot /></Tag>

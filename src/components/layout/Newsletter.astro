@@ -1,38 +1,87 @@
 ---
-import { getLang, useTranslations } from '../../i18n/utils';
+/*
+ * Newsletter signup.
+ *
+ * Wired to Netlify Forms (name="newsletter"). ⚠️ Netlify Forms only collects
+ * submissions in a dashboard: no confirmation mail, no list, no unsubscribe — so
+ * this is not yet a compliant mailing list. The co-op runs Odoo, which has a
+ * mailing-list endpoint; point `action` at it and drop the data-netlify
+ * attributes once the URL is confirmed.
+ *
+ * The consent checkbox is required either way: this collects personal data.
+ */
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+
+interface Props {
+  /** Which background it sits on — the footer band is light, dark stays available. */
+  tone?: 'light' | 'dark';
+}
+const { tone = 'light' } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    honeypot: 'No omplir',
+    promise: 'Un correu al mes: producte de temporada, receptes i què decidim a l’assemblea. Res més.',
+    consent: 'Accepto rebre el butlletí i la',
+    privacy: 'política de privacitat',
+  },
+  es: {
+    honeypot: 'No rellenar',
+    promise: 'Un correo al mes: producto de temporada, recetas y qué decidimos en la asamblea. Nada más.',
+    consent: 'Acepto recibir el boletín y la',
+    privacy: 'política de privacidad',
+  },
+}[lang];
+
+const field =
+  tone === 'dark'
+    ? 'bg-paper/10 text-paper placeholder:text-paper/60 focus:bg-paper/20 focus:ring-2 focus:ring-accent'
+    : 'bg-paper text-ink ring-1 ring-line placeholder:text-muted focus:ring-2 focus:ring-brand';
+const muted = tone === 'dark' ? 'text-paper/70' : 'text-ink-soft';
 ---
-<!--
-  Newsletter signup. Wired to Netlify Forms by default (name="newsletter").
-  To use a provider instead (Mailchimp/MailerLite/Acumbamail), swap `action`
-  for the provider's POST endpoint and remove the data-netlify attributes.
--->
 <form
+  id="newsletter"
   name="newsletter"
   method="POST"
   data-netlify="true"
   netlify-honeypot="bot-field"
-  action={`${lang === 'ca' ? '' : '/es'}/gracies-newsletter`}
-  class="flex flex-col gap-2 sm:flex-row"
+  action={localizePath('/gracies-newsletter', lang)}
+  class="space-y-2"
 >
   <input type="hidden" name="form-name" value="newsletter" />
   <p class="hidden">
-    <label>No omplir: <input name="bot-field" /></label>
+    <label>{c.honeypot}: <input name="bot-field" /></label>
   </p>
-  <label for="nl-email" class="sr-only">{t('form.email')}</label>
-  <input
-    id="nl-email"
-    type="email"
-    name="email"
-    required
-    placeholder={t('footer.emailPlaceholder')}
-    class="min-w-0 flex-1 rounded-pill bg-paper/10 px-4 py-2.5 text-sm text-paper placeholder:text-paper/40 focus:bg-paper/15 focus:outline-none"
-  />
-  <button
-    type="submit"
-    class="rounded-pill bg-accent px-5 py-2.5 text-sm font-bold text-ink hover:brightness-105"
-  >
-    {t('footer.newsletterCta')}
-  </button>
+
+  <!-- Say what arrives and how often before asking for the address. -->
+  <p class:list={['text-sm', muted]}>{c.promise}</p>
+
+  <div class="flex flex-col gap-2 sm:flex-row">
+    <label for="nl-email" class="sr-only">{t('form.email')}</label>
+    <input
+      id="nl-email"
+      type="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder={t('footer.emailPlaceholder')}
+      class:list={['min-w-0 flex-1 rounded-pill px-4 py-2.5 text-sm focus:outline-none', field]}
+    />
+    <button
+      type="submit"
+      class="rounded-pill bg-brand px-5 py-2.5 text-sm font-bold text-paper hover:brightness-110"
+    >
+      {t('footer.newsletterCta')}
+    </button>
+  </div>
+
+  <label class:list={['flex items-start gap-2 text-xs', muted]}>
+    <input type="checkbox" name="consent" required class="mt-0.5" />
+    <span>
+      {c.consent}{' '}
+      <a href={localizePath('/legal/privacitat', lang)} class="underline">{c.privacy}</a>.
+    </span>
+  </label>
 </form>

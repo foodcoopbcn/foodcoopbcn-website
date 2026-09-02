@@ -9,9 +9,11 @@ interface Props {
   date: Date;
   excerpt: string;
   cover?: string;
+  /** Editor-supplied alt text; empty means the image is decorative. */
+  coverAlt?: string;
   category?: string;
 }
-const { href, title, date, excerpt, cover, category } = Astro.props;
+const { href, title, date, excerpt, cover, coverAlt, category } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
   day: 'numeric',
@@ -22,7 +24,7 @@ const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
 <Card href={href} class="h-full">
   <div class="aspect-[16/10] overflow-hidden bg-paper-soft">
     {cover ? (
-      <img src={cover} alt="" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+      <img src={cover} alt={coverAlt ?? ''} width="640" height="360" loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
     ) : (
       <div class="h-full w-full bg-gradient-to-br from-paper-green to-accent/40"></div>
     )}
@@ -32,7 +34,7 @@ const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
       {category && <Tag>{category}</Tag>}
       <time class="text-xs text-muted">{dateStr}</time>
     </div>
-    <h3 class="text-lg leading-snug group-hover:text-brand">{title}</h3>
+    <h3 class="text-lg leading-snug group-hover:text-brand-ink">{title}</h3>
     <p class="mt-2 line-clamp-3 text-sm text-ink-soft">{excerpt}</p>
   </div>
 </Card>

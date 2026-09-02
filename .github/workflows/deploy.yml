@@ -22,19 +22,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      - name: Test the price collector (offline fixtures)
+        run: pnpm run prices:test
+
+      # Pulls the live member count from Odoo. A no-op without the secrets, and it
+      # never fails the build: a stale cached number beats a broken deploy.
+      - name: Refresh the member count from Odoo
+        run: node scripts/fetch-members.mjs
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_USER: ${{ secrets.ODOO_USER }}
+          ODOO_API_KEY: ${{ secrets.ODOO_API_KEY }}
 
       - name: Build (as production does — ENABLE_KEYSTATIC deliberately unset)
-        run: npm run build
+        run: pnpm run build
+
+      - name: Type-check
+        run: pnpm run check
 
       - name: Check the build ships no client-side JS
         run: ./scripts/check-no-client-js.sh
+
+      # Catches the class of bug that shipped here twice: hreflang tags pointing
+      # at slugs that do not exist, and download buttons wired to missing PDFs.
+      - name: Check for broken internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # --root-dir (absolute) is what lets root-relative hrefs like
+          # /el-super resolve to dist/el-super/. Without it lychee reports every
+          # internal link as unresolvable and checks nothing; --base is for URLs,
+          # not local directories.
+          #
+          # No --include-fragments: the site uses directory-style URLs, so lychee
+          # resolves /qui-som to the directory and cannot look inside index.html
+          # for #governanca. Every anchor it flagged was verified to exist. Link
+          # existence is the part worth checking, and that works.
+          args: >-
+            --offline --no-progress --root-dir "$GITHUB_WORKSPACE/dist"
+            'dist/**/*.html'
+          fail: true
 
   deploy:
     needs: verify
@@ -42,24 +79,59 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      # Tells the two possible causes apart before netlify-cli reports a bare
+      # "Unauthorized: could not retrieve project", which does not say which of the
+      # two secrets is wrong. Only HTTP status codes are printed; the token is
+      # never echoed and its response body is discarded.
+      - name: Check the Netlify credentials
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ] || [ -z "$NETLIFY_SITE_ID" ]; then
+            echo "::error::NETLIFY_AUTH_TOKEN or NETLIFY_SITE_ID is not set. Add both under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+          user=$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
+            https://api.netlify.com/api/v1/user)
+          if [ "$user" != "200" ]; then
+            echo "::error::The token is not valid (Netlify answered $user to /user). Create a new personal access token at https://app.netlify.com/user/applications and update NETLIFY_AUTH_TOKEN."
+            exit 1
+          fi
+          echo "Token accepted by Netlify."
+
+          site=$(curl -sS -o /dev/null -w '%{http_code}' \
+            -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
+            "https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID")
+          case "$site" in
+            200) echo "Project found. Deploying." ;;
+            404) echo "::error::The token is fine, but no project has this ID ($site). Copy the Project ID from Netlify: Project configuration -> General -> Project information. Update NETLIFY_SITE_ID."; exit 1 ;;
+            401|403) echo "::error::The token is valid but has no access to this project ($site). It probably belongs to an account that is not a member of the team that owns it. Generate the token from an account with access."; exit 1 ;;
+            *) echo "::error::Netlify answered $site for this project ID."; exit 1 ;;
+          esac
 
       - name: Deploy (production)
         if: github.ref == 'refs/heads/main'
-        run: npx netlify deploy --build --prod --site "$NETLIFY_SITE_ID"
+        run: npx --yes netlify-cli deploy --build --prod --site "$NETLIFY_SITE_ID"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: Deploy preview (pull requests)
         if: github.event_name == 'pull_request'
-        run: npx netlify deploy --build --site "$NETLIFY_SITE_ID"
+        run: npx --yes netlify-cli deploy --build --site "$NETLIFY_SITE_ID"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

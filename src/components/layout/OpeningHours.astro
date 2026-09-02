@@ -1,0 +1,117 @@
+---
+/*
+ * Opening hours, resolved to *today* in the visitor's own clock.
+ *
+ * Everything is rendered server-side — the full week, and one pre-built row per weekday. With
+ * JavaScript off the visitor sees the complete week, which is always correct. The tiny inline
+ * script below only flips visibility: it unhides today's row, hides the week, and records
+ * whether we are open right now. Nothing is built with innerHTML, so the scoped styles apply.
+ *
+ * The script must stay small: Astro inlines a hoisted script under Vite's assetsInlineLimit
+ * (4 KB) and emits a .js file above it, which scripts/check-no-client-js.sh rejects.
+ */
+import { hours, dayKey, formatRanges } from '../../config/site';
+import { getLang, useTranslations } from '../../i18n/utils';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  /** inline = one line (homepage strip); stacked = a block (footer). */
+  variant?: 'inline' | 'stacked';
+  class?: string;
+}
+const { variant = 'stacked', class: className = '' } = Astro.props;
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const inline = variant === 'inline';
+
+const week = hours.map((h) => ({
+  ...h,
+  name: t(dayKey(h.day)),
+  value: formatRanges(h.ranges, t('hours.closed')),
+}));
+
+/* All the script needs: weekday index -> ranges. Labels stay in the markup. */
+const ranges = Object.fromEntries(hours.map((h) => [h.day, h.ranges]));
+---
+<div class:list={['fc-hours', className]} data-hours={JSON.stringify(ranges)}>
+  <!-- No-JS fallback: the whole week. Hidden once the script picks today. -->
+  <div class="fc-hours-week">
+    {!inline && (
+      <p class="mb-2 flex items-center gap-2 text-sm font-bold uppercase tracking-wide">
+        <Icon name="clock" size={16} /> {t('hours.week')}
+      </p>
+    )}
+    <dl class:list={[inline ? 'flex flex-wrap items-center gap-x-4' : 'space-y-1']}>
+      {week.map((d) => (
+        <div class="flex justify-between gap-3 text-sm">
+          <dt class="font-medium">{d.name}</dt>
+          <dd class="opacity-70">{d.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  <div class="fc-hours-today">
+    {week.map((d) => (
+      <p class="fc-hours-day" data-day={d.day} hidden>
+        <span class="fc-hours-state fc-open">{t('hours.open')}</span>
+        <span class="fc-hours-state fc-closed">
+          {d.ranges.length ? t('hours.closed') : t('hours.closedToday')}
+        </span>
+        {d.ranges.length > 0 && <span class="fc-hours-value">{d.value}</span>}
+      </p>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Unhide today's pre-rendered row and record whether we are open right now.
+  const toMin = (s: string) => +s.slice(0, 2) * 60 + +s.slice(3, 5);
+  document.querySelectorAll<HTMLElement>('.fc-hours').forEach((el) => {
+    const ranges = JSON.parse(el.dataset.hours || '{}');
+    const now = new Date();
+    const row = el.querySelector<HTMLElement>(`.fc-hours-day[data-day="${now.getDay()}"]`);
+    if (!row) return;
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const open = (ranges[now.getDay()] || []).some(
+      (r: string[]) => mins >= toMin(r[0]) && mins < toMin(r[1]),
+    );
+    row.hidden = false;
+    el.dataset.open = String(open);
+  });
+</script>
+
+<style>
+  .fc-hours-day:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+  }
+  .fc-hours-state {
+    display: none;
+    border-radius: var(--radius-pill);
+    padding: 0.125rem 0.625rem;
+    font-weight: 700;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+  }
+  .fc-hours[data-open='true'] .fc-open,
+  .fc-hours[data-open='false'] .fc-closed {
+    display: inline-block;
+  }
+  .fc-hours[data-open='true'] .fc-open {
+    background: var(--color-brand);
+    color: var(--color-paper);
+  }
+  /* The one place a status colour earns its keep. */
+  .fc-hours[data-open='false'] .fc-closed {
+    background: var(--color-danger);
+    color: var(--color-paper);
+  }
+  /* Once today is resolved, the week fallback is redundant. */
+  .fc-hours[data-open] .fc-hours-week {
+    display: none;
+  }
+</style>

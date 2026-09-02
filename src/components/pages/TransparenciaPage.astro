@@ -1,0 +1,169 @@
+---
+/*
+ * Transparency hub.
+ *
+ * The site promises "transparent margins" and "decisions taken in assembly" in
+ * several places and never showed the evidence. The documents existed but were
+ * buried in the footer under "Documentació" and marked noindex. This page puts
+ * them where a sceptical reader can find them.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { org, membership as m } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    eyebrow: 'Qui som',
+    title: 'Transparència',
+    intro: 'Els documents que expliquen com funciona la cooperativa, qui decideix què i on van els diners. Tot és públic i descarregable.',
+    docsTitle: 'Documents',
+    docs: [
+      { icon: 'vote', t: 'Estatuts', d: 'Les regles que ens hem donat: drets i deures de les sòcies, òrgans de decisió, aportacions i baixes.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
+      { icon: 'basket', t: 'Memòria d’activitats', d: 'Què hem fet durant l’exercici: activitat del súper, projecte associatiu i comptes.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
+      { icon: 'heart', t: 'Balanç social', d: 'L’auditoria social de la Xarxa d’Economia Solidària: condicions laborals, democràcia interna, impacte ambiental i gestió econòmica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
+    ],
+    download: 'Descarrega el PDF',
+    howTitle: 'Com prenem les decisions',
+    how: [
+      { t: 'L’assemblea', d: 'És l’òrgan sobirà. Una sòcia, un vot, independentment del capital aportat. Hi aprovem els comptes, els criteris de producte i les decisions estratègiques.' },
+      { t: 'Els cercles', d: 'Vuit equips de treball preparen i executen: Compres, Comunicació, Finances, IT, Operacions, Comunitat i cures, Governança i Local.' },
+      { t: 'El dia a dia', d: 'Un equip contractat fa funcionar el súper amb el suport dels torns de les sòcies.' },
+    ],
+    moneyTitle: 'On van els diners',
+    money: [
+      { t: 'Sense ànim de lucre', d: 'Cap benefici es reparteix entre particulars. El que sobra torna al projecte.' },
+      { t: 'Marges iguals per a tot', d: 'Apliquem el mateix criteri a tot el catàleg. Sense productes reclam ni ofertes ganxo.' },
+      { t: 'El capital social és de les sòcies', d: `Els ${m.capital} € que aportes són teus i te’ls tornem si et dones de baixa.` },
+      { t: 'Suport públic', d: 'El projecte va rebre suport de l’Ajuntament de Barcelona i la Diputació en la fase d’arrencada.' },
+    ],
+    factsTitle: 'Dades clau',
+    facts: [
+      { k: 'Forma jurídica', v: org.legalName },
+      { k: 'Obertura', v: '8 de febrer de 2022' },
+      { k: 'Adreça', v: `${org.address.street}, ${org.address.postalCode} ${org.address.locality}` },
+      { k: 'Sòcies', v: org.members.toLocaleString('ca-ES') },
+      { k: 'Superfície', v: '240 m²' },
+      { k: 'Referències', v: 'Més de 1.200' },
+      { k: 'Descompte sòcies', v: `${m.discount}%` },
+      { k: 'Aportació al capital', v: `${m.capital} €, retornable` },
+      { k: 'Participació', v: `${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes, cercle o quota` },
+    ],
+    finalTitle: 'Trobes a faltar alguna dada?',
+    finalText: 'Si vols consultar alguna cosa que no és aquí, demana-la i te la donem.',
+  },
+  es: {
+    eyebrow: 'Quiénes somos',
+    title: 'Transparencia',
+    intro: 'Los documentos que explican cómo funciona la cooperativa, quién decide qué y dónde va el dinero. Todo es público y descargable.',
+    docsTitle: 'Documentos',
+    docs: [
+      { icon: 'vote', t: 'Estatutos', d: 'Las reglas que nos hemos dado: derechos y deberes de las socias, órganos de decisión, aportaciones y bajas.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
+      { icon: 'basket', t: 'Memoria de actividades', d: 'Qué hemos hecho durante el ejercicio: actividad del súper, proyecto asociativo y cuentas.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
+      { icon: 'heart', t: 'Balance social', d: 'La auditoría social de la Xarxa d’Economia Solidària: condiciones laborales, democracia interna, impacto ambiental y gestión económica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
+    ],
+    download: 'Descargar el PDF',
+    howTitle: 'Cómo tomamos las decisiones',
+    how: [
+      { t: 'La asamblea', d: 'Es el órgano soberano. Una socia, un voto, independientemente del capital aportado. Aprobamos las cuentas, los criterios de producto y las decisiones estratégicas.' },
+      { t: 'Los círculos', d: 'Ocho equipos de trabajo preparan y ejecutan: Compras, Comunicación, Finanzas, IT, Operaciones, Comunidad y cuidados, Gobernanza y Local.' },
+      { t: 'El día a día', d: 'Un equipo contratado hace funcionar el súper con el apoyo de los turnos de las socias.' },
+    ],
+    moneyTitle: 'Dónde va el dinero',
+    money: [
+      { t: 'Sin ánimo de lucro', d: 'Ningún beneficio se reparte entre particulares. Lo que sobra vuelve al proyecto.' },
+      { t: 'Márgenes iguales para todo', d: 'Aplicamos el mismo criterio a todo el catálogo. Sin productos reclamo ni ofertas gancho.' },
+      { t: 'El capital social es de las socias', d: `Los ${m.capital} € que aportas son tuyos y te los devolvemos si te das de baja.` },
+      { t: 'Apoyo público', d: 'El proyecto recibió apoyo del Ayuntamiento de Barcelona y la Diputación en la fase de arranque.' },
+    ],
+    factsTitle: 'Datos clave',
+    facts: [
+      { k: 'Forma jurídica', v: org.legalName },
+      { k: 'Apertura', v: '8 de febrero de 2022' },
+      { k: 'Dirección', v: `${org.address.street}, ${org.address.postalCode} ${org.address.locality}` },
+      { k: 'Socias', v: org.members.toLocaleString('es-ES') },
+      { k: 'Superficie', v: '240 m²' },
+      { k: 'Referencias', v: 'Más de 1.200' },
+      { k: 'Descuento socias', v: `${m.discount}%` },
+      { k: 'Aportación al capital', v: `${m.capital} €, reembolsable` },
+      { k: 'Participación', v: `${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas, círculo o cuota` },
+    ],
+    finalTitle: '¿Echas en falta algún dato?',
+    finalText: 'Si quieres consultar algo que no está aquí, pídelo y te lo damos.',
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
+
+  <Section>
+    <h2 class="mb-8 text-2xl">{c.docsTitle}</h2>
+    <div class="grid gap-6 md:grid-cols-3">
+      {c.docs.map((d) => (
+        <div class="flex flex-col rounded-2xl bg-paper p-7 shadow-sm ring-1 ring-line">
+          <span class="grid h-11 w-11 place-items-center rounded-2xl bg-paper-green text-brand-ink">
+            <Icon name={d.icon as any} size={22} />
+          </span>
+          <h3 class="mt-5 text-lg">{d.t}</h3>
+          <p class="mt-2 grow text-sm text-ink-soft">{d.d}</p>
+          <a href={d.href} class="mt-5 inline-flex items-center gap-2 font-semibold text-brand-ink underline">
+            <Icon name="arrow" size={16} class="rotate-90" /> {c.download}
+          </a>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section tone="soft">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl">{c.howTitle}</h2>
+        <dl class="mt-6 space-y-5">
+          {c.how.map((h) => (
+            <div>
+              <dt class="font-display text-lg font-bold">{h.t}</dt>
+              <dd class="mt-1 text-ink-soft">{h.d}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div>
+        <h2 class="text-2xl">{c.moneyTitle}</h2>
+        <dl class="mt-6 space-y-5">
+          {c.money.map((h) => (
+            <div>
+              <dt class="font-display text-lg font-bold">{h.t}</dt>
+              <dd class="mt-1 text-ink-soft">{h.d}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  </Section>
+
+  <!-- A tight block of citable facts: the shape LLMs and search engines extract best. -->
+  <Section>
+    <h2 class="mb-8 text-2xl">{c.factsTitle}</h2>
+    <dl class="grid gap-x-10 gap-y-4 sm:grid-cols-2 lg:grid-cols-4">
+      {c.facts.map((f) => (
+        <div class="border-t border-line pt-3">
+          <dt class="text-sm font-bold uppercase tracking-wide text-brand-ink">{f.k}</dt>
+          <dd class="mt-1">{f.v}</dd>
+        </div>
+      ))}
+    </dl>
+  </Section>
+
+  <CTASection
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+    secondaryCta={{ label: t('nav.quisom'), href: localizePath('/qui-som', lang) }}
+  />
+</BaseLayout>

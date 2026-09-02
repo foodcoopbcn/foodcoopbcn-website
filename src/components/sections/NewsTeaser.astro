@@ -31,6 +31,7 @@ const { title, posts, labels, allNewsHref, allNewsLabel, tone = 'paper' } = Astr
         date={entry.data.date}
         excerpt={entry.data.excerpt}
         cover={entry.data.cover}
+          coverAlt={entry.data.coverAlt}
         category={labels[entry.data.category] ?? entry.data.category}
       />
     ))}

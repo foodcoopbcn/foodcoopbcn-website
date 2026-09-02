@@ -4,18 +4,58 @@ import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { org, hours, social } from '../../config/site';
+import { org, hours, dayKey, formatRanges, social } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const action = localizePath('/gracies', lang);
 const intro =
   lang === 'ca'
-    ? 'Tens un dubte, una proposta o vols col·laborar-hi? Escriu-nos i et respondrem ben aviat.'
-    : '¿Tienes una duda, una propuesta o quieres colaborar? Escríbenos y te responderemos pronto.';
+    ? 'Tens un dubte, una proposta o vols col·laborar-hi? Escriu-nos i et responem en 2-3 dies feiners.'
+    : '¿Tienes una duda, una propuesta o quieres colaborar? Escríbenos y te respondemos en 2-3 días laborables.';
+
+/* Everything used to land in one inbox with no indication of what it was about.
+   The topic routes the message to the right circle. */
+const topics =
+  lang === 'ca'
+    ? [
+        'Vull fer-me sòcia',
+        'Ja soc sòcia (torns, comandes)',
+        'Proposar un producte o una productora',
+        'Entitats i intercooperació',
+        'Premsa',
+        'Altres',
+      ]
+    : [
+        'Quiero hacerme socia',
+        'Ya soy socia (turnos, pedidos)',
+        'Proponer un producto o una productora',
+        'Entidades e intercooperación',
+        'Prensa',
+        'Otros',
+      ];
+
+const c = {
+  ca: {
+    topic: 'Sobre què ens escrius?',
+    consent: 'He llegit i accepto la política de privacitat.',
+    consentNote: 'Només farem servir el teu correu per respondre’t.',
+    read: 'Llegeix-la',
+  },
+  es: {
+    topic: '¿Sobre qué nos escribes?',
+    consent: 'He leído y acepto la política de privacidad.',
+    consentNote: 'Solo usaremos tu correo para responderte.',
+    read: 'Léela',
+  },
+}[lang];
 ---
 <BaseLayout title={t('nav.contacte')} description={intro}>
-  <PageHeader eyebrow={t('nav.contacte')} title={t('nav.contacte')} intro={intro} />
+  <PageHeader
+    eyebrow={t('nav.contacte')}
+    title={lang === 'ca' ? 'Parlem-ne' : 'Hablemos'}
+    intro={intro}
+  />
 
   <Section>
     <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
@@ -34,17 +74,37 @@ const intro =
         <div class="grid gap-5 sm:grid-cols-2">
           <label class="block">
             <span class="mb-1.5 block text-sm font-semibold">{t('form.name')}</span>
-            <input type="text" name="name" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none" />
+            <input type="text" name="name" required autocomplete="name" class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40" />
           </label>
           <label class="block">
             <span class="mb-1.5 block text-sm font-semibold">{t('form.email')}</span>
-            <input type="email" name="email" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none" />
+            <input type="email" name="email" required autocomplete="email" class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40" />
           </label>
         </div>
         <label class="block">
-          <span class="mb-1.5 block text-sm font-semibold">{t('form.message')}</span>
-          <textarea name="message" rows="6" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand focus:outline-none"></textarea>
+          <span class="mb-1.5 block text-sm font-semibold">{c.topic}</span>
+          <select
+            name="topic"
+            required
+            class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40"
+          >
+            {topics.map((tp) => <option value={tp}>{tp}</option>)}
+          </select>
         </label>
+
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">{t('form.message')}</span>
+          <textarea name="message" rows="6" required class="w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40"></textarea>
+        </label>
+        <label class="flex items-start gap-3 text-sm">
+          <input type="checkbox" name="consent" required class="mt-1" />
+          <span>
+            {c.consent}{' '}
+            <a href={localizePath('/legal/privacitat', lang)} class="text-brand-ink underline">{c.read}</a>.
+            <span class="block text-ink-soft">{c.consentNote}</span>
+          </span>
+        </label>
+
         <button type="submit" class="rounded-pill bg-brand px-7 py-3 font-display font-extrabold text-paper hover:brightness-110">
           {t('form.send')}
         </button>
@@ -55,21 +115,21 @@ const intro =
           <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="pin" size={18} /> {t('footer.contact')}</h2>
           <address class="space-y-1 text-sm not-italic text-ink-soft">
             <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
-            <p><a class="hover:text-brand" href={`tel:${org.phone}`}>{org.phoneDisplay}</a></p>
-            <p><a class="hover:text-brand" href={`mailto:${org.email}`}>{org.email}</a></p>
+            <p><a class="hover:text-brand-ink" href={`tel:${org.phone}`}>{org.phoneDisplay}</a></p>
+            <p><a class="hover:text-brand-ink" href={`mailto:${org.email}`}>{org.email}</a></p>
           </address>
         </div>
         <div>
           <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="clock" size={18} /> {t('footer.hours')}</h2>
           <dl class="space-y-1 text-sm text-ink-soft">
             {hours.map((h) => (
-              <div class="flex justify-between"><dt>{h.day}</dt><dd class="text-muted">{h.value}</dd></div>
+              <div class="flex justify-between"><dt>{t(dayKey(h.day))}</dt><dd class="text-muted">{formatRanges(h.ranges, t('hours.closed'))}</dd></div>
             ))}
           </dl>
         </div>
         <div class="flex gap-2">
           {social.map((s) => (
-            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand hover:bg-brand hover:text-paper">
+            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand-ink hover:bg-brand hover:text-paper">
               <Icon name={s.icon as any} size={18} />
             </a>
           ))}

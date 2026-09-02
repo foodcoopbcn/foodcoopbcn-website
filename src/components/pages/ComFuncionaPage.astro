@@ -1,0 +1,240 @@
+---
+/*
+ * "How a cooperative supermarket works", in plain language.
+ *
+ * The rebuild had no page for the single thing a stranger does not understand:
+ * that the shop is owned by the people who shop in it. Everything else on the
+ * site assumes you already know. This page assumes you don't.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m, org } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const signup = localizePath(m.signupPath, lang);
+
+const c = {
+  ca: {
+    eyebrow: 'Com funciona',
+    title: 'Un supermercat que és de qui hi compra',
+    intro: 'FoodCoop BCN no té amo ni inversors. Les persones que hi compren en són les propietàries: decidim què venem, a quin preu i què fem amb el que sobra. Això és tot el que cal saber.',
+    stepsTitle: 'En tres passos',
+    steps: [
+      {
+        icon: 'basket',
+        n: '1',
+        t: 'Entra i compra',
+        d: 'El súper és obert a tothom des del 2023. No cal carnet, ni quota, ni fer-se sòcia de res. Vine, mira, compra el que vulguis a preu públic.',
+      },
+      {
+        icon: 'heart',
+        n: '2',
+        t: 'Si t’agrada, fes-te’n sòcia',
+        d: `Una aportació de ${m.capital} € al capital social (que és teva i te la tornem si pleges) i passes a tenir un ${m.discount}% de descompte en tot, per sempre.`,
+      },
+      {
+        icon: 'vote',
+        n: '3',
+        t: 'Tria com hi participes',
+        d: `Un torn de ${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes, un cercle de treball des de casa, o una quota trimestral des de ${m.quota.reduced} €. Les tres valen igual.`,
+      },
+    ],
+    whyTitle: 'Per què això fa que sigui diferent',
+    why: [
+      {
+        icon: 'user',
+        t: 'El treball de les sòcies abarateix el súper',
+        d: 'Una part de la feina la fem nosaltres mateixes. Això redueix els costos i és el que permet vendre producte agroecològic i de proximitat a un preu que no sigui prohibitiu.',
+      },
+      {
+        icon: 'vote',
+        t: 'Els marges són públics i iguals per a tothom',
+        d: 'No hi ha ofertes ganxo ni productes reclam. Apliquem el mateix criteri a tot, i el podem explicar.',
+      },
+      {
+        icon: 'leaf',
+        t: 'Triem el producte per criteris, no per marge',
+        d: 'Prioritzem qui produeix a prop, com produeix i en quines condicions treballa. Els criteris els decidim en assemblea, no un departament de compres.',
+      },
+      {
+        icon: 'clock',
+        t: 'Sense ànim de lucre',
+        d: 'Cap benefici va a butxaques privades. El que sobra torna al projecte: millors condicions, més producte, més barri.',
+      },
+    ],
+    compareTitle: 'I en què es diferencia d’un súper normal?',
+    compareRows: [
+      { a: 'Qui n’és propietari', b: 'Una empresa o un fons', c: 'Les persones que hi compren' },
+      { a: 'Qui decideix què es ven', b: 'Un departament de compres', c: 'L’assemblea de sòcies' },
+      { a: 'On van els beneficis', b: 'Als accionistes', c: 'Al projecte: no n’hi ha de privats' },
+      { a: 'Qui hi treballa', b: 'Només personal contractat', c: 'Equip contractat + torns de les sòcies' },
+      { a: 'Els marges', b: 'Opacs', c: 'Públics' },
+    ],
+    compareHeads: ['', 'Un súper convencional', 'FoodCoop BCN'],
+    modelTitle: 'No ens ho hem inventat',
+    modelText:
+      'El model ve del Park Slope Food Coop de Nova York, que funciona des del 1973 amb més de 17.000 sòcies. A Europa l’han seguit La Louve (París), la Bees Coop (Brussel·les) i La Cagette (Montpeller). FoodCoop BCN va néixer el 2018 d’una trobada de 250 persones a les Cotxeres de Sants, després de veure el documental *Food Coop*, i va obrir el 8 de febrer del 2022.',
+    finalTitle: 'Ho vols provar?',
+    finalText: 'No cal decidir res avui. Vine un dia, compra el que vulguis i decideix un altre dia.',
+  },
+  es: {
+    eyebrow: 'Cómo funciona',
+    title: 'Un supermercado que es de quien compra en él',
+    intro: 'FoodCoop BCN no tiene dueño ni inversores. Las personas que compran en él son sus propietarias: decidimos qué vendemos, a qué precio y qué hacemos con lo que sobra. Esto es todo lo que hay que saber.',
+    stepsTitle: 'En tres pasos',
+    steps: [
+      {
+        icon: 'basket',
+        n: '1',
+        t: 'Entra y compra',
+        d: 'El súper está abierto a todo el mundo desde 2023. No hace falta carnet, ni cuota, ni hacerse socia de nada. Ven, mira, compra lo que quieras a precio público.',
+      },
+      {
+        icon: 'heart',
+        n: '2',
+        t: 'Si te gusta, hazte socia',
+        d: `Una aportación de ${m.capital} € al capital social (que es tuya y te la devolvemos si lo dejas) y pasas a tener un ${m.discount}% de descuento en todo, para siempre.`,
+      },
+      {
+        icon: 'vote',
+        n: '3',
+        t: 'Elige cómo participas',
+        d: `Un turno de ${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas, un círculo de trabajo desde casa, o una cuota trimestral desde ${m.quota.reduced} €. Las tres valen igual.`,
+      },
+    ],
+    whyTitle: 'Por qué esto lo hace diferente',
+    why: [
+      {
+        icon: 'user',
+        t: 'El trabajo de las socias abarata el súper',
+        d: 'Una parte del trabajo la hacemos nosotras mismas. Eso reduce los costes y es lo que permite vender producto agroecológico y de proximidad a un precio que no sea prohibitivo.',
+      },
+      {
+        icon: 'vote',
+        t: 'Los márgenes son públicos e iguales para todo el mundo',
+        d: 'No hay ofertas gancho ni productos reclamo. Aplicamos el mismo criterio a todo, y lo podemos explicar.',
+      },
+      {
+        icon: 'leaf',
+        t: 'Elegimos el producto por criterios, no por margen',
+        d: 'Priorizamos quién produce cerca, cómo produce y en qué condiciones trabaja. Los criterios los decidimos en asamblea, no un departamento de compras.',
+      },
+      {
+        icon: 'clock',
+        t: 'Sin ánimo de lucro',
+        d: 'Ningún beneficio va a bolsillos privados. Lo que sobra vuelve al proyecto: mejores condiciones, más producto, más barrio.',
+      },
+    ],
+    compareTitle: '¿Y en qué se diferencia de un súper normal?',
+    compareRows: [
+      { a: 'Quién es su propietario', b: 'Una empresa o un fondo', c: 'Las personas que compran en él' },
+      { a: 'Quién decide qué se vende', b: 'Un departamento de compras', c: 'La asamblea de socias' },
+      { a: 'Dónde van los beneficios', b: 'A los accionistas', c: 'Al proyecto: no hay privados' },
+      { a: 'Quién trabaja allí', b: 'Solo personal contratado', c: 'Equipo contratado + turnos de las socias' },
+      { a: 'Los márgenes', b: 'Opacos', c: 'Públicos' },
+    ],
+    compareHeads: ['', 'Un súper convencional', 'FoodCoop BCN'],
+    modelTitle: 'No nos lo hemos inventado',
+    modelText:
+      'El modelo viene del Park Slope Food Coop de Nueva York, que funciona desde 1973 con más de 17.000 socias. En Europa lo han seguido La Louve (París), la Bees Coop (Bruselas) y La Cagette (Montpellier). FoodCoop BCN nació en 2018 de un encuentro de 250 personas en las Cotxeres de Sants, tras ver el documental *Food Coop*, y abrió el 8 de febrero de 2022.',
+    finalTitle: '¿Lo quieres probar?',
+    finalText: 'No hace falta decidir nada hoy. Ven un día, compra lo que quieras y decide otro día.',
+  },
+}[lang];
+
+const em = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
+---
+<BaseLayout title={c.eyebrow} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
+    <Button href={localizePath('/el-super', lang)} size="lg" variant="primary">
+      {lang === 'ca' ? 'Vine a comprar' : 'Ven a comprar'}
+    </Button>
+    <Button href={signup} size="lg" variant="ghost">{t('cta.becomeMember')}</Button>
+  </PageHeader>
+
+  <Section>
+    <h2 class="mb-10 text-2xl">{c.stepsTitle}</h2>
+    <ol class="grid gap-6 md:grid-cols-3">
+      {c.steps.map((s) => (
+        <li class="rounded-2xl bg-paper-green p-8">
+          <span class="grid h-12 w-12 place-items-center rounded-full bg-brand text-paper">
+            <Icon name={s.icon as any} size={22} />
+          </span>
+          <p class="mt-5 text-sm font-bold uppercase tracking-widest text-brand-dark">
+            {lang === 'ca' ? 'Pas' : 'Paso'} {s.n}
+          </p>
+          <h3 class="mt-1 text-lg text-brand-dark">{s.t}</h3>
+          <p class="mt-2 text-ink-soft">{s.d}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section tone="soft">
+    <h2 class="mb-10 text-2xl">{c.whyTitle}</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {c.why.map((w) => (
+        <div class="flex gap-4 rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-paper-green text-brand-ink">
+            <Icon name={w.icon as any} size={22} />
+          </span>
+          <div>
+            <h3 class="text-lg">{w.t}</h3>
+            <p class="mt-2 text-ink-soft">{w.d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section>
+    <h2 class="mb-8 text-2xl">{c.compareTitle}</h2>
+    <!-- Scrolls inside itself rather than pushing the page sideways on a phone. -->
+    <div class="overflow-x-auto">
+      <table class="w-full min-w-[36rem] border-collapse text-left">
+        <thead>
+          <tr>
+            {c.compareHeads.map((h, i) => (
+              <th
+                scope="col"
+                class:list={[
+                  'border-b-2 border-line p-4 text-sm font-bold uppercase tracking-wide',
+                  i === 2 ? 'rounded-t-lg bg-paper-green text-brand-dark' : 'text-ink-soft',
+                ]}
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {c.compareRows.map((r) => (
+            <tr>
+              <th scope="row" class="border-b border-line p-4 font-semibold">{r.a}</th>
+              <td class="border-b border-line p-4 text-ink-soft">{r.b}</td>
+              <td class="border-b border-line bg-paper-green/40 p-4 font-semibold text-brand-dark">{r.c}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section tone="green" width="narrow">
+    <h2 class="text-2xl text-brand-dark">{c.modelTitle}</h2>
+    <p class="mt-4 text-lg" set:html={em(c.modelText)} />
+  </Section>
+
+  <CTASection
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: lang === 'ca' ? 'Horari i com arribar-hi' : 'Horario y cómo llegar', href: localizePath('/el-super', lang) }}
+    secondaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+  />
+</BaseLayout>

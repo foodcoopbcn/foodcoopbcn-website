@@ -1,0 +1,63 @@
+# Keeps the member count on the site current without anyone editing a page.
+#
+# The figure grows every month; the site once showed "530" copied from a 2024
+# press article when the real number was over a thousand. This reads it from the
+# co-op's Odoo, which is the only system that knows, and commits it when it moves.
+#
+# Requires four repository secrets: ODOO_URL, ODOO_DB, ODOO_USER, ODOO_API_KEY.
+# ODOO_USER should be a dedicated account that can only read contacts — Odoo API
+# keys carry all of their user's permissions.
+#
+# Without the secrets this workflow runs and does nothing, which is intentional.
+name: Refresh member count
+
+on:
+  schedule:
+    # Mondays at 05:00 UTC. Weekly is plenty for a number that moves slowly.
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read the count from Odoo
+        run: node scripts/fetch-members.mjs
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_USER: ${{ secrets.ODOO_USER }}
+          ODOO_API_KEY: ${{ secrets.ODOO_API_KEY }}
+
+      - name: Commit if it changed
+        run: |
+          if git diff --quiet -- src/data/members.json; then
+            echo "Member count unchanged — nothing to do."
+            exit 0
+          fi
+          git config user.name "foodcoop-bot"
+          git config user.email "hola@foodcoopbcn.cat"
+          git add src/data/members.json
+          git commit -m "Update member count from Odoo"
+          git push
+
+      # A push made with GITHUB_TOKEN does not trigger other workflows, so ask
+      # Netlify to rebuild directly. Optional: skipped if the hook is not set.
+      - name: Trigger a Netlify rebuild
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "NETLIFY_BUILD_HOOK not set — skipping the rebuild trigger."
+            exit 0
+          fi
+          curl -fsS -X POST -d '{}' "$HOOK"

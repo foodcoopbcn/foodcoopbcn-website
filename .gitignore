@@ -19,3 +19,7 @@ npm-debug.log*
 
 # os
 .DS_Store
+
+# Source photo bank: working material only, never published.
+# Photos actually used are optimised into public/images/ instead.
+banc_fotos_foodcoop/

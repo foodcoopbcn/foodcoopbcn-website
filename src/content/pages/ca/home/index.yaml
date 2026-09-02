@@ -1,95 +1,221 @@
 sections:
   - discriminant: hero
     value:
-      eyebrow: Supermercat cooperatiu de Barcelona
-      title: Bons productes per a tu i per a la terra
+      eyebrow: ''
+      title: El súper del barri que és de les seves clientes
       highlights:
-        - Decisions i marges transparents
-        - Productes sostenibles i de proximitat
-        - Bon ambient i comunitat
+        - Obert a tothom, també si no ets sòcia
+        - 12% de descompte per a les sòcies
+        - Agroecològic, de proximitat i a granel
       text: >-
-        El primer supermercat cooperatiu, participatiu i sense ànim de lucre de
-        Barcelona. Productes bons, sans i a un preu just, sense marges per a
-        ningú.
+        Som el primer supermercat cooperatiu, participatiu i sense ànim de lucre
+        de Barcelona. Més de 1.200 productes a un preu just, perquè aquí ningú
+        no s’emporta el marge.
+      image: hero-entrada
+      imageAlt: Sòcies de FoodCoop BCN entrant i sortint del súper al passatge d’Aragó
       primaryCta:
         label: Fes-te sòcia
         href: /fes-te-socia
       secondaryCta:
-        label: Visita el súper
+        label: Vine a comprar
         href: /el-super
+  - discriminant: infoStrip
+    value:
+      addressLabel: ''
   - discriminant: featureGrid
     value:
-      title: Per què FoodCoop?
-      intro: Un model just per a les persones, els productors i el planeta.
+      eyebrow: Com funciona
+      title: Un súper cooperatiu, en tres passos
+      intro: >-
+        No cal decidir res avui. Aquest és tot el compromís que hi ha, de menys
+        a més.
       tone: paper
-      columns: '4'
+      columns: '3'
       features:
-        - icon: leaf
-          title: Sostenible i de proximitat
+        - icon: basket
+          title: 1. Entra i compra
           text: >-
-            Prioritzem productors locals catalans i productes agroecològics, a
-            granel i amb poc envàs.
-        - icon: vote
-          title: Transparència total
-          text: >-
-            Decisions preses en assemblea i marges visibles. Sense ànim de
-            lucre: cap benefici privat.
+            El súper és obert a tothom des del 2023. Sense carnet, sense quota i
+            sense fer-te sòcia de res. Vine, mira i compra a preu públic.
         - icon: heart
-          title: Sa i assequible
+          title: 2. Si t’agrada, fes-te’n sòcia
           text: >-
-            Més de 1.200 productes de qualitat a un preu just, perquè menjar bé
-            sigui per a tothom.
-        - icon: user
-          title: Comunitat
+            Una aportació de 40 € que és teva i et tornem si pleges. A canvi,
+            un 12% de descompte en tot, per sempre.
+        - icon: vote
+          title: 3. Tria com hi participes
           text: >-
-            Un projecte fet entre totes: les sòcies hi dediquen unes hores al
-            mes i en decideixen el rumb.
-  - discriminant: splitCards
+            Un torn de 2,5 h cada 4 setmanes, un cercle de treball des de casa o
+            una quota trimestral des de 10 €. Les tres valen igual.
+  - discriminant: mediaSplit
+    value:
+      eyebrow: Qui som
+      title: Un súper que és de qui hi compra
+      text: >-
+        Som una cooperativa de consum sense ànim de lucre. Les sòcies en són
+        propietàries, hi dediquen unes hores al mes i en decideixen el rumb en
+        assemblea. Ni inversors, ni beneficis privats: només bon menjar a un
+        preu just.
+      image: socies-davantal
+      imageAlt: Dues sòcies amb el davantal de FoodCoop, amb bolets i verdura acabats de rebre
+      reverse: false
+      tone: paper
+      cta:
+        label: Coneix el projecte
+        href: /qui-som
+  - discriminant: stats
+    value:
+      title: ''
+      tone: ink
+      stats:
+        - value: '{socies}'
+          label: Sòcies
+          icon: user
+        - value: '2022'
+          label: Obert des de
+          icon: clock
+        - value: 1.200+
+          label: Productes
+          icon: basket
+        - value: 12%
+          label: Descompte sòcies
+          icon: heart
+      cta:
+        label: ''
+        href: /
+  - discriminant: comparisonTable
     value:
       eyebrow: FoodCoop BCN
-      title: Dues maneres de comprar-hi
+      title: Dues maneres de comprar
       intro: >-
         Pots comprar-hi sense ser sòcia, o fer-te’n part i gaudir de tots els
         avantatges.
       tone: soft
-      options:
-        - badge: Obert a tothom
-          title: Compra pública
-          text: >-
-            No cal ser sòcia per comprar al súper. Vine i descobreix els nostres
-            productes.
-          points:
-            - Sense quota ni compromís
-            - Productes a granel i de proximitat
-            - Horari ampli de dilluns a dissabte
+      columns:
+        - label: Públic general
           featured: false
-          cta:
-            label: Visita el súper
-            href: /el-super
-        - badge: Recomanat
-          title: Fes-te sòcia
-          text: Forma part del projecte, decideix i estalvia.
-          points:
-            - 12% de descompte en tots els productes
-            - Accés a la botiga en línia amb repartiment en bici
-            - Vot a les assemblees
-            - Participació d’unes 2-2,5 h al mes
+        - label: Sòcies
           featured: true
+      rows:
+        - label: Comprar a la botiga
+          values:
+            - 'yes'
+            - 'yes'
+        - label: Preu general
+          values:
+            - 'yes'
+            - 'yes'
+        - label: Preu sòcia (12% dte.)
+          values:
+            - 'no'
+            - 'yes'
+        - label: Botiga online
+          values:
+            - 'no'
+            - 'yes'
+        - label: Participació en el projecte
+          values:
+            - 'no'
+            - 'yes'
+      primaryCta:
+        label: Vull comprar
+        href: 'https://botiga.foodcoopbcn.cat/'
+      secondaryCta:
+        label: Fes-te’n sòcia
+        href: /fes-te-socia
+  - discriminant: priceTeaser
+    value:
+      eyebrow: ''
+      title: ''
+      tone: soft
+  - discriminant: photoCards
+    value:
+      title: Què pots comprar a Foodcoop
+      intro: >-
+        Més de 1.200 productes amb criteris de proximitat, sostenibilitat i preu
+        just.
+      layout: tile
+      columns: '6'
+      tone: paper
+      items:
+        - image: fam-fruita-verdura
+          imageAlt: Prunes de temporada al taulell de fruita
+          title: Fruita i verdura
           cta:
-            label: Fes-te sòcia
-            href: /fes-te-socia
+            label: Veure fruita i verdura
+            href: /productes
+        - image: fam-frescos
+          imageAlt: Nevera de producte fresc del súper
+          title: Frescos
+          cta:
+            label: Veure frescos
+            href: /productes
+        - image: fam-rebost
+          imageAlt: Prestatges de conserves i pots de vidre
+          title: Rebost
+          cta:
+            label: Veure rebost
+            href: /productes
+        - image: fam-granel
+          imageAlt: Pots i dispensadors de la zona de granel
+          title: Granel
+          cta:
+            label: Veure granel
+            href: /productes
+        - image: fam-llar-cura
+          imageAlt: Passadís de drogueria i productes de neteja
+          title: Llar i cura
+          cta:
+            label: Veure llar i cura
+            href: /productes
+        - image: fam-forn
+          imageAlt: Pans de massa mare en un prestatge
+          title: Forn i pa
+          cta:
+            label: Veure forn i pa
+            href: /productes
+  - discriminant: photoCards
+    value:
+      layout: card
+      columns: '3'
+      tight: true
+      tone: soft
+      items:
+        - image: card-cistella
+          imageAlt: Sòcia triant verdura amb la cistella groga del súper
+          title: Cistella bàsica
+          text: 55 productes essencials a preus accessibles.
+          cta:
+            label: Veure cistella
+            href: /comparativa
+        - image: card-proveidors
+          imageAlt: Repartiment de pa amb bici de càrrega a la porta del súper
+          title: Proveïdors
+          text: Coneix les persones i projectes que hi ha darrere dels productes.
+          cta:
+            label: Veure proveïdors
+            href: /productes
+        - image: card-criteris
+          imageAlt: Mapa il·lustrat de l’origen dels productes que venem
+          title: Els criteris
+          text: Així decidim què venem i amb quins principis treballem.
+          cta:
+            label: Veure criteris
+            href: /productes
   - discriminant: stats
     value:
-      tone: ink
+      title: El 72% de la fruita i verdura és de Catalunya, i el 94% dels lactis també.
+      tone: green
       stats:
-        - value: 1.200+
-          label: Productes
-        - value: 12%
-          label: Descompte sòcies
-        - value: 100%
-          label: Sense ànim de lucre
-        - value: '0'
-          label: Marges privats
+        - value: 72%
+          label: Fruita i verdura de Catalunya
+          icon: leaf
+        - value: 94%
+          label: Lactis de Catalunya
+          icon: heart
+      cta:
+        label: Saber-ne més
+        href: /productes
   - discriminant: newsTeaser
     value:
       title: Actualitat del projecte
@@ -97,13 +223,13 @@ sections:
       limit: 3
   - discriminant: ctaSection
     value:
-      title: Vols formar part del projecte?
+      title: Comença per venir un dia
       text: >-
-        Fes-te sòcia i ajuda’ns a construir una altra manera d’alimentar-nos a
-        Barcelona.
+        No cal decidir res avui. Vine, tafaneja i pregunta-li a qui hi hagi a
+        caixa. Si t’agrada, ja en parlarem.
       primaryCta:
-        label: Fes-te sòcia
-        href: /fes-te-socia
+        label: Horari i com arribar-hi
+        href: /el-super
       secondaryCta:
-        label: Contacte
-        href: /contacte
+        label: Fer-me sòcia
+        href: /fes-te-socia

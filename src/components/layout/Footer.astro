@@ -1,56 +1,52 @@
 ---
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { org, social, hours, legalLinks } from '../../config/site';
+import { org, social, legalLinks } from '../../config/site';
 import Newsletter from './Newsletter.astro';
+import OpeningHours from './OpeningHours.astro';
 import Icon from '../ui/Icon.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const year = new Date().getFullYear();
+
+const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-dark';
 ---
-<footer class="mt-auto bg-ink text-paper">
-  <div class="container-page grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
-    <!-- Brand + newsletter -->
-    <div class="lg:col-span-1">
-      <p class="font-display text-2xl font-extrabold">FoodCoop<span class="text-accent">.</span></p>
-      <p class="mt-3 max-w-xs text-sm text-paper/70">{t('footer.rights')}</p>
-      <div class="mt-6">
-        <p class="mb-2 text-sm font-bold uppercase tracking-wide text-accent">{t('footer.newsletter')}</p>
-        <Newsletter />
+<footer aria-labelledby="footer-heading" class="mt-auto">
+  <h2 id="footer-heading" class="sr-only">{t('footer.landmark')}</h2>
+  <!-- Practical band: where we are, when we're open, how to follow us, how to subscribe -->
+  <div class="border-t border-line bg-paper-soft text-ink">
+    <div class="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <p class={heading}><Icon name="pin" size={16} /> {t('footer.visit')}</p>
+        <address class="space-y-2 text-sm not-italic text-ink-soft">
+          <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
+          <p><a href={`tel:${org.phone}`} class="hover:text-brand-ink">{org.phoneDisplay}</a></p>
+          <p><a href={`mailto:${org.email}`} class="hover:text-brand-ink">{org.email}</a></p>
+        </address>
+        <a
+          href={org.mapUrl}
+          target="_blank"
+          rel="noopener"
+          class="mt-4 inline-flex items-center gap-2 rounded-pill px-4 py-2 text-sm font-bold ring-2 ring-ink/15 hover:text-brand-ink hover:ring-brand"
+        >
+          <Icon name="pin" size={16} /> {t('footer.directions')}
+        </a>
       </div>
-    </div>
 
-    <!-- Hours -->
-    <div>
-      <h2 class="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-accent">
-        <Icon name="clock" size={16} /> {t('footer.hours')}
-      </h2>
-      <dl class="space-y-1.5 text-sm text-paper/80">
-        {
-          hours.map((h) => (
-            <div class="flex justify-between gap-4">
-              <dt>{h.day}</dt>
-              <dd class="text-paper/60">{h.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
+      <div>
+        <p class={heading}><Icon name="clock" size={16} /> {t('hours.today')}</p>
+        <OpeningHours variant="stacked" class="text-ink-soft" />
+        <a
+          href={`${localizePath('/el-super', lang)}#horaris`}
+          class="mt-4 inline-block text-sm font-bold text-brand-ink hover:underline"
+        >
+          {t('hours.all')} →
+        </a>
+      </div>
 
-    <!-- Contact -->
-    <div>
-      <h2 class="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-accent">
-        <Icon name="pin" size={16} /> {t('footer.contact')}
-      </h2>
-      <address class="space-y-2 text-sm not-italic text-paper/80">
-        <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
-        <p><a href={`tel:${org.phone}`} class="hover:text-accent">{org.phoneDisplay}</a></p>
-        <p><a href={`mailto:${org.email}`} class="hover:text-accent">{org.email}</a></p>
-        <p><a href={org.mapUrl} class="hover:text-accent" target="_blank" rel="noopener">Google Maps ↗</a></p>
-      </address>
-      <div class="mt-5">
-        <p class="mb-2 text-sm font-bold uppercase tracking-wide text-accent">{t('footer.follow')}</p>
-        <div class="flex gap-2">
+      <div>
+        <p class={heading}>{t('footer.follow')}</p>
+        <div class="flex flex-wrap gap-2">
           {
             social.map((s) => (
               <a
@@ -58,20 +54,29 @@ const year = new Date().getFullYear();
                 target="_blank"
                 rel="noopener"
                 aria-label={s.name}
-                class="grid h-10 w-10 place-items-center rounded-full bg-paper/10 hover:bg-brand"
+                class="grid h-10 w-10 place-items-center rounded-full bg-paper text-ink ring-1 ring-line hover:bg-brand hover:text-paper"
               >
                 <Icon name={s.icon as any} size={18} />
               </a>
             ))
           }
         </div>
+        <p class="mt-4 max-w-xs text-sm text-ink-soft">{t('footer.rights')}</p>
+      </div>
+
+      <div>
+        <p class={heading}><Icon name="mail" size={16} /> {t('footer.newsletter')}</p>
+        <Newsletter />
       </div>
     </div>
+  </div>
 
-    <!-- Documentation / legal -->
-    <div>
-      <h2 class="mb-4 text-sm font-bold uppercase tracking-wide text-accent">{t('footer.legal')}</h2>
-      <ul class="space-y-2 text-sm text-paper/80">
+  <!-- Documentation, legal and copyright -->
+  <div class="bg-brand-dark text-paper">
+    <div
+      class="container-page flex flex-col gap-4 py-6 text-xs text-on-ink-soft lg:flex-row lg:items-center lg:justify-between"
+    >
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
         {
           legalLinks.map((l) => (
             <li>
@@ -82,13 +87,10 @@ const year = new Date().getFullYear();
           ))
         }
       </ul>
-    </div>
-  </div>
-
-  <div class="border-t border-paper/10">
-    <div class="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-paper/50 sm:flex-row">
-      <p>© {year} {org.legalName}</p>
-      <p>Fet amb ♥ a Barcelona · Allotjat sense traçadors</p>
+      <div class="flex flex-col gap-1 lg:items-end">
+        <p>© {year} {org.legalName}</p>
+        <p class="text-on-ink-soft">{t('footer.madeIn')}</p>
+      </div>
     </div>
   </div>
 </footer>

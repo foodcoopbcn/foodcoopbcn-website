@@ -1,30 +1,93 @@
 ---
+/*
+ * Post-submission pages. Each one answers "what happens now?" and offers one
+ * onward step — a dead-end "thanks!" wastes the only moment the visitor is
+ * guaranteed to be paying attention.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m } from '../../config/site';
 
 interface Props {
-  variant?: 'contact' | 'newsletter';
+  variant?: 'contact' | 'newsletter' | 'membership';
 }
 const { variant = 'contact' } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const msg = {
-  contact: { ca: 'Gràcies! Hem rebut el teu missatge i et respondrem ben aviat.', es: '¡Gracias! Hemos recibido tu mensaje y te responderemos pronto.' },
-  newsletter: { ca: 'Gràcies per subscriure’t! Aviat rebràs les nostres novetats.', es: '¡Gracias por suscribirte! Pronto recibirás nuestras novedades.' },
+
+const copy = {
+  contact: {
+    ca: {
+      title: 'Rebut!',
+      msg: 'Et responem en 2-3 dies feiners. Som una cooperativa de voluntàries: gràcies per la paciència.',
+      links: [
+        { label: 'Mentrestant, mira les FAQs', href: '/faqs', primary: true },
+        { label: 'Vine a veure’ns', href: '/el-super' },
+      ],
+    },
+    es: {
+      title: '¡Recibido!',
+      msg: 'Te respondemos en 2-3 días laborables. Somos una cooperativa de voluntarias: gracias por la paciencia.',
+      links: [
+        { label: 'Mientras tanto, mira las FAQs', href: '/faqs', primary: true },
+        { label: 'Ven a vernos', href: '/el-super' },
+      ],
+    },
+  },
+  newsletter: {
+    ca: {
+      title: 'Ja ets a la llista.',
+      msg: 'El proper correu surt a principis de mes: producte de temporada, receptes i què decidim a l’assemblea.',
+      links: [
+        { label: 'Fes-te sòcia', href: '/fes-te-socia', primary: true },
+        { label: 'Llegeix l’actualitat', href: '/actualitat' },
+      ],
+    },
+    es: {
+      title: 'Ya estás en la lista.',
+      msg: 'El próximo correo sale a principios de mes: producto de temporada, recetas y qué decidimos en la asamblea.',
+      links: [
+        { label: 'Hazte socia', href: '/fes-te-socia', primary: true },
+        { label: 'Lee la actualidad', href: '/actualitat' },
+      ],
+    },
+  },
+  membership: {
+    ca: {
+      title: 'Benvinguda! Ja gairebé hi som.',
+      msg: `Hem rebut la teva sol·licitud. Et responem en 2-3 dies feiners amb com fer l’aportació de ${m.capital} € i els dies disponibles per a la sessió de benvinguda.`,
+      links: [
+        { label: 'Com funcionen els torns', href: '/fes-te-socia', primary: true },
+        { label: 'Horari i com arribar-hi', href: '/el-super' },
+      ],
+    },
+    es: {
+      title: '¡Bienvenida! Ya casi estamos.',
+      msg: `Hemos recibido tu solicitud. Te respondemos en 2-3 días laborables con cómo hacer la aportación de ${m.capital} € y los días disponibles para la sesión de bienvenida.`,
+      links: [
+        { label: 'Cómo funcionan los turnos', href: '/fes-te-socia', primary: true },
+        { label: 'Horario y cómo llegar', href: '/el-super' },
+      ],
+    },
+  },
 }[variant][lang];
 ---
-<BaseLayout title={lang === 'ca' ? 'Gràcies' : 'Gracias'} noindex={true}>
+<BaseLayout title={copy.title} noindex={true}>
   <section class="section">
     <div class="container-narrow text-center">
       <div class="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full bg-brand text-paper">
-        <Icon name="leaf" size={32} />
+        <Icon name="check" size={32} />
       </div>
-      <h1 class="text-2xl">{lang === 'ca' ? 'Gràcies!' : '¡Gracias!'}</h1>
-      <p class="mx-auto mt-4 max-w-md text-lg text-ink-soft">{msg}</p>
-      <div class="mt-8">
-        <Button href={localizePath('/', lang)} variant="primary">{lang === 'ca' ? 'Torna a l’inici' : 'Volver al inicio'}</Button>
+      <h1 class="text-2xl">{copy.title}</h1>
+      <p class="mx-auto mt-4 max-w-md text-lg text-ink-soft">{copy.msg}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        {copy.links.map((l) => (
+          <Button href={localizePath(l.href, lang)} variant={l.primary ? 'primary' : 'ghost'}>
+            {l.label}
+          </Button>
+        ))}
       </div>
     </div>
   </section>

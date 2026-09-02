@@ -1,0 +1,102 @@
+---
+/*
+ * A row of picture-led items. Two layouts, one component — so the CMS gains one block type
+ * rather than two near-identical ones.
+ *   tile: image over a short caption (the product families)
+ *   card: image, title, text and a link (Cistella bàsica / Proveïdors / Els criteris)
+ */
+import Section from './Section.astro';
+import Card from '../ui/Card.astro';
+import Photo from '../ui/Photo.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Item {
+  image?: string;
+  imageAlt?: string;
+  title: string;
+  text?: string;
+  cta?: { label: string; href: string };
+}
+interface Props {
+  /** Pulls this block up against the one above it. */
+  tight?: boolean;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  layout?: 'tile' | 'card';
+  columns?: 2 | 3 | 4 | 6;
+  items: Item[];
+  tone?: 'paper' | 'soft' | 'green';
+}
+const {
+  eyebrow,
+  title,
+  intro,
+  layout = 'card',
+  columns = 3,
+  items,
+  tone = 'paper',
+  tight = false,
+} = Astro.props;
+
+const cols = {
+  2: 'grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-3',
+  4: 'grid-cols-2 lg:grid-cols-4',
+  6: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6',
+}[columns];
+const tile = layout === 'tile';
+---
+<Section tone={tone} tight={tight}>
+  {
+    (title || intro || eyebrow) && (
+      <div class="mb-10 max-w-2xl">
+        {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-ink">{eyebrow}</p>}
+        {title && <h2 class="text-2xl">{title}</h2>}
+        {intro && <p class="mt-4 text-lg opacity-80">{intro}</p>}
+      </div>
+    )
+  }
+
+  <div class:list={['grid gap-5', cols]}>
+    {
+      items.map((item) => (
+        <Card href={item.cta?.href}>
+          {item.image && (
+            <Photo
+              src={item.image}
+              alt={item.imageAlt || ''}
+              ratio={tile ? 1 : 4 / 3}
+              sizes={
+                tile
+                  ? '(min-width: 1024px) 12vw, (min-width: 640px) 24vw, 45vw'
+                  : '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw'
+              }
+              class:list={[
+                'w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]',
+                tile ? 'aspect-square' : 'aspect-[4/3]',
+              ]}
+            />
+          )}
+          <div class:list={[tile ? 'p-3 text-center' : 'p-6']}>
+            <h3 class:list={[tile ? 'text-base font-bold' : 'text-lg font-extrabold']}>
+              {item.title}
+            </h3>
+            {item.text && <p class="mt-2 text-sm text-ink-soft">{item.text}</p>}
+            {/* A tile is the whole link, so its CTA label is the link's purpose, not a
+                visible row — an arrow under a one-word caption is noise. */}
+            {item.cta?.label &&
+              (tile ? (
+                <span class="sr-only">{item.cta.label}</span>
+              ) : (
+                <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-brand-ink">
+                  {item.cta.label}
+                  <Icon name="arrow" size={14} />
+                </p>
+              ))}
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Section>

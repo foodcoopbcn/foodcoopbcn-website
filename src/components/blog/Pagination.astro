@@ -14,7 +14,7 @@ const t = useTranslations(lang);
   lastPage > 1 && (
     <nav class="mt-12 flex items-center justify-between gap-4" aria-label="Pagination">
       {prevUrl ? (
-        <a href={prevUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand hover:ring-brand">
+        <a href={prevUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand-ink hover:ring-brand">
           ← {t('blog.newer')}
         </a>
       ) : (
@@ -22,7 +22,7 @@ const t = useTranslations(lang);
       )}
       <span class="text-sm text-muted">{currentPage} / {lastPage}</span>
       {nextUrl ? (
-        <a href={nextUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand hover:ring-brand">
+        <a href={nextUrl} class="rounded-pill px-4 py-2 text-sm font-semibold ring-1 ring-line hover:text-brand-ink hover:ring-brand">
           {t('blog.older')} →
         </a>
       ) : (
