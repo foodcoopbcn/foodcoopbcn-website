@@ -19,12 +19,15 @@ const { question, open = false, id, as: Heading = 'h3' } = Astro.props;
 ---
 <details id={id} class="group border-b border-line py-1 [&[open]>summary_svg]:rotate-180" open={open}>
   <summary
-    class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 marker:hidden"
+    class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 transition-colors duration-[var(--duration-fast)] ease-out-soft hover:text-brand-ink marker:hidden"
   >
     <Heading class="font-display text-lg font-bold">{question}</Heading>
-    <Icon name="chevron" class="shrink-0 text-brand-ink transition-transform duration-200" />
+    <Icon
+      name="chevron"
+      class="shrink-0 text-brand-ink transition-transform duration-[var(--duration-base)] ease-out-soft"
+    />
   </summary>
-  <div class="prose-content pb-5 text-ink-soft">
+  <div class="reveal-panel prose-content pb-5 text-ink-soft">
     <slot />
   </div>
 </details>
@@ -33,5 +36,29 @@ const { question, open = false, id, as: Heading = 'h3' } = Astro.props;
   /* Safari still paints its own disclosure triangle without this. */
   summary::-webkit-details-marker {
     display: none;
+  }
+
+  /*
+   * The chevron used to rotate over a hard cut: the panel itself appeared
+   * instantly. `@starting-style` gives the answer a real entrance without any
+   * JavaScript and without measuring heights — the panel is display:none until
+   * the details opens, so `transition-behavior: allow-discrete` is what makes
+   * the frame before it become animatable.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-panel {
+      opacity: 1;
+      translate: 0 0;
+      transition:
+        opacity var(--duration-base) var(--ease-out-soft),
+        translate var(--duration-base) var(--ease-out-soft);
+    }
+
+    @starting-style {
+      details[open] .reveal-panel {
+        opacity: 0;
+        translate: 0 -0.5rem;
+      }
+    }
   }
 </style>

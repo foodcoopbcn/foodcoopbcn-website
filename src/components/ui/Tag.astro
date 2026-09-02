@@ -4,7 +4,17 @@ interface Props {
   class?: string;
 }
 const { href, class: className = '' } = Astro.props;
-const cls = `inline-flex items-center rounded-pill bg-paper-green text-brand-dark text-xs font-semibold px-3 py-1 leading-none ${className}`;
+const base =
+  'inline-flex items-center rounded-pill bg-paper-green text-brand-dark text-xs font-semibold px-3 py-1 leading-none';
+/*
+ * When `href` is passed this is a link, and it used to have no hover and no
+ * focus treatment whatsoever — the only interactive element on the site with
+ * neither. Category tags on the blog are a real navigation path.
+ */
+const interactive = href
+  ? ' transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-ink hover:text-paper focus-visible:bg-brand-ink focus-visible:text-paper'
+  : '';
+const cls = `${base}${interactive} ${className}`;
 const Tag = href ? 'a' : 'span';
 ---
 <Tag class={cls} href={href}><slot /></Tag>

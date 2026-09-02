@@ -18,7 +18,7 @@ interface Props {
 const { eyebrow, title, text, image, imageAlt = '', reverse, tone = 'paper', cta } = Astro.props;
 ---
 <Section tone={tone}>
-  <div class="grid items-center gap-10 md:grid-cols-2">
+  <div class="reveal-stagger grid items-center gap-10 md:grid-cols-2">
     {image && (
       <Photo
         src={image}

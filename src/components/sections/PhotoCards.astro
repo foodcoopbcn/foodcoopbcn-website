@@ -58,7 +58,7 @@ const tile = layout === 'tile';
     )
   }
 
-  <div class:list={['grid gap-5', cols]}>
+  <div class:list={['reveal-stagger grid gap-5', cols]}>
     {
       items.map((item) => (
         <Card href={item.cta?.href}>

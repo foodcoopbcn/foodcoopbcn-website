@@ -157,7 +157,7 @@ const primaryHref = variant === 'persona' ? signup : contact;
           ))}
         </ul>
       </div>
-      <div class="rounded-2xl bg-paper-green p-8">
+      <div class="rounded-lg bg-paper-green p-8">
         <h2 class="text-xl text-brand-dark">{content.commitTitle}</h2>
         <ul class="mt-5 space-y-3">
           {content.commit.map((b) => (
@@ -168,7 +168,7 @@ const primaryHref = variant === 'persona' ? signup : contact;
           ))}
         </ul>
       </div>
-      <aside class="self-start rounded-2xl bg-ink p-8 text-center text-paper">
+      <aside class="self-start rounded-lg bg-ink p-8 text-center text-paper">
         <p class="text-sm font-bold uppercase tracking-widest text-accent">{content.priceLabel}</p>
         <p class="mt-2 font-display text-3xl font-extrabold">{content.price}</p>
         {'priceNote' in content && <p class="mt-2 text-sm text-paper/70">{content.priceNote}</p>}
