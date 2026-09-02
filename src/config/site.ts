@@ -123,9 +123,9 @@ export const hours: HoursDay[] = [
 /** `day.0`…`day.6` — the UI key holding the name of a weekday index. */
 export const dayKey = (day: number) => `day.${day}` as UiKey;
 
-/** Format one day's ranges for display: "10:00–14:00 · 17:00–20:30". */
+/** Format one day's ranges for display: "10:00-14:00 · 17:00-20:30". */
 export const formatRanges = (ranges: [string, string][], closed = '—') =>
-  ranges.length ? ranges.map(([from, to]) => `${from}–${to}`).join(' · ') : closed;
+  ranges.length ? ranges.map(([from, to]) => `${from}-${to}`).join(' · ') : closed;
 
 type NavItem = {
   key: UiKey;

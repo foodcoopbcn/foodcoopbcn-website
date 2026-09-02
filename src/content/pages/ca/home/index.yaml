@@ -14,7 +14,7 @@ sections:
       image: /images/assets/home-hero.svg
       imageAlt: Sòcies de FoodCoop BCN davant del supermercat
       primaryCta:
-        label: Fes-te sòcia — 40 €, retornables
+        label: "Fes-te sòcia: 40 €, retornables"
         href: /fes-te-socia
       secondaryCta:
         label: Vine a comprar

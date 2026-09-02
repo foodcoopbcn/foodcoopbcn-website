@@ -14,7 +14,7 @@ sections:
       image: /images/assets/home-hero.svg
       imageAlt: Socias de FoodCoop BCN delante del supermercado
       primaryCta:
-        label: Hazte socia — 40 €, reembolsables
+        label: "Hazte socia: 40 €, reembolsables"
         href: /fes-te-socia
       secondaryCta:
         label: Ven a comprar

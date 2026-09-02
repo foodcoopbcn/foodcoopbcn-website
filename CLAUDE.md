@@ -29,7 +29,11 @@ content collections (`src/content/**`), blog posts, form copy, alt text, and SEO
   - Good: `Fes-te sòcia: 40 €, retornables`
 - The hyphen `-` stays available for compounds and for numeric ranges (`10-12 h`), though
   `de 10 a 12 h` reads better in ca/es.
-- Same rule in code comments and commit messages, so nothing leaks into copy by copy-paste.
+- Exempt: the `—` glyph used as a "no value" placeholder in tables and stat cells
+  (always `aria-hidden`, with the meaning carried by an `sr-only` label). That is an icon,
+  not punctuation.
+- Commit messages and PR descriptions follow the same rule. Existing code comments are
+  not worth churning over, but write new ones without em dashes.
 
 ### Register: always informal "tu" (ca) / "tú" (es)
 - Address the reader as one person, informally. Never `vostè`/`vostès` (ca) or
