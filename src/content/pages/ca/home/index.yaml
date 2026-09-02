@@ -1,0 +1,109 @@
+sections:
+  - discriminant: hero
+    value:
+      eyebrow: Supermercat cooperatiu de Barcelona
+      title: Bons productes per a tu i per a la terra
+      highlights:
+        - Decisions i marges transparents
+        - Productes sostenibles i de proximitat
+        - Bon ambient i comunitat
+      text: >-
+        El primer supermercat cooperatiu, participatiu i sense ànim de lucre de
+        Barcelona. Productes bons, sans i a un preu just, sense marges per a
+        ningú.
+      primaryCta:
+        label: Fes-te sòcia
+        href: /fes-te-socia
+      secondaryCta:
+        label: Visita el súper
+        href: /el-super
+  - discriminant: featureGrid
+    value:
+      title: Per què FoodCoop?
+      intro: Un model just per a les persones, els productors i el planeta.
+      tone: paper
+      columns: '4'
+      features:
+        - icon: leaf
+          title: Sostenible i de proximitat
+          text: >-
+            Prioritzem productors locals catalans i productes agroecològics, a
+            granel i amb poc envàs.
+        - icon: vote
+          title: Transparència total
+          text: >-
+            Decisions preses en assemblea i marges visibles. Sense ànim de
+            lucre: cap benefici privat.
+        - icon: heart
+          title: Sa i assequible
+          text: >-
+            Més de 1.200 productes de qualitat a un preu just, perquè menjar bé
+            sigui per a tothom.
+        - icon: user
+          title: Comunitat
+          text: >-
+            Un projecte fet entre totes: les sòcies hi dediquen unes hores al
+            mes i en decideixen el rumb.
+  - discriminant: splitCards
+    value:
+      eyebrow: FoodCoop BCN
+      title: Dues maneres de comprar-hi
+      intro: >-
+        Pots comprar-hi sense ser sòcia, o fer-te’n part i gaudir de tots els
+        avantatges.
+      tone: soft
+      options:
+        - badge: Obert a tothom
+          title: Compra pública
+          text: >-
+            No cal ser sòcia per comprar al súper. Vine i descobreix els nostres
+            productes.
+          points:
+            - Sense quota ni compromís
+            - Productes a granel i de proximitat
+            - Horari ampli de dilluns a dissabte
+          featured: false
+          cta:
+            label: Visita el súper
+            href: /el-super
+        - badge: Recomanat
+          title: Fes-te sòcia
+          text: Forma part del projecte, decideix i estalvia.
+          points:
+            - 12% de descompte en tots els productes
+            - Accés a la botiga en línia amb repartiment en bici
+            - Vot a les assemblees
+            - Participació d’unes 2-2,5 h al mes
+          featured: true
+          cta:
+            label: Fes-te sòcia
+            href: /fes-te-socia
+  - discriminant: stats
+    value:
+      tone: ink
+      stats:
+        - value: 1.200+
+          label: Productes
+        - value: 12%
+          label: Descompte sòcies
+        - value: 100%
+          label: Sense ànim de lucre
+        - value: '0'
+          label: Marges privats
+  - discriminant: newsTeaser
+    value:
+      title: Actualitat del projecte
+      tone: paper
+      limit: 3
+  - discriminant: ctaSection
+    value:
+      title: Vols formar part del projecte?
+      text: >-
+        Fes-te sòcia i ajuda’ns a construir una altra manera d’alimentar-nos a
+        Barcelona.
+      primaryCta:
+        label: Fes-te sòcia
+        href: /fes-te-socia
+      secondaryCta:
+        label: Contacte
+        href: /contacte
