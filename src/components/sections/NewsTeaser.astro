@@ -1,0 +1,38 @@
+---
+import Section from './Section.astro';
+import Button from '../ui/Button.astro';
+import PostCard from '../blog/PostCard.astro';
+import { entryLang, entrySlug, postPath, type PostType, type AnyPost } from '../../lib/posts';
+
+/*
+ * News teaser. Only the heading is editable content — the cards are generated from the
+ * news/recipes collections, so the page passes `posts`/`labels` in.
+ */
+interface Props {
+  title: string;
+  posts: { type: PostType; entry: AnyPost }[];
+  labels: Record<string, string>;
+  allNewsHref: string;
+  allNewsLabel: string;
+  tone?: 'paper' | 'soft' | 'green';
+}
+const { title, posts, labels, allNewsHref, allNewsLabel, tone = 'paper' } = Astro.props;
+---
+<Section tone={tone}>
+  <div class="mb-10 flex items-end justify-between gap-4">
+    <h2 class="text-2xl">{title}</h2>
+    <Button href={allNewsHref} variant="ghost">{allNewsLabel}</Button>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {posts.map(({ type, entry }) => (
+      <PostCard
+        href={postPath(type, entryLang(entry.id), entrySlug(entry.id))}
+        title={entry.data.title}
+        date={entry.data.date}
+        excerpt={entry.data.excerpt}
+        cover={entry.data.cover}
+        category={labels[entry.data.category] ?? entry.data.category}
+      />
+    ))}
+  </div>
+</Section>
