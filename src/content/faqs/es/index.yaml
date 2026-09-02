@@ -14,7 +14,7 @@ groups:
       - q: "¿Todo es ecológico?"
         a: "La mayor parte sí, pero el criterio no es solo el sello. Valoramos la proximidad, la manera de producir y las condiciones de trabajo de quien lo hace. Las socias decidimos los criterios en asamblea."
       - q: "¿Puedo comprar a granel con mis envases?"
-        a: "Sí. Trae tus tarros o bolsas, los pesamos vacíos en caja y solo te cobramos el producto. También tenemos disponibles en la tienda."
+        a: "Sí. Trae tus tarros o bolsas, los pesamos vacíos en caja y solo te cobramos el producto. También los tenemos disponibles en la tienda."
       - q: "¿Cómo funciona la tienda online y qué cuesta el reparto?"
         a: "La tienda online es exclusiva para socias. Recibes el pedido en casa en 24-48 h con reparto en bici de las cooperativas Mensakas y Les Mercedes: {deliveryCheap} € para pedidos de más de {deliveryThreshold} € y {deliveryStandard} € por debajo."
   - title: "Hacerse socia"

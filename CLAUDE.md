@@ -52,7 +52,8 @@ Before committing ca/es copy, check it reads as native text:
 - Accents and open/closed vowels: `què` vs `que`, `més`, `sòcia`, `perquè` vs `per què`.
 - Geminated l: use the punt volat `l·l` (`col·lectiu`, `cel·la`), never `ll` or `l.l`.
 - Weak pronouns and apostrophes: `apunta't`, `informa-te'n`, `l'horari`, `d'aquí`.
-- Correct imperatives: `fes`, not `fas`; `vine`, not `véns`.
+- Correct imperatives: `fes`, not `fas`; `vine`, not `véns`; `vés` (from `anar`) carries an accent.
+- `en` + `hi` contracts to `n’hi`: `n’hi ha d’altres`, never `en hi ha`.
 - Barbarisms: prefer `sòcia` over `socia`, `recollida` over `recogida`, `targeta` over
   `tarjeta`, `cop` / `vegada` over `vez`.
 
@@ -67,3 +68,8 @@ Before committing ca/es copy, check it reads as native text:
   idiomatic on its own.
 - Keep terminology consistent with the glossary already used on the site (`sòcia`/`socia`,
   `torn`/`turno`, `quota`/`cuota`, `cistella`/`cesta`).
+- Subject and verb must agree in person. A third-person list cannot take a second-person
+  verb: not `Cooperatives, associacions… podeu ser`, but `Si sou una cooperativa,
+  associació… podeu ser`.
+- The brand is always `FoodCoop BCN`, never `Foodcoop Bcn`.
+- Use the typographic apostrophe `’` in ca/es copy, never the straight `'`.
