@@ -111,7 +111,7 @@ const c = {
 
       <aside class="space-y-6 rounded-lg bg-paper-green p-8">
         <div>
-          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="pin" size={18} /> {t('footer.contact')}</h2>
+          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-strong"><Icon name="pin" size={18} /> {t('footer.contact')}</h2>
           <address class="space-y-1 text-sm not-italic text-ink-soft">
             <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
             <p><a class="hover:text-brand-ink" href={`tel:${org.phone}`}>{org.phoneDisplay}</a></p>
@@ -119,7 +119,7 @@ const c = {
           </address>
         </div>
         <div>
-          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="clock" size={18} /> {t('footer.hours')}</h2>
+          <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-strong"><Icon name="clock" size={18} /> {t('footer.hours')}</h2>
           <dl class="space-y-1 text-sm text-ink-soft">
             {hours.map((h) => (
               <div class="flex justify-between"><dt>{t(dayKey(h.day))}</dt><dd class="text-muted">{formatRanges(h.ranges, t('hours.closed'))}</dd></div>
@@ -128,7 +128,7 @@ const c = {
         </div>
         <div class="flex gap-2">
           {social.map((s) => (
-            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand-ink hover:bg-brand-ink hover:text-paper">
+            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand-ink hover:bg-brand-fill hover:text-paper">
               <Icon name={s.icon as any} size={18} />
             </a>
           ))}

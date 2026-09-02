@@ -275,7 +275,7 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         <ul class="mt-6 space-y-4">
           {c.benefits.map((b) => (
             <li class="flex items-start gap-3">
-              <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-ink text-paper">
+              <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-fill text-paper">
                 <Icon name="check" size={14} />
               </span>
               <span set:html={bold(b)} />
@@ -284,8 +284,8 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
         </ul>
       </div>
       <aside class="self-start rounded-lg bg-paper-green p-8 text-center">
-        <p class="text-sm font-bold uppercase tracking-widest text-brand-dark">{c.priceLabel}</p>
-        <p class="mt-2 font-display text-3xl font-extrabold text-brand-dark">{m.capital} €</p>
+        <p class="text-sm font-bold uppercase tracking-widest text-brand-strong">{c.priceLabel}</p>
+        <p class="mt-2 font-display text-3xl font-extrabold text-brand-strong">{m.capital} €</p>
         <p class="mt-3 text-sm text-ink-soft">{c.priceNote}</p>
       </aside>
     </div>
@@ -300,7 +300,7 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     <div class="grid gap-6 md:grid-cols-3">
       {c.ways.map((w) => (
         <div class="flex flex-col rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
-          <span class="mb-4 inline-flex w-fit items-center gap-2 rounded-pill bg-paper-green px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark">
+          <span class="mb-4 inline-flex w-fit items-center gap-2 rounded-pill bg-paper-green px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-strong">
             <Icon name={w.icon as any} size={14} /> {w.badge}
           </span>
           <h3 class="text-lg">{w.title}</h3>
@@ -325,7 +325,7 @@ const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     <ol class="grid gap-6 md:grid-cols-4">
       {c.steps.map((s) => (
         <li class="rounded-lg bg-paper p-6 shadow-sm ring-1 ring-line">
-          <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-ink font-display text-lg font-extrabold text-paper">{s.n}</span>
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-fill font-display text-lg font-extrabold text-paper">{s.n}</span>
           <h3 class="mt-4 text-lg">{s.t}</h3>
           <p class="mt-1.5 text-sm text-ink-soft">{s.d}</p>
         </li>

@@ -196,7 +196,7 @@ const em = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
                 scope="col"
                 class:list={[
                   'border-b-2 border-line p-4 text-sm font-bold uppercase tracking-wide',
-                  i === 2 ? 'rounded-t-lg bg-paper-green text-brand-dark' : 'text-ink-soft',
+                  i === 2 ? 'rounded-t-lg bg-paper-green text-brand-strong' : 'text-ink-soft',
                 ]}
               >
                 {h}
@@ -209,7 +209,7 @@ const em = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
             <tr>
               <th scope="row" class="border-b border-line p-4 font-semibold">{r.a}</th>
               <td class="border-b border-line p-4 text-ink-soft">{r.b}</td>
-              <td class="border-b border-line bg-paper-green/40 p-4 font-semibold text-brand-dark">{r.c}</td>
+              <td class="border-b border-line bg-paper-green/40 p-4 font-semibold text-brand-strong">{r.c}</td>
             </tr>
           ))}
         </tbody>
@@ -218,7 +218,7 @@ const em = (s: string) => s.replace(/\*(.+?)\*/g, '<em>$1</em>');
   </Section>
 
   <Section tone="green" width="narrow">
-    <h2 class="text-2xl text-brand-dark">{c.modelTitle}</h2>
+    <h2 class="text-2xl text-brand-strong">{c.modelTitle}</h2>
     <p class="mt-4 text-lg" set:html={em(c.modelText)} />
   </Section>
 

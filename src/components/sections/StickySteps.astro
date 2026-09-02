@@ -28,7 +28,7 @@ const { eyebrow, title, intro, tone = 'paper', steps, id } = Astro.props;
 const tones = {
   paper: 'bg-paper text-ink',
   soft: 'bg-paper-soft text-ink',
-  green: 'bg-paper-green text-brand-dark',
+  green: 'bg-paper-green text-brand-strong',
 };
 ---
 <section id={id} class:list={['section', tones[tone]]}>
@@ -56,7 +56,7 @@ const tones = {
           -->
           <div class="flex items-start gap-4">
             <span
-              class="numeral grid h-10 w-10 shrink-0 place-items-center rounded-pill bg-brand-ink font-display text-lg font-extrabold text-paper"
+              class="numeral grid h-10 w-10 shrink-0 place-items-center rounded-pill bg-brand-fill font-display text-lg font-extrabold text-paper"
               aria-hidden="true"
             ></span>
             <div class="min-w-0">

@@ -29,7 +29,7 @@ const ext = (item: { external?: boolean }) =>
 const ctaItem = mainNav.find((item) => item.highlight);
 
 const pill =
-  'inline-flex items-center gap-1.5 rounded-pill bg-brand-ink px-4 py-2 text-sm font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2';
+  'inline-flex items-center gap-1.5 rounded-pill bg-brand-fill px-4 py-2 text-sm font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2';
 ---
 <header class="site-header sticky top-0 z-40 lg:top-[-2.25rem]">
   <!-- Utility row: scrolls away, only the main bar below stays pinned -->
@@ -107,7 +107,7 @@ const pill =
                   {item.children.map((child) => (
                     <a
                       href={localizePath(child.path, lang)}
-                      class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-dark"
+                      class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-strong"
                     >
                       {t(child.key)}
                     </a>
@@ -144,7 +144,7 @@ const pill =
           ctaItem && (
             <a
               href={hrefOf(ctaItem)}
-              class="hidden items-center whitespace-nowrap rounded-pill bg-brand-ink px-3.5 py-2 text-xs font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 min-[360px]:inline-flex sm:text-sm"
+              class="hidden items-center whitespace-nowrap rounded-pill bg-brand-fill px-3.5 py-2 text-xs font-bold text-paper transition-colors duration-[var(--duration-fast)] ease-out-soft hover:bg-brand-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 min-[360px]:inline-flex sm:text-sm"
             >
               {t(ctaItem.key)}
             </a>
@@ -195,7 +195,7 @@ const pill =
                     href={hrefOf(item)}
                     class:list={[
                       'rounded-md px-3 py-3 text-base font-semibold hover:bg-paper-green',
-                      item.highlight && 'text-brand-dark',
+                      item.highlight && 'text-brand-strong',
                     ]}
                     {...ext(item)}
                   >

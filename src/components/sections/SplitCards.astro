@@ -40,7 +40,7 @@ const { eyebrow, title, intro, options, tone = 'soft' } = Astro.props;
           <span
             class:list={[
               'mb-4 inline-flex w-fit items-center rounded-pill px-3 py-1 text-xs font-bold uppercase tracking-wide',
-              o.featured ? 'bg-accent text-ink' : 'bg-paper-soft text-ink-soft',
+              o.featured ? 'bg-accent text-on-accent' : 'bg-paper-soft text-ink-soft',
             ]}
           >
             {o.badge}

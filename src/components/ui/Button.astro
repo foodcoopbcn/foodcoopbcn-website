@@ -1,7 +1,7 @@
 ---
 interface Props {
   href?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'accent';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'accent' | 'bare';
   size?: 'md' | 'lg';
   class?: string;
   type?: 'button' | 'submit';
@@ -34,10 +34,21 @@ const sizes = {
  * brightness() filter, which behaved differently per variant.
  */
 const variants = {
-  primary: 'bg-brand-ink text-paper hover:bg-brand-hover shadow-sm',
-  accent: 'bg-accent text-ink hover:bg-accent-hover shadow-sm',
-  secondary: 'bg-ink text-paper hover:bg-brand-ink',
+  primary: 'bg-brand-fill text-paper hover:bg-brand-hover shadow-sm',
+  accent: 'bg-accent text-on-accent hover:bg-accent-hover shadow-sm',
+  secondary: 'bg-ink text-paper hover:bg-brand-fill',
   ghost: 'bg-transparent text-ink ring-1 ring-ink/40 hover:ring-brand-ink hover:text-brand-ink',
+  /*
+   * No colours at all, for callers that supply their own — the hero's outline
+   * CTA sits on a photograph and needs the on-ink ramp, not a theme colour.
+   *
+   * Without this they passed `text-on-ink-strong` in `class` while the variant
+   * still emitted `text-paper`. Both are single-class rules, so the winner is
+   * decided by order in the stylesheet, not order in the attribute. In one theme
+   * the two were near-identical whites and the clash was invisible; the moment
+   * --color-paper flipped dark, the button turned near-black on a dark band.
+   */
+  bare: '',
 };
 const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
 const Tag = href ? 'a' : 'button';

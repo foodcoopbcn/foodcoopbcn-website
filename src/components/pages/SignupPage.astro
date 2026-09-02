@@ -151,13 +151,13 @@ const field =
       </form>
 
       <aside class="self-start rounded-lg bg-paper-green p-8">
-        <h2 class="flex items-center gap-2 font-display text-lg font-bold text-brand-dark">
+        <h2 class="flex items-center gap-2 font-display text-lg font-bold text-brand-strong">
           <Icon name="check" size={18} /> {c.asideTitle}
         </h2>
         <ol class="mt-4 space-y-3 text-sm text-ink-soft">
           {c.steps.map((s, i) => (
             <li class="flex items-start gap-3">
-              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-ink text-xs font-bold text-paper">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-fill text-xs font-bold text-paper">
                 {i + 1}
               </span>
               <span>{s}</span>
@@ -165,7 +165,7 @@ const field =
           ))}
         </ol>
         <p class="mt-6 border-t border-brand/20 pt-5 text-sm">
-          <strong class="block text-brand-dark">{c.prefer}</strong>
+          <strong class="block text-brand-strong">{c.prefer}</strong>
           <a href={`mailto:${org.email}`} class="text-brand-ink underline">{org.email}</a>
           {' · '}
           <a href={`tel:${org.phone}`} class="text-brand-ink underline">{org.phoneDisplay}</a>

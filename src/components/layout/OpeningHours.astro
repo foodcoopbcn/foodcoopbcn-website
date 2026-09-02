@@ -101,9 +101,45 @@ const ranges = Object.fromEntries(hours.map((h) => [h.day, h.ranges]));
   .fc-hours[data-open='false'] .fc-closed {
     display: inline-block;
   }
+  /*
+   * brand-ink, not brand: this is small bold white text on a fill, and
+   * white on #009739 is 3.83:1. Same rule as the buttons.
+   */
   .fc-hours[data-open='true'] .fc-open {
-    background: var(--color-brand);
+    background: var(--color-brand-ink);
     color: var(--color-paper);
+  }
+
+  /*
+   * A live dot, so "Obert" reads as the shop's state right now rather than as a
+   * label someone typed. The script already sets data-open; this costs no extra
+   * JavaScript, and it stops moving entirely when the reader asks for that.
+   */
+  .fc-hours[data-open='true'] .fc-open::before {
+    content: '';
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.4rem;
+    vertical-align: baseline;
+    border-radius: var(--radius-pill);
+    background: currentColor;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fc-hours[data-open='true'] .fc-open::before {
+      animation: fc-pulse 2.4s var(--ease-out-soft) infinite;
+    }
+  }
+
+  @keyframes fc-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
   }
   /* The one place a status colour earns its keep. */
   .fc-hours[data-open='false'] .fc-closed {
