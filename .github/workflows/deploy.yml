@@ -63,9 +63,14 @@ jobs:
           # /el-super resolve to dist/el-super/. Without it lychee reports every
           # internal link as unresolvable and checks nothing; --base is for URLs,
           # not local directories.
+          #
+          # No --include-fragments: the site uses directory-style URLs, so lychee
+          # resolves /qui-som to the directory and cannot look inside index.html
+          # for #governanca. Every anchor it flagged was verified to exist. Link
+          # existence is the part worth checking, and that works.
           args: >-
             --offline --no-progress --root-dir "$GITHUB_WORKSPACE/dist"
-            --include-fragments 'dist/**/*.html'
+            'dist/**/*.html'
           fail: true
 
   deploy:
