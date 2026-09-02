@@ -70,7 +70,9 @@ const PHOTOS = [
   { slug: 'grup-comunitat', src: `${B}/photo_2024-03-04 11.17.01 (1).jpeg`, ratio: 3 / 2, widths: [520, 900] },
   { slug: 'torn-caixa', src: `${M}/_F1A5497 copia.jpg`, ratio: 3 / 2, widths: [520, 900, 1200], position: 'attention' },
   { slug: 'torn-reposant', src: `${M}/_F1A5313 copia.jpg`, ratio: 3 / 2, widths: [520, 900, 1200], position: 'attention' },
-  { slug: 'passatge-rotul', src: `${P}/IMG_1804.HEIC`, ratio: 4 / 3, widths: [420, 720, 1000], position: 'attention' },
+/* The shop front itself, which is what someone walking down the passage is
+     actually looking for. */
+  { slug: 'facana-botiga', src: `${M}/_F1A5292.jpg`, ratio: 4 / 3, widths: [420, 720, 1000], position: 'attention' },
 
   // --- Product family tiles: small squares, six across ----------------------
   { slug: 'fam-fruita-verdura', src: `${PR}/photo_2023-07-21_08-41-30.jpg`, ratio: 1, widths: [240, 400, 560] },
