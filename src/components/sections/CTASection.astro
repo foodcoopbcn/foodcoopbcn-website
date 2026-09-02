@@ -8,10 +8,18 @@ interface Props {
 }
 const { title, text, primaryCta, secondaryCta } = Astro.props;
 ---
-<section class="section bg-brand text-paper">
+<!--
+  The band used to be `bg-brand` with the paragraph at `text-paper/85`. tokens.css
+  documents white-on-#009739 as 3.83:1 — fine behind display type, not behind
+  20px body copy, and the 85% alpha took it to roughly 3.2:1. This is the site's
+  main conversion band and it appears on thirteen pages, so it moves one
+  considered step onto `brand-ink` (5.1:1, the token that exists for writing on)
+  and the paragraph goes back to full white.
+-->
+<section class="section bg-brand-ink text-paper">
   <div class="container-narrow text-center">
     <h2 class="text-2xl">{title}</h2>
-    {text && <p class="mx-auto mt-4 max-w-xl text-lg text-paper/85">{text}</p>}
+    {text && <p class="mx-auto mt-4 max-w-xl text-lg text-paper">{text}</p>}
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       {primaryCta && <Button href={primaryCta.href} size="lg" variant="accent">{primaryCta.label}</Button>}
       {secondaryCta && <Button href={secondaryCta.href} size="lg" variant="secondary">{secondaryCta.label}</Button>}

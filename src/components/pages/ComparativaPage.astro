@@ -26,6 +26,9 @@ const c = {
   ca: {
     eyebrow: 'Preus',
     title: 'Compara’ns amb altres supermercats',
+    /* The table's own heading. It used to reuse `title`, so the page printed the
+       same sentence twice, as an h1 and then as an h2 right underneath it. */
+    tableTitle: 'La cistella d’avui, producte a producte',
     intro:
       'Els preus d’avui d’una selecció de productes bàsics a FoodCoop BCN i a quatre supermercats de Barcelona. Els recollim automàticament cada dia de les botigues en línia de cadascun.',
     unavailableTitle: 'Avui no podem mostrar la comparativa',
@@ -56,6 +59,7 @@ const c = {
   es: {
     eyebrow: 'Precios',
     title: 'Compáranos con otros supermercados',
+    tableTitle: 'La cesta de hoy, producto a producto',
     intro:
       'Los precios de hoy de una selección de productos básicos en FoodCoop BCN y en cuatro supermercados de Barcelona. Los recogemos automáticamente cada día de las tiendas en línea de cada uno.',
     unavailableTitle: 'Hoy no podemos mostrar la comparativa',
@@ -90,7 +94,7 @@ const c = {
 
   {
     compare ? (
-      <PriceCompare title={c.title} data={compare} tone="paper" id="comparativa" />
+      <PriceCompare title={c.tableTitle} data={compare} tone="paper" id="comparativa" />
     ) : (
       <Section width="narrow">
         <h2 class="text-2xl">{c.unavailableTitle}</h2>

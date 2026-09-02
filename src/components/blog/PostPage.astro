@@ -62,9 +62,19 @@ const crumbs = breadcrumbs([
   { name: data.title, path: Astro.url.pathname },
 ]);
 
+/*
+ * og:image must be a raster. Every post cover is currently
+ * /images/news/placeholder.svg, and passing that through emitted an SVG
+ * og:image on every article — the exact case scripts/gen-social-assets.mjs was
+ * written to prevent. Fall through to the generated default instead of
+ * shipping a card no network will render.
+ */
+const rasterCover =
+  data.cover && !data.cover.toLowerCase().endsWith('.svg') ? data.cover : undefined;
+
 const jsonLd = graph(organization(lang), post, crumbs);
 ---
-<BaseLayout title={data.title} description={data.excerpt} image={data.cover} jsonLd={jsonLd}>
+<BaseLayout title={data.title} description={data.excerpt} image={rasterCover} jsonLd={jsonLd}>
   <article data-pagefind-body data-pagefind-meta={`image:${data.cover ?? ''}`}>
     <header class="bg-paper-green">
       <div class="container-narrow py-12 md:py-16">

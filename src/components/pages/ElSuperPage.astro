@@ -10,6 +10,7 @@ import { hours, dayKey, formatRanges, org } from '../../config/site';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import Icon from '../ui/Icon.astro';
 import Photo from '../ui/Photo.astro';
+import Button from '../ui/Button.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -20,9 +21,9 @@ const c = {
     heading: 'Un supermercat de barri, obert a tothom',
     intro: 'Un supermercat de barri, obert a tothom, amb més de 1.200 productes bons, sans i de proximitat.',
     features: [
-      { icon: 'leaf', title: 'Fresc i de temporada', text: 'Fruita, verdura, pa i producte fresc de productores catalanes.' },
-      { icon: 'basket', title: 'A granel', text: 'Llegums, cereals, fruita seca i més, amb el mínim d’envàs.' },
-      { icon: 'heart', title: 'Cura i higiene', text: 'Cosmètica i higiene natural, també a granel sempre que es pot.' },
+      { icon: 'apple', title: 'Fresc i de temporada', text: 'Fruita, verdura, pa i producte fresc de productores catalanes.' },
+      { icon: 'jar', title: 'A granel', text: 'Llegums, cereals, fruita seca i més, amb el mínim d’envàs.' },
+      { icon: 'soap', title: 'Cura i higiene', text: 'Cosmètica i higiene natural, també a granel sempre que es pot.' },
     ],
     shopTitle: 'Botiga en línia',
     shopText: 'Les sòcies poden comprar en línia i rebre la comanda a casa amb repartiment en bici de la cooperativa Mensakas.',
@@ -36,9 +37,9 @@ const c = {
     heading: 'Un supermercado de barrio, abierto a todo el mundo',
     intro: 'Un supermercado de barrio, abierto a todo el mundo, con más de 1.200 productos buenos, sanos y de proximidad.',
     features: [
-      { icon: 'leaf', title: 'Fresco y de temporada', text: 'Fruta, verdura, pan y producto fresco de productoras catalanas.' },
-      { icon: 'basket', title: 'A granel', text: 'Legumbres, cereales, frutos secos y más, con el mínimo de envase.' },
-      { icon: 'heart', title: 'Cuidado e higiene', text: 'Cosmética e higiene natural, también a granel siempre que se puede.' },
+      { icon: 'apple', title: 'Fresco y de temporada', text: 'Fruta, verdura, pan y producto fresco de productoras catalanas.' },
+      { icon: 'jar', title: 'A granel', text: 'Legumbres, cereales, frutos secos y más, con el mínimo de envase.' },
+      { icon: 'soap', title: 'Cuidado e higiene', text: 'Cosmética e higiene natural, también a granel siempre que se puede.' },
     ],
     shopTitle: 'Tienda online',
     shopText: 'Las socias pueden comprar online y recibir el pedido en casa con reparto en bici de la cooperativa Mensakas.',
@@ -60,11 +61,11 @@ const c = {
       <div>
         <h2 class="text-2xl text-brand-dark">{c.shopTitle}</h2>
         <p class="mt-4 text-lg text-ink-soft">{c.shopText}</p>
-        <a href={org.shopUrl} class="mt-6 inline-flex items-center gap-2 rounded-pill bg-brand px-6 py-3 font-bold text-paper hover:brightness-110">
+        <Button href={org.shopUrl} class="mt-6">
           <Icon name="basket" size={18} /> {lang === 'ca' ? 'Vés a la botiga' : 'Ir a la tienda'}
-        </a>
+        </Button>
       </div>
-      <div id="horaris" class="rounded-2xl bg-paper p-8 shadow-sm">
+      <div id="horaris" class="rounded-lg bg-paper p-8 shadow-sm">
         <h3 class="mb-4 flex items-center gap-2 font-display text-lg font-bold">
           <Icon name="clock" size={18} class="text-brand-ink" /> {c.hoursTitle}
         </h3>
