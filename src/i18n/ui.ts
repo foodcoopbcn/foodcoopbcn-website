@@ -103,6 +103,13 @@ export const ui = {
     'compare.eco': 'ECO',
     'compare.notEco': 'No eco',
     'compare.viewProduct': 'Veure el producte a la botiga en línia',
+    'compare.basket': 'La cistella d’avui',
+    'compare.basketNote': 'Els mateixos {n} productes bàsics, comprats a cada botiga.',
+    'compare.viewAll': 'Cistella sencera ({n})',
+    'compare.viewLike': 'Mateix tipus de producte ({n})',
+    'compare.viewNote':
+      'La cistella sencera compara el producte equivalent de cada botiga, sigui ecològic o no. L’altra vista es queda només amb els productes on totes les botigues venen el mateix tipus de producte, i és la comparació més neta que podem fer.',
+    'compare.relative': 'Preu relatiu dins de la fila',
     'compare.method.title': 'Com ho calculem',
     'compare.method.source':
       'Preus públics de la botiga en línia de cada establiment per a Barcelona, recollits automàticament cada dia. Darrera actualització: {date}.',
@@ -205,6 +212,13 @@ export const ui = {
     'compare.eco': 'ECO',
     'compare.notEco': 'No eco',
     'compare.viewProduct': 'Ver el producto en la tienda en línea',
+    'compare.basket': 'La cesta de hoy',
+    'compare.basketNote': 'Los mismos {n} productos básicos, comprados en cada tienda.',
+    'compare.viewAll': 'Cesta entera ({n})',
+    'compare.viewLike': 'Mismo tipo de producto ({n})',
+    'compare.viewNote':
+      'La cesta entera compara el producto equivalente de cada tienda, sea ecológico o no. La otra vista se queda solo con los productos donde todas las tiendas venden el mismo tipo de producto, y es la comparación más limpia que podemos hacer.',
+    'compare.relative': 'Precio relativo dentro de la fila',
     'compare.method.title': 'Cómo lo calculamos',
     'compare.method.source':
       'Precios públicos de la tienda en línea de cada establecimiento para Barcelona, recogidos automáticamente cada día. Última actualización: {date}.',

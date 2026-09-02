@@ -73,7 +73,15 @@ const pill =
       <!-- Desktop nav -->
       <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
         {
-          mainNav.map((item) => {
+          mainNav.map((item, i) => {
+            /*
+             * The last menu opens leftwards. `left-0` on the rightmost item put
+             * a 240px panel past the right edge of the viewport, and because an
+             * `invisible` element still counts towards scrollWidth, every page
+             * on the site had a horizontal scrollbar because of a menu nobody
+             * had opened.
+             */
+            const opensLeft = i === mainNav.length - 1;
             const active = !item.external && isActive(item.path);
             const aria = active ? { 'aria-current': 'page' as const } : {};
             const cls = item.highlight
@@ -91,7 +99,10 @@ const pill =
                   <Icon name="chevron" size={14} />
                 </a>
                 <div
-                  class="invisible absolute left-0 top-full min-w-60 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow-lg transition-all duration-[var(--duration-fast)] ease-out-soft before:absolute before:-top-2 before:left-0 before:h-2 before:w-full before:content-[''] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                  class:list={[
+                    "invisible absolute top-full min-w-60 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow-lg transition-all duration-[var(--duration-fast)] ease-out-soft before:absolute before:-top-2 before:left-0 before:h-2 before:w-full before:content-[''] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                    opensLeft ? "right-0" : "left-0",
+                  ]}
                 >
                   {item.children.map((child) => (
                     <a
