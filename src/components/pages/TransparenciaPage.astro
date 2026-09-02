@@ -25,9 +25,9 @@ const c = {
     intro: 'Els documents que expliquen com funciona la cooperativa, qui decideix què i on van els diners. Tot és públic i descarregable.',
     docsTitle: 'Documents',
     docs: [
-      { icon: 'vote', t: 'Estatuts', d: 'Les regles que ens hem donat: drets i deures de les sòcies, òrgans de decisió, aportacions i baixes.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
-      { icon: 'basket', t: 'Memòria d’activitats', d: 'Què hem fet durant l’exercici: activitat del súper, projecte associatiu i comptes.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
-      { icon: 'heart', t: 'Balanç social', d: 'L’auditoria social de la Xarxa d’Economia Solidària: condicions laborals, democràcia interna, impacte ambiental i gestió econòmica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
+      { icon: 'doc', t: 'Estatuts', d: 'Les regles que ens hem donat: drets i deures de les sòcies, òrgans de decisió, aportacions i baixes.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
+      { icon: 'chart', t: 'Memòria d’activitats', d: 'Què hem fet durant l’exercici: activitat del súper, projecte associatiu i comptes.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
+      { icon: 'scale', t: 'Balanç social', d: 'L’auditoria social de la Xarxa d’Economia Solidària: condicions laborals, democràcia interna, impacte ambiental i gestió econòmica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
     ],
     download: 'Descarrega el PDF',
     howTitle: 'Com prenem les decisions',
@@ -64,9 +64,9 @@ const c = {
     intro: 'Los documentos que explican cómo funciona la cooperativa, quién decide qué y dónde va el dinero. Todo es público y descargable.',
     docsTitle: 'Documentos',
     docs: [
-      { icon: 'vote', t: 'Estatutos', d: 'Las reglas que nos hemos dado: derechos y deberes de las socias, órganos de decisión, aportaciones y bajas.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
-      { icon: 'basket', t: 'Memoria de actividades', d: 'Qué hemos hecho durante el ejercicio: actividad del súper, proyecto asociativo y cuentas.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
-      { icon: 'heart', t: 'Balance social', d: 'La auditoría social de la Xarxa d’Economia Solidària: condiciones laborales, democracia interna, impacto ambiental y gestión económica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
+      { icon: 'doc', t: 'Estatutos', d: 'Las reglas que nos hemos dado: derechos y deberes de las socias, órganos de decisión, aportaciones y bajas.', href: '/docs/estatuts.pdf', page: '/legal/estatuts' },
+      { icon: 'chart', t: 'Memoria de actividades', d: 'Qué hemos hecho durante el ejercicio: actividad del súper, proyecto asociativo y cuentas.', href: '/docs/memoria.pdf', page: '/legal/memoria' },
+      { icon: 'scale', t: 'Balance social', d: 'La auditoría social de la Xarxa d’Economia Solidària: condiciones laborales, democracia interna, impacto ambiental y gestión económica.', href: '/docs/balanc-social.pdf', page: '/legal/balanc-social' },
     ],
     download: 'Descargar el PDF',
     howTitle: 'Cómo tomamos las decisiones',
@@ -106,8 +106,8 @@ const c = {
     <h2 class="mb-8 text-2xl">{c.docsTitle}</h2>
     <div class="grid gap-6 md:grid-cols-3">
       {c.docs.map((d) => (
-        <div class="flex flex-col rounded-2xl bg-paper p-7 shadow-sm ring-1 ring-line">
-          <span class="grid h-11 w-11 place-items-center rounded-2xl bg-paper-green text-brand-ink">
+        <div class="flex flex-col rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
+          <span class="grid h-11 w-11 place-items-center rounded-lg bg-paper-green text-brand-ink">
             <Icon name={d.icon as any} size={22} />
           </span>
           <h3 class="mt-5 text-lg">{d.t}</h3>
