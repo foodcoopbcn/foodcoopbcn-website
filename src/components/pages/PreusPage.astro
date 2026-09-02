@@ -1,0 +1,196 @@
+---
+/*
+ * Every euro the co-op charges, on one page.
+ *
+ * Before this existed the site named no figure anywhere — not the share capital,
+ * not the quotas, not the delivery fee — while promising "transparent margins".
+ * All numbers come from `membership` in src/config/site.ts.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const signup = localizePath(m.signupPath, lang);
+const eur = (n: number) => `${String(n).replace('.', ',')} €`;
+
+const c = {
+  ca: {
+    eyebrow: 'Fes-te sòcia',
+    title: 'Què costa, exactament',
+    intro: 'Tots els imports de la cooperativa en una sola pàgina. Sense quotes amagades ni permanències.',
+    capitalTitle: 'L’aportació al capital social',
+    capitalNote: 'Una sola vegada, i és teva',
+    capitalText: `Els ${m.capital} € no són una quota ni una despesa: són la teva part de la cooperativa. Si un dia et dones de baixa, te’ls tornem segons el que preveuen els estatuts. La teva responsabilitat com a sòcia es limita a aquesta quantitat.`,
+    rows: [
+      { what: 'Sòcia consumidora (persona)', amount: eur(m.capital), when: 'una sola vegada, retornable' },
+      { what: 'Sòcia col·laboradora (no vius a Barcelona)', amount: eur(m.capital), when: 'una sola vegada, retornable' },
+      { what: 'Entitat amiga (cooperativa, associació, empresa)', amount: eur(m.entityCapital), when: `una sola vegada o ${eur(m.entityCapital)} l’any` },
+    ],
+    quotaTitle: 'La quota, només si no fas torn',
+    quotaText: 'Si tries no fer torn ni cercle, pagues una quota trimestral. No canvia res més: mantens tots els avantatges. Tries la modalitat tu, i la reduïda no s’ha de justificar.',
+    quotas: [
+      { name: 'Bàsica', amount: eur(m.quota.standard), per: 'al trimestre', note: 'La que paga la majoria.' },
+      { name: 'Reduïda', amount: eur(m.quota.reduced), per: 'al trimestre', note: 'Sense haver de justificar res. Si et va just, és aquesta.', featured: true },
+      { name: 'Solidària', amount: `des de ${eur(m.quota.standard)}`, per: 'al trimestre', note: 'Si pots posar-hi més, ajudes a sostenir les reduïdes.' },
+    ],
+    deliveryTitle: 'El repartiment a casa',
+    deliveryText: `La botiga en línia és per a sòcies. Reparteixen en bici les cooperatives Mensakas i Les Mercedes, en 24-48 h.`,
+    deliveries: [
+      { what: `Comandes de més de ${m.delivery.threshold} €`, amount: eur(m.delivery.cheap) },
+      { what: `Comandes de menys de ${m.delivery.threshold} €`, amount: eur(m.delivery.standard) },
+    ],
+    freeTitle: 'Què no costa res',
+    free: [
+      'Entrar i comprar sense ser sòcia, a preu públic',
+      'Fer-te sòcia si fas torn o cercle: cap quota',
+      'Donar-te de baixa i recuperar l’aportació',
+      'Canviar de modalitat de participació',
+      'Venir a una sessió informativa',
+    ],
+    marginTitle: 'I el preu dels productes?',
+    marginText: 'Apliquem el mateix criteri de marge a tot el catàleg i el fem públic: no hi ha productes reclam ni ofertes ganxo. No som més barates que la gran distribució en tot, i no ho pretenem: el que garantim és saber d’on ve cada cosa i en quines condicions s’ha produït.',
+    marginLink: 'Com triem els productes',
+    finalTitle: 'Res més?',
+    finalText: 'Res més. Si trobes a faltar algun import en aquesta pàgina, digues-nos-ho i l’hi afegim.',
+  },
+  es: {
+    eyebrow: 'Hazte socia',
+    title: 'Qué cuesta, exactamente',
+    intro: 'Todos los importes de la cooperativa en una sola página. Sin cuotas escondidas ni permanencias.',
+    capitalTitle: 'La aportación al capital social',
+    capitalNote: 'Una sola vez, y es tuya',
+    capitalText: `Los ${m.capital} € no son una cuota ni un gasto: son tu parte de la cooperativa. Si algún día te das de baja, te los devolvemos según lo que prevén los estatutos. Tu responsabilidad como socia se limita a esa cantidad.`,
+    rows: [
+      { what: 'Socia consumidora (persona)', amount: eur(m.capital), when: 'una sola vez, reembolsable' },
+      { what: 'Socia colaboradora (no vives en Barcelona)', amount: eur(m.capital), when: 'una sola vez, reembolsable' },
+      { what: 'Entidad amiga (cooperativa, asociación, empresa)', amount: eur(m.entityCapital), when: `una sola vez o ${eur(m.entityCapital)} al año` },
+    ],
+    quotaTitle: 'La cuota, solo si no haces turno',
+    quotaText: 'Si eliges no hacer turno ni círculo, pagas una cuota trimestral. No cambia nada más: mantienes todas las ventajas. Eliges tú la modalidad, y la reducida no hay que justificarla.',
+    quotas: [
+      { name: 'Básica', amount: eur(m.quota.standard), per: 'al trimestre', note: 'La que paga la mayoría.' },
+      { name: 'Reducida', amount: eur(m.quota.reduced), per: 'al trimestre', note: 'Sin tener que justificar nada. Si vas justa, es esta.', featured: true },
+      { name: 'Solidaria', amount: `desde ${eur(m.quota.standard)}`, per: 'al trimestre', note: 'Si puedes poner más, ayudas a sostener las reducidas.' },
+    ],
+    deliveryTitle: 'El reparto a casa',
+    deliveryText: 'La tienda online es para socias. Reparten en bici las cooperativas Mensakas y Les Mercedes, en 24-48 h.',
+    deliveries: [
+      { what: `Pedidos de más de ${m.delivery.threshold} €`, amount: eur(m.delivery.cheap) },
+      { what: `Pedidos de menos de ${m.delivery.threshold} €`, amount: eur(m.delivery.standard) },
+    ],
+    freeTitle: 'Qué no cuesta nada',
+    free: [
+      'Entrar y comprar sin ser socia, a precio público',
+      'Hacerte socia si haces turno o círculo: ninguna cuota',
+      'Darte de baja y recuperar la aportación',
+      'Cambiar de modalidad de participación',
+      'Venir a una sesión informativa',
+    ],
+    marginTitle: '¿Y el precio de los productos?',
+    marginText: 'Aplicamos el mismo criterio de margen a todo el catálogo y lo hacemos público: no hay productos reclamo ni ofertas gancho. No somos más baratas que la gran distribución en todo, y no lo pretendemos: lo que garantizamos es saber de dónde viene cada cosa y en qué condiciones se ha producido.',
+    marginLink: 'Cómo elegimos los productos',
+    finalTitle: '¿Nada más?',
+    finalText: 'Nada más. Si echas en falta algún importe en esta página, dínoslo y lo añadimos.',
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
+    <Button href={signup} size="lg" variant="primary">{t('cta.becomeMember')}</Button>
+  </PageHeader>
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+      <div>
+        <h2 class="text-2xl">{c.capitalTitle}</h2>
+        <p class="mt-2 text-sm font-bold uppercase tracking-widest text-brand-ink">{c.capitalNote}</p>
+        <p class="mt-4 text-ink-soft">{c.capitalText}</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[30rem] border-collapse text-left">
+          <tbody>
+            {c.rows.map((r) => (
+              <tr class="border-b border-line">
+                <th scope="row" class="py-4 pr-4 font-semibold">{r.what}</th>
+                <td class="py-4 pr-4 text-right font-display text-lg font-extrabold text-brand-ink">{r.amount}</td>
+                <td class="py-4 text-sm text-ink-soft">{r.when}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="soft">
+    <div class="mb-8 max-w-2xl">
+      <h2 class="text-2xl">{c.quotaTitle}</h2>
+      <p class="mt-3 text-lg text-ink-soft">{c.quotaText}</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {c.quotas.map((q) => (
+        <div
+          class:list={[
+            'rounded-2xl p-8',
+            q.featured ? 'bg-paper ring-2 ring-brand' : 'bg-paper ring-1 ring-line',
+          ]}
+        >
+          <h3 class="text-lg">{q.name}</h3>
+          <p class="mt-3 font-display text-2xl font-extrabold text-brand-ink">{q.amount}</p>
+          <p class="text-sm text-ink-soft">{q.per}</p>
+          <p class="mt-4 border-t border-line pt-4 text-sm text-ink-soft">{q.note}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl">{c.deliveryTitle}</h2>
+        <p class="mt-3 text-ink-soft">{c.deliveryText}</p>
+        <dl class="mt-6">
+          {c.deliveries.map((d) => (
+            <div class="flex items-baseline justify-between gap-4 border-b border-line py-3">
+              <dt>{d.what}</dt>
+              <dd class="font-display font-extrabold text-brand-ink">{d.amount}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="rounded-2xl bg-paper-green p-8">
+        <h2 class="text-2xl text-brand-dark">{c.freeTitle}</h2>
+        <ul class="mt-5 space-y-3">
+          {c.free.map((f) => (
+            <li class="flex items-start gap-3">
+              <Icon name="check" size={20} class="mt-0.5 shrink-0 text-brand-ink" />
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="soft" width="narrow">
+    <h2 class="text-2xl">{c.marginTitle}</h2>
+    <p class="mt-4 text-lg text-ink-soft">{c.marginText}</p>
+    <div class="mt-6">
+      <Button href={localizePath('/productes', lang)} variant="ghost">{c.marginLink}</Button>
+    </div>
+  </Section>
+
+  <CTASection
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: t('cta.becomeMember'), href: signup }}
+    secondaryCta={{ label: t('nav.faqs'), href: localizePath('/faqs', lang) }}
+  />
+</BaseLayout>

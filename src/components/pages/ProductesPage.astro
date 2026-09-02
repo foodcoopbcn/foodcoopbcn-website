@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import FeatureGrid from '../sections/FeatureGrid.astro';
 import CTASection from '../sections/CTASection.astro';
+import Button from '../ui/Button.astro';
+import { org } from '../../config/site';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 
 const lang = getLang(Astro.currentLocale);
@@ -11,6 +13,7 @@ const t = useTranslations(lang);
 const c = {
   ca: {
     title: 'Productes',
+    heading: 'Més de 1.200 productes triats amb criteri',
     intro: 'Més de 1.200 referències triades amb cura: prioritzem productores catalanes, l’agroecologia i el granel.',
     cats: [
       { icon: 'leaf', title: 'Fruita i verdura', text: 'De temporada i de proximitat.' },
@@ -20,10 +23,13 @@ const c = {
       { icon: 'vote', title: 'Begudes', text: 'Vins, cerveses i sucs cooperatius.' },
       { icon: 'user', title: 'Cura i llar', text: 'Cosmètica i neteja natural.' },
     ],
-    note: 'El catàleg complet i els preus estan disponibles a la botiga en línia per a sòcies.',
+    noteTitle: 'Els preus, a la vista',
+    note: 'Apliquem el mateix criteri de marge a tot el catàleg i el fem públic: no hi ha productes reclam ni ofertes ganxo. El catàleg complet, amb preus, és a la botiga en línia de les sòcies — i al súper el tens tot a la lleixa, obert a tothom.',
+    noteCta: 'Com decidim els preus',
   },
   es: {
     title: 'Productos',
+    heading: 'Más de 1.200 productos elegidos con criterio',
     intro: 'Más de 1.200 referencias elegidas con cuidado: priorizamos productoras catalanas, la agroecología y el granel.',
     cats: [
       { icon: 'leaf', title: 'Fruta y verdura', text: 'De temporada y de proximidad.' },
@@ -33,15 +39,26 @@ const c = {
       { icon: 'vote', title: 'Bebidas', text: 'Vinos, cervezas y zumos cooperativos.' },
       { icon: 'user', title: 'Cuidado y hogar', text: 'Cosmética y limpieza natural.' },
     ],
-    note: 'El catálogo completo y los precios están disponibles en la tienda online para socias.',
+    noteTitle: 'Los precios, a la vista',
+    note: 'Aplicamos el mismo criterio de margen a todo el catálogo y lo hacemos público: no hay productos reclamo ni ofertas gancho. El catálogo completo, con precios, está en la tienda online de las socias — y en el súper lo tienes todo en la estantería, abierto a todo el mundo.',
+    noteCta: 'Cómo decidimos los precios',
   },
 }[lang];
 ---
 <BaseLayout title={c.title} description={c.intro}>
-  <PageHeader eyebrow={c.title} title={c.title} intro={c.intro} />
+  <PageHeader eyebrow={t('nav.productes')} title={c.heading} intro={c.intro} />
   <FeatureGrid features={c.cats} columns={3} />
   <section class="section bg-paper-soft">
-    <p class="container-narrow text-center text-lg text-ink-soft">{c.note}</p>
+    <div class="container-narrow text-center">
+      <h2 class="text-2xl">{c.noteTitle}</h2>
+      <p class="mt-4 text-lg text-ink-soft">{c.note}</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <Button href={localizePath('/fes-te-socia/preus', lang)} variant="ghost">{c.noteCta}</Button>
+        <Button href={org.shopUrl} variant="ghost" target="_blank" rel="noopener noreferrer">
+          {lang === 'ca' ? 'Catàleg complet' : 'Catálogo completo'}
+        </Button>
+      </div>
+    </div>
   </section>
   <CTASection
     title={lang === 'ca' ? 'Vols veure el catàleg complet?' : '¿Quieres ver el catálogo completo?'}

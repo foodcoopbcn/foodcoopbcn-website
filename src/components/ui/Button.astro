@@ -16,17 +16,28 @@ const {
   ...rest
 } = Astro.props;
 
+/*
+ * `focus-visible:outline-none` used to sit here with nothing replacing it, which
+ * silently removed the focus indicator from every button on the site — no hero
+ * CTA, no form submit was reachable-looking by keyboard. The ring below works on
+ * both light and green backgrounds thanks to the offset.
+ */
 const base =
-  'inline-flex items-center justify-center gap-2 font-display font-extrabold tracking-tight rounded-pill transition-transform duration-150 active:translate-y-px focus-visible:outline-none';
+  'inline-flex items-center justify-center gap-2 font-display font-extrabold tracking-tight rounded-pill transition-colors duration-150 active:translate-y-px focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/40 focus-visible:ring-offset-2';
 const sizes = {
   md: 'px-5 py-2.5 text-[0.95rem]',
   lg: 'px-7 py-3.5 text-lg',
 };
+/*
+ * `primary` fills with brand-ink, not brand: white on #009739 is 3.83:1, which
+ * fails AA at the default button size. Hover is a defined colour rather than a
+ * brightness() filter, which behaved differently per variant.
+ */
 const variants = {
-  primary: 'bg-brand text-paper hover:brightness-110 shadow-sm',
+  primary: 'bg-brand-ink text-paper hover:bg-brand shadow-sm',
   accent: 'bg-accent text-ink hover:brightness-105 shadow-sm',
-  secondary: 'bg-ink text-paper hover:brightness-125',
-  ghost: 'bg-transparent text-ink ring-2 ring-ink/15 hover:ring-brand hover:text-brand',
+  secondary: 'bg-ink text-paper hover:bg-brand-ink',
+  ghost: 'bg-transparent text-ink ring-1 ring-ink/40 hover:ring-brand-ink hover:text-brand-ink',
 };
 const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`;
 const Tag = href ? 'a' : 'button';

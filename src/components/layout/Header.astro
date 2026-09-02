@@ -1,6 +1,6 @@
 ---
 import { getLang, useTranslations, localizePath, stripLocale } from '../../i18n/utils';
-import { mainNav, org } from '../../config/site';
+import { mainNav, utilityNav, org } from '../../config/site';
 import LangToggle from '../ui/LangToggle.astro';
 import Icon from '../ui/Icon.astro';
 
@@ -8,124 +8,173 @@ const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 const current = stripLocale(Astro.url.pathname);
 
-function isActive(path: string) {
-  return current === path || current.startsWith(path + '/');
+/** External links keep their URL; internal ones get the locale prefix. */
+function hrefOf(item: { path: string; external?: boolean }) {
+  return item.external ? item.path : localizePath(item.path, lang);
 }
----
-<header class="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur">
-  <div class="container-page relative flex h-[68px] items-center justify-between gap-4">
-    <!-- Brand badge: sits in the navbar and bleeds below onto the hero -->
-    <a
-      href={localizePath('/', lang)}
-      class="absolute left-3 top-1.5 z-50 block"
-      aria-label={org.name}
-    >
-      <img
-        src="/logo_foodcoop.png"
-        alt={org.name}
-        width="120"
-        height="120"
-        class="h-20 w-20 drop-shadow-md md:h-[112px] md:w-[112px]"
-      />
-    </a>
-    <!-- Spacer reserving the badge's horizontal room so nav doesn't slide under it -->
-    <div class="w-20 shrink-0 md:w-[112px]" aria-hidden="true"></div>
+/** Anchors (/qui-som#valors) are still "on" the page they point into. */
+function isActive(path: string) {
+  const p = path.split('#')[0];
+  return current === p || current.startsWith(p + '/');
+}
+const ext = (item: { external?: boolean }) =>
+  item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
-    <!-- Desktop nav -->
-    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+/*
+ * Exactly one entry is highlighted, and it is the conversion action. Two pills of
+ * different colours next to each other made neither of them primary, so `highlight`
+ * is now a single-use flag rather than a style anyone can opt into.
+ */
+const pill =
+  'inline-flex items-center gap-1.5 rounded-pill bg-brand px-4 py-2 text-sm font-bold text-paper hover:brightness-110';
+---
+<header class="sticky top-0 z-40 lg:top-[-2.25rem]">
+  <!-- Utility row: scrolls away, only the main bar below stays pinned -->
+  <div class="hidden border-b border-line bg-paper-soft lg:block">
+    <div class="container-page flex h-9 items-center justify-end gap-5 text-xs font-semibold">
       {
-        mainNav.map((item) =>
-          item.children ? (
-            <div class="group relative">
+        utilityNav.map((item) => (
+          <a href={hrefOf(item)} class="hover:text-brand-ink" {...ext(item)}>
+            {t(item.key)}
+          </a>
+        ))
+      }
+      <LangToggle />
+    </div>
+  </div>
+
+  <!-- Main row: what stays pinned once the utility row has scrolled off -->
+  <div class="border-b border-line bg-paper/95 backdrop-blur">
+    <div class="container-page relative flex h-[68px] items-center justify-between gap-4">
+      <!-- Brand badge: sits in the navbar and bleeds below onto the hero -->
+      <a
+        href={localizePath('/', lang)}
+        class="absolute left-3 top-0 z-50 block"
+        aria-label={org.name}
+      >
+        <img
+          src="/logo_foodcoop.png"
+          alt={org.name}
+          width="120"
+          height="120"
+          class="h-16 w-16 drop-shadow-md md:h-[104px] md:w-[104px]"
+        />
+      </a>
+      <!-- Spacer reserving the badge's horizontal room so nav doesn't slide under it -->
+      <div class="w-16 shrink-0 md:w-[104px]" aria-hidden="true"></div>
+
+      <!-- Desktop nav -->
+      <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+        {
+          mainNav.map((item) => {
+            const active = !item.external && isActive(item.path);
+            const aria = active ? { 'aria-current': 'page' as const } : {};
+            const cls = item.highlight
+              ? pill
+              : 'rounded-md px-3 py-2 text-sm font-semibold hover:text-brand-ink';
+            return item.children ? (
+              <div class="group relative">
+                <a
+                  href={hrefOf(item)}
+                  class:list={[cls, 'flex items-center gap-1', !item.highlight && active && 'text-brand-ink']}
+                  {...aria}
+                  {...ext(item)}
+                >
+                  {t(item.key)}
+                  <Icon name="chevron" size={14} />
+                </a>
+                <div
+                  class="invisible absolute left-0 top-full min-w-60 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow transition-all before:absolute before:-top-2 before:left-0 before:h-2 before:w-full before:content-[''] group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+                >
+                  {item.children.map((child) => (
+                    <a
+                      href={localizePath(child.path, lang)}
+                      class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-dark"
+                    >
+                      {t(child.key)}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <a
-                href={localizePath(item.path, lang)}
-                class:list={[
-                  'flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold hover:text-brand',
-                  isActive(item.path) && 'text-brand',
-                ]}
+                href={hrefOf(item)}
+                class:list={[cls, 'inline-flex items-center gap-1', !item.highlight && active && 'text-brand-ink']}
+                {...aria}
+                {...ext(item)}
               >
                 {t(item.key)}
-                <Icon name="chevron" size={14} />
+                {item.external && <Icon name="arrow" size={13} class="-rotate-45 opacity-60" />}
               </a>
-              <div class="invisible absolute left-0 top-full min-w-56 translate-y-1 rounded-lg border border-line bg-paper p-2 opacity-0 shadow transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                {item.children.map((child) => (
+            );
+          })
+        }
+      </nav>
+
+      <div class="flex items-center gap-2 lg:hidden">
+        <LangToggle />
+
+        <!-- Mobile menu toggle (CSS-only, no JS). The icons are direct siblings of the
+             checkbox, which is what Tailwind's `peer-checked:` selector requires. -->
+        <input type="checkbox" id="nav-toggle" class="peer hidden" />
+        <label
+          for="nav-toggle"
+          class="inline-flex cursor-pointer items-center rounded-md p-2 peer-checked:hidden"
+          aria-label={t('nav.menu')}
+        >
+          <Icon name="menu" size={26} />
+        </label>
+        <label
+          for="nav-toggle"
+          class="hidden cursor-pointer items-center rounded-md p-2 peer-checked:inline-flex"
+          aria-label={t('nav.menu')}
+        >
+          <Icon name="close" size={26} />
+        </label>
+
+        <!-- Mobile drawer -->
+        <div
+          class="invisible fixed inset-x-0 top-[68px] z-40 max-h-0 overflow-hidden border-b border-line bg-paper opacity-0 transition-all duration-200 peer-checked:visible peer-checked:max-h-[calc(100vh-68px)] peer-checked:overflow-y-auto peer-checked:opacity-100"
+        >
+          <nav class="container-page flex flex-col gap-1 py-4" aria-label="Mobile">
+            {
+              mainNav.map((item) => (
+                <>
                   <a
-                    href={localizePath(child.path, lang)}
-                    class="block rounded-md px-3 py-2 text-sm font-medium hover:bg-paper-green hover:text-brand-dark"
+                    href={hrefOf(item)}
+                    class:list={[
+                      'rounded-md px-3 py-3 text-base font-semibold hover:bg-paper-green',
+                      item.highlight && 'text-brand-dark',
+                    ]}
+                    {...ext(item)}
                   >
-                    {t(child.key)}
+                    {t(item.key)}
                   </a>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <a
-              href={localizePath(item.path, lang)}
-              class:list={[
-                'rounded-md px-3 py-2 text-sm font-semibold hover:text-brand',
-                isActive(item.path) && 'text-brand',
-              ]}
-            >
-              {t(item.key)}
-            </a>
-          )
-        )
-      }
-    </nav>
-
-    <div class="flex items-center gap-2">
-      <a
-        href={org.memberLoginUrl}
-        class="hidden items-center gap-1.5 rounded-pill bg-brand px-4 py-2 text-sm font-bold text-paper hover:brightness-110 sm:inline-flex"
-      >
-        <Icon name="user" size={16} />
-        {t('nav.login')}
-      </a>
-      <LangToggle />
-
-      <!-- Mobile menu toggle (CSS-only, no JS) -->
-      <input type="checkbox" id="nav-toggle" class="peer hidden" />
-      <label
-        for="nav-toggle"
-        class="inline-flex cursor-pointer items-center rounded-md p-2 lg:hidden"
-        aria-label={t('nav.menu')}
-      >
-        <Icon name="menu" size={26} class="peer-checked:hidden" />
-      </label>
-
-      <!-- Mobile drawer -->
-      <div
-        class="invisible fixed inset-x-0 top-[68px] z-40 max-h-0 overflow-hidden border-b border-line bg-paper opacity-0 transition-all duration-200 peer-checked:visible peer-checked:max-h-[calc(100vh-68px)] peer-checked:overflow-y-auto peer-checked:opacity-100 lg:hidden"
-      >
-        <nav class="container-page flex flex-col gap-1 py-4" aria-label="Mobile">
-          {
-            mainNav.map((item) => (
-              <>
+                  {item.children?.map((child) => (
+                    <a
+                      href={localizePath(child.path, lang)}
+                      class="rounded-md px-6 py-2.5 text-sm text-ink-soft hover:bg-paper-green"
+                    >
+                      {t(child.key)}
+                    </a>
+                  ))}
+                </>
+              ))
+            }
+            <hr class="my-2 border-line" />
+            {
+              utilityNav.map((item) => (
                 <a
-                  href={localizePath(item.path, lang)}
-                  class="rounded-md px-3 py-3 text-base font-semibold hover:bg-paper-green"
+                  href={hrefOf(item)}
+                  class="rounded-md px-3 py-2.5 text-sm text-ink-soft hover:bg-paper-green"
+                  {...ext(item)}
                 >
                   {t(item.key)}
                 </a>
-                {item.children?.map((child) => (
-                  <a
-                    href={localizePath(child.path, lang)}
-                    class="rounded-md px-6 py-2.5 text-sm text-ink-soft hover:bg-paper-green"
-                  >
-                    {t(child.key)}
-                  </a>
-                ))}
-              </>
-            ))
-          }
-          <a
-            href={org.memberLoginUrl}
-            class="mt-2 inline-flex items-center justify-center gap-2 rounded-pill bg-brand px-4 py-3 font-bold text-paper"
-          >
-            <Icon name="user" size={18} />
-            {t('nav.login')}
-          </a>
-        </nav>
+              ))
+            }
+          </nav>
+        </div>
       </div>
     </div>
   </div>

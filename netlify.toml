@@ -24,26 +24,257 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# --- Redirects from the old WordPress URLs (preserve SEO + inbound links) ---
-# Adjust/extend with the real old permalinks once the WP export is mapped.
+# --- Redirects from the old WordPress site -------------------------------------
+#
+# The old site is what Google still indexes, so these rules are what stops the
+# migration from throwing away the domain's rankings and inbound links.
+#
+# Netlify applies netlify.toml rules BEFORE public/_redirects. The ~90 blog posts
+# live at the site ROOT (/slug/, not /actualitat/slug/), so they cannot use a
+# wildcard — one would swallow every page below. They are generated one-by-one
+# into public/_redirects by scripts/gen-redirects.mjs.
+#
+# Rules are ordered most-specific first.
+
+# --- Category archives. MUST precede anything matching /actualitat/*, because the
+# --- new site puts individual posts at /actualitat/<post-slug>/.
 [[redirects]]
-  from = "/blog/*"
-  to = "/actualitat/:splat"
+  from = "/actualitat/receptes-foodcoop-bcn/"
+  to = "/actualitat/categoria/receptes/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/acords-dintercooperacio/"
+  to = "/actualitat/categoria/intercooperacio/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/comunitat/"
+  to = "/actualitat/categoria/comunitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/socies/"
+  to = "/actualitat/categoria/comunitat/"
   status = 301
 
+# The other twelve WP categories have no equivalent on the new site.
 [[redirects]]
-  from = "/receptes/*"
-  to = "/actualitat/receptes/:splat"
+  from = "/actualitat/agenda/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/associacio/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/consum-agroecologic/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/economia-social-i-solidaria/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/food-coop-bcn/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/supermercat-cooperatiu-i-participatiu-bcn/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/tendencies/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/foodcoop-als-mitjans/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/productores-i-proveidores/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/campanya-de-microfinancament/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/residu-0/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/actualitat/ofertes-laborals/"
+  to = "/actualitat/"
   status = 301
 
+# --- Catalan pages that changed address.
 [[redirects]]
-  from = "/es/blog/*"
-  to = "/es/actualitat/:splat"
+  from = "/supermercat/"
+  to = "/el-super/"
+  status = 301
+[[redirects]]
+  from = "/entitatamiga/"
+  to = "/fes-te-socia/entitat/"
+  status = 301
+[[redirects]]
+  from = "/soci-collaborador/"
+  to = "/fes-te-socia/persona/"
+  status = 301
+[[redirects]]
+  from = "/ja-soc-soci-socia/"
+  to = "/fes-te-socia/"
+  status = 301
+[[redirects]]
+  from = "/actualitat-premsa/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/activitats-directori/"
+  to = "/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/subscriu-te/"
+  to = "/contacte/"
+  status = 301
+[[redirects]]
+  from = "/politica-cookies/"
+  to = "/legal/cookies/"
+  status = 301
+[[redirects]]
+  from = "/politica-privacitat/"
+  to = "/legal/privacitat/"
+  status = 301
+[[redirects]]
+  from = "/avis-legal/"
+  to = "/legal/avis-legal/"
+  status = 301
+[[redirects]]
+  from = "/inici-actualitzacio-de-la-pagina-2022/"
+  to = "/"
+  status = 301
+# A leftover scratch page. 410 tells Google to drop it rather than keep retrying.
+[[redirects]]
+  from = "/testing-arena/"
+  to = "/404"
+  status = 410
+
+# --- Spanish pages: the old site used Spanish slugs, the new one mirrors the Catalan routes.
+[[redirects]]
+  from = "/es/quienes-somos/"
+  to = "/es/qui-som/"
+  status = 301
+[[redirects]]
+  from = "/es/supermercado/"
+  to = "/es/el-super/"
+  status = 301
+[[redirects]]
+  from = "/es/hazte-socia/"
+  to = "/es/fes-te-socia/"
+  status = 301
+[[redirects]]
+  from = "/es/entidad-amiga/"
+  to = "/es/fes-te-socia/entitat/"
+  status = 301
+[[redirects]]
+  from = "/es/actualidad-prensa/"
+  to = "/es/actualitat/"
+  status = 301
+[[redirects]]
+  from = "/es/contacta/"
+  to = "/es/contacte/"
+  status = 301
+[[redirects]]
+  from = "/es/aviso-legal/"
+  to = "/es/legal/avis-legal/"
+  status = 301
+[[redirects]]
+  from = "/es/politica-privacidad/"
+  to = "/es/legal/privacitat/"
+  status = 301
+[[redirects]]
+  from = "/es/politica-cookies/"
+  to = "/es/legal/cookies/"
+  status = 301
+[[redirects]]
+  from = "/es/hola/"
+  to = "/es/"
+  status = 301
+[[redirects]]
+  from = "/es/inicio-2/"
+  to = "/es/"
   status = 301
 
-# Member portal / online shop live in an external system.
+# --- The shop and the member area live in an external system (Odoo).
 [[redirects]]
   from = "/botiga"
   to = "https://botiga.foodcoopbcn.cat/"
   status = 302
   force = true
+[[redirects]]
+  from = "/cistela/"
+  to = "https://botiga.foodcoopbcn.cat/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/finalitzar-proces/"
+  to = "https://botiga.foodcoopbcn.cat/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/el-meu-compte/"
+  to = "https://botiga.foodcoopbcn.cat/"
+  status = 302
+  force = true
+
+# --- Documents that used to sit in the WP media library.
+[[redirects]]
+  from = "/wp-content/uploads/260117_Estatuts_Foodcoopbcn_2026.pdf"
+  to = "/docs/estatuts.pdf"
+  status = 301
+[[redirects]]
+  from = "/wp-content/uploads/memoria_foodcoopbcn_2021.pdf"
+  to = "/docs/memoria.pdf"
+  status = 301
+[[redirects]]
+  from = "/wp-content/uploads/balanc_social-21.pdf"
+  to = "/docs/balanc-social.pdf"
+  status = 301
+
+# --- Feeds.
+[[redirects]]
+  from = "/feed/"
+  to = "/rss.xml"
+  status = 301
+[[redirects]]
+  from = "/es/feed/"
+  to = "/es/rss.xml"
+  status = 301
+[[redirects]]
+  from = "/comments/feed/"
+  to = "/rss.xml"
+  status = 301
+
+# --- WordPress plumbing: answer 404 rather than redirect. These are probed
+# --- constantly by bots and must not be dressed up as real pages.
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/404"
+  status = 404
+[[redirects]]
+  from = "/wp-login.php"
+  to = "/404"
+  status = 404
+[[redirects]]
+  from = "/wp-json/*"
+  to = "/404"
+  status = 404
+[[redirects]]
+  from = "/xmlrpc.php"
+  to = "/404"
+  status = 404
+
+# Spanish 404. Netlify only serves the root 404.html automatically; this makes
+# anything unmatched under /es/ answer with the Spanish page (still a real 404
+# status). It is last on purpose: every rule above wins, and real files always do.
+[[redirects]]
+  from = "/es/*"
+  to = "/es/404"
+  status = 404

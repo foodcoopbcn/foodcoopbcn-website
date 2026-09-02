@@ -6,8 +6,20 @@ const postBase = z.object({
   date: z.coerce.date(),
   excerpt: z.string(),
   cover: z.string().optional(),
+  /** Alt text for the cover. Without it a decorative alt="" is used. */
+  coverAlt: z.string().optional(),
   category: z.string(),
   draft: z.boolean().default(false),
+  /*
+   * Ties the Catalan and Spanish versions of one post together.
+   *
+   * Slugs differ per language ("millores-2025" / "mejoras-2025"), so the site
+   * cannot guess the counterpart by string-swapping the locale prefix — doing
+   * that produced hreflang links and a language switcher that 404'd on every
+   * article. Give both files the same key and the pair resolves properly; leave
+   * it out and the post is simply treated as untranslated.
+   */
+  translationKey: z.string().optional(),
 });
 
 /** News posts. Files live in src/content/news/{ca,es}/*.md (lang from folder). */
@@ -66,6 +78,8 @@ const heroSection = block('hero', {
   title: z.string(),
   highlights: z.array(z.string()).default([]),
   text: optionalText(),
+  image: optionalText(),
+  imageAlt: optionalText(),
   primaryCta: cta,
   secondaryCta: cta,
 });
@@ -104,8 +118,65 @@ const splitCardsSection = block('splitCards', {
 });
 
 const statsSection = block('stats', {
+  title: optionalText(),
   tone: z.enum(['paper', 'soft', 'green', 'ink']).catch('ink'),
-  stats: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
+  stats: z
+    .array(z.object({ value: z.string(), label: z.string(), icon: optionalText() }))
+    .default([]),
+  cta,
+});
+
+const infoStripSection = block('infoStrip', {
+  addressLabel: optionalText(),
+});
+
+const mediaSplitSection = block('mediaSplit', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  text: optionalText(),
+  image: optionalText(),
+  imageAlt: optionalText(),
+  reverse: z.boolean().catch(false),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  cta,
+});
+
+const comparisonTableSection = block('comparisonTable', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
+  columns: z
+    .array(z.object({ label: z.string(), featured: z.boolean().catch(false) }))
+    .default([]),
+  rows: z
+    .array(z.object({ label: z.string(), values: z.array(z.string()).default([]) }))
+    .default([]),
+  primaryCta: cta,
+  secondaryCta: cta,
+});
+
+const photoCardsSection = block('photoCards', {
+  eyebrow: optionalText(),
+  title: optionalText(),
+  intro: optionalText(),
+  layout: z.enum(['tile', 'card']).catch('card'),
+  columns: z
+    .enum(['2', '3', '4', '6'])
+    .catch('3')
+    .transform((v) => Number(v) as 2 | 3 | 4 | 6),
+  tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+  items: z
+    .array(
+      z.object({
+        image: optionalText(),
+        imageAlt: optionalText(),
+        title: z.string(),
+        text: optionalText(),
+        cta,
+      }),
+    )
+    .default([]),
 });
 
 /** Post cards are generated from the news/recipes collections — only the heading is editable. */
@@ -113,6 +184,14 @@ const newsTeaserSection = block('newsTeaser', {
   title: z.string(),
   limit: z.number().int().min(1).max(6).catch(3),
   tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
+});
+
+/** Prices are collected daily into src/data/prices.json — only the heading is editable. */
+const priceCompareSection = block('priceCompare', {
+  eyebrow: optionalText(),
+  title: z.string(),
+  intro: optionalText(),
+  tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
 });
 
 const ctaSectionSchema = block('ctaSection', {
@@ -141,7 +220,12 @@ const pages = defineCollection({
           featureGridSection,
           splitCardsSection,
           statsSection,
+          infoStripSection,
+          mediaSplitSection,
+          comparisonTableSection,
+          photoCardsSection,
           newsTeaserSection,
+          priceCompareSection,
           ctaSectionSchema,
         ]),
       )

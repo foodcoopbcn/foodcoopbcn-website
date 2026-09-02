@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" role="img" aria-label="Foto de capçalera">
+  <rect width="900" height="900" fill="#e9fbe5"/>
+  <circle cx="702" cy="216" r="180" fill="#feec3f" opacity="0.65"/>
+  <path d="M144 666c0-234 180-405 252-405 -18 234 -180 405 -252 405Z" fill="#009739" opacity="0.85"/>
+  <text x="50%" y="828" text-anchor="middle" font-family="Open Sans, sans-serif" font-weight="800" font-size="67" fill="#06402a">Foto de capçalera</text>
+</svg>

@@ -10,8 +10,11 @@ const bg = tone === 'green' ? 'bg-paper-green' : 'bg-paper-soft';
 ---
 <section class={bg}>
   <div class="container-page pb-14 pt-20 md:pb-20 md:pt-24">
-    {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand">{eyebrow}</p>}
+    {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand-ink">{eyebrow}</p>}
     <h1 class="max-w-3xl text-3xl text-ink">{title}</h1>
     {intro && <p class="mt-5 max-w-2xl text-lg text-ink-soft">{intro}</p>}
+    <!-- Optional call-to-action row: keeps the primary action above the fold on
+         conversion pages instead of stranding it below three screens of copy. -->
+    <div class="mt-8 flex flex-wrap gap-3 empty:mt-0"><slot /></div>
   </div>
 </section>

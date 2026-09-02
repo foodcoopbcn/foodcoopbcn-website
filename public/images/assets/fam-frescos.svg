@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Frescos">
+  <rect width="600" height="600" fill="#e9fbe5"/>
+  <circle cx="468" cy="144" r="120" fill="#feec3f" opacity="0.65"/>
+  <path d="M96 444c0-156 120-270 168-270 -12 156 -120 270 -168 270Z" fill="#009739" opacity="0.85"/>
+  <text x="50%" y="552" text-anchor="middle" font-family="Open Sans, sans-serif" font-weight="800" font-size="45" fill="#06402a">Frescos</text>
+</svg>

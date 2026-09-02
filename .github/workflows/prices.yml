@@ -1,0 +1,66 @@
+name: Update basket prices
+
+# Once a day: collect the basket prices from each shop, commit src/data/prices.json and
+# trigger the production deploy so the site shows today's figures. A shop that cannot be
+# read keeps its last good value (the site hides it after a week); only a failure to read
+# FoodCoop's own shop fails the run.
+#
+# Pushes made with GITHUB_TOKEN never trigger `on: push`, hence the explicit dispatch of
+# deploy.yml. If `main` ever gets a "require pull request" rule, give Actions a bypass or
+# switch the push to a fine-grained PAT (a PAT push does trigger deploy.yml by itself).
+on:
+  schedule:
+    - cron: '17 5 * * *' # ~07:17 Barcelona
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Fetch and report, but do not commit or deploy'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: prices
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test the collector (offline fixtures)
+        run: npm run prices:test
+
+      - name: Collect today's prices
+        run: node scripts/fetch-prices.mjs ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Commit and deploy
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "foodcoop-prices"
+          git config user.email "hola@foodcoopbcn.cat"
+          git add src/data/prices.json
+          if git diff --cached --quiet; then
+            echo "Prices unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Update basket prices $(date -u +%F)"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh workflow run deploy.yml --ref main

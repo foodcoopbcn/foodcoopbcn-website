@@ -5,6 +5,8 @@
 /* Map design tokens into Tailwind's theme so utilities (bg-brand, text-ink, etc.) are generated. */
 @theme inline {
   --color-brand: var(--color-brand);
+  --color-brand-ink: var(--color-brand-ink);
+  --color-brand-hover: var(--color-brand-hover);
   --color-brand-dark: var(--color-brand-dark);
   --color-brand-olive: var(--color-brand-olive);
   --color-accent: var(--color-accent);
@@ -29,7 +31,30 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
+  }
+
+  /* Smooth scrolling is a comfort for most and a vestibular trigger for some. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Honour the OS setting everywhere, including utility-class transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* The main nav bar is pinned, so an anchored heading would otherwise land underneath it. */
+  [id] {
+    scroll-margin-top: 5.5rem;
   }
 
   body {
@@ -104,7 +129,7 @@
     margin-top: 1.4em;
   }
   .prose-content a {
-    color: var(--color-brand);
+    color: var(--color-brand-ink);
     text-decoration: underline;
     text-underline-offset: 3px;
   }

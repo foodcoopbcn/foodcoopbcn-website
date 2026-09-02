@@ -1,19 +1,40 @@
 ---
+/*
+ * CA / ES switch.
+ *
+ * It resolves the target through `alternateOf`, the same lookup the hreflang tags
+ * use, because blog posts have different slugs per language: swapping the /es
+ * prefix on an article URL produced a link straight to a 404. When a post has no
+ * counterpart the switch degrades to the news index in the other language rather
+ * than to a broken page.
+ */
 import { getLang, otherLang, localizePath, stripLocale } from '../../i18n/utils';
-import { languages } from '../../i18n/ui';
-import Icon from './Icon.astro';
+import { alternateOf } from '../../lib/posts';
 
 const lang = getLang(Astro.currentLocale);
 const target = otherLang(lang);
 const canonicalPath = stripLocale(Astro.url.pathname);
-const href = localizePath(canonicalPath, target);
+
+const mirrored = localizePath(canonicalPath, target);
+const resolved = await alternateOf(Astro.url.pathname, mirrored);
+/* No translated post: the closest honest destination is that language's index. */
+const href = resolved ?? localizePath('/actualitat', target);
+
+const label = {
+  ca: { ca: 'Veure aquesta pàgina en català', es: 'Veure aquesta pàgina en castellà' },
+  es: { ca: 'Ver esta página en catalán', es: 'Ver esta página en castellano' },
+}[lang][target];
 ---
 <a
   href={href}
-  class="inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-sm font-semibold ring-1 ring-ink/15 hover:ring-brand hover:text-brand"
+  class="inline-flex items-center gap-1.5 rounded-pill px-3 py-1.5 text-sm font-semibold ring-1 ring-ink/25 hover:text-brand-ink hover:ring-brand"
   hreflang={target}
-  aria-label={`${languages[target]}`}
+  lang={target}
+  aria-label={label}
 >
-  <Icon name="globe" size={16} />
-  {target.toUpperCase()}
+  <!-- Both codes are shown so the control reads as a pair; the one you would
+       switch TO is the emphasised half. -->
+  <span aria-hidden="true" class="text-muted">{lang.toUpperCase()}</span>
+  <span aria-hidden="true" class="text-muted">·</span>
+  <span>{target.toUpperCase()}</span>
 </a>

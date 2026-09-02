@@ -1,0 +1,158 @@
+---
+/*
+ * "Dues maneres de comprar" — what you get as a member versus as anyone off the street.
+ *
+ * A real <table> on desktop (so it is announced as one), stacked cards below md (so nothing
+ * scrolls sideways on a phone). A tick is never icon-only: each carries visually-hidden text.
+ */
+import Section from './Section.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  columns: { label: string; featured?: boolean }[];
+  /** A value is either 'yes', 'no', or free text shown as-is. */
+  rows: { label: string; values: string[] }[];
+  yesLabel?: string;
+  noLabel?: string;
+  tone?: 'paper' | 'soft' | 'green';
+  primaryCta?: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+}
+const {
+  eyebrow,
+  title,
+  intro,
+  columns,
+  rows,
+  yesLabel = 'Sí',
+  noLabel = 'No',
+  tone = 'soft',
+  primaryCta,
+  secondaryCta,
+} = Astro.props;
+
+const cell = (v: string) => (v === 'yes' ? 'yes' : v === 'no' ? 'no' : 'text');
+---
+<Section tone={tone}>
+  <div class="mx-auto mb-10 max-w-2xl text-center">
+    {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-ink">{eyebrow}</p>}
+    <h2 class="text-2xl">{title}</h2>
+    {intro && <p class="mt-4 text-lg opacity-80">{intro}</p>}
+  </div>
+
+  <!-- Desktop: one table -->
+  <div class="hidden overflow-hidden rounded-lg bg-paper shadow-sm ring-1 ring-line md:block">
+    <table class="w-full border-collapse text-left">
+      <thead>
+        <tr class="border-b border-line">
+          <th scope="col" class="w-2/5 px-6 py-4"><span class="sr-only">{title}</span></th>
+          {
+            columns.map((c) => (
+              <th
+                scope="col"
+                class:list={[
+                  'px-6 py-4 text-center text-sm font-bold uppercase tracking-wide',
+                  c.featured ? 'bg-paper-green text-brand-dark' : 'text-ink-soft',
+                ]}
+              >
+                {c.label}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((r) => (
+            <tr class="border-b border-line last:border-0">
+              <th scope="row" class="px-6 py-4 text-sm font-semibold">
+                {r.label}
+              </th>
+              {r.values.map((v, i) => (
+                <td
+                  class:list={[
+                    'px-6 py-4 text-center text-sm',
+                    columns[i]?.featured && 'bg-paper-green/50',
+                  ]}
+                >
+                  {cell(v) === 'yes' && (
+                    <>
+                      <Icon name="check" size={20} class="inline text-brand-ink" />
+                      <span class="sr-only">{yesLabel}</span>
+                    </>
+                  )}
+                  {cell(v) === 'no' && (
+                    <>
+                      <span aria-hidden="true" class="text-muted">—</span>
+                      <span class="sr-only">{noLabel}</span>
+                    </>
+                  )}
+                  {cell(v) === 'text' && <span class="font-semibold">{v}</span>}
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile: one card per column, so nothing scrolls sideways -->
+  <div class="grid gap-4 md:hidden">
+    {
+      columns.map((c, i) => (
+        <div
+          class:list={[
+            'rounded-lg bg-paper p-5 shadow-sm',
+            c.featured ? 'ring-2 ring-brand' : 'ring-1 ring-line',
+          ]}
+        >
+          <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-dark">{c.label}</p>
+          <dl class="space-y-2 text-sm">
+            {rows.map((r) => (
+              <div class="flex items-start justify-between gap-4 border-b border-line pb-2 last:border-0">
+                <dt class="opacity-80">{r.label}</dt>
+                <dd class="shrink-0 font-semibold">
+                  {cell(r.values[i]) === 'yes' && (
+                    <>
+                      <Icon name="check" size={18} class="inline text-brand-ink" />
+                      <span class="sr-only">{yesLabel}</span>
+                    </>
+                  )}
+                  {cell(r.values[i]) === 'no' && (
+                    <>
+                      <span aria-hidden="true" class="text-muted">—</span>
+                      <span class="sr-only">{noLabel}</span>
+                    </>
+                  )}
+                  {cell(r.values[i]) === 'text' && r.values[i]}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    (primaryCta || secondaryCta) && (
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        {primaryCta && (
+          <Button href={primaryCta.href} size="lg" variant="primary">
+            {primaryCta.label}
+          </Button>
+        )}
+        {secondaryCta && (
+          <Button href={secondaryCta.href} size="lg" variant="ghost">
+            {secondaryCta.label}
+          </Button>
+        )}
+      </div>
+    )
+  }
+</Section>

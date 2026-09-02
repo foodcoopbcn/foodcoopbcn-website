@@ -1,0 +1,30 @@
+---
+/* Thin full-width band under the hero: where we are, and whether we're open right now. */
+import { org } from '../../config/site';
+import OpeningHours from '../layout/OpeningHours.astro';
+import Icon from '../ui/Icon.astro';
+
+interface Props {
+  /** Optional override; defaults to the address in src/config/site.ts. */
+  addressLabel?: string;
+}
+const { addressLabel } = Astro.props;
+const address =
+  addressLabel || `${org.address.street}, ${org.address.postalCode} ${org.address.locality}`;
+---
+<div class="border-y border-brand/20 bg-paper-green text-brand-dark">
+  <div
+    class="container-page flex flex-col gap-2 py-3 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+  >
+    <a
+      href={org.mapUrl}
+      target="_blank"
+      rel="noopener"
+      class="inline-flex items-center gap-2 font-semibold hover:text-brand-ink"
+    >
+      <Icon name="pin" size={16} />
+      {address}
+    </a>
+    <OpeningHours variant="inline" />
+  </div>
+</div>

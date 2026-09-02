@@ -20,7 +20,12 @@ import { config, fields, collection, singleton } from '@keystatic/core';
 const ROUTES = [
   '/',
   '/qui-som',
+  '/qui-som#valors',
+  '/qui-som#historia',
+  '/qui-som#governanca',
   '/el-super',
+  '/el-super#espai',
+  '/el-super#horaris',
   '/fes-te-socia',
   '/fes-te-socia/persona',
   '/fes-te-socia/entitat',
@@ -28,6 +33,8 @@ const ROUTES = [
   '/actualitat',
   '/contacte',
   '/faqs',
+  // The member shop is an external system; HomePage's href() passes non-"/" values through.
+  'https://botiga.foodcoopbcn.cat/',
 ];
 
 /** Scoped to the real keys in src/components/ui/Icon.astro — an unknown name renders empty. */
@@ -45,6 +52,13 @@ const cta = (label: string) =>
     { label },
   );
 
+/** Images are plain public/ paths everywhere in this project (astro:assets is not used). */
+const imageField = (label = 'Imatge') =>
+  fields.text({
+    label,
+    description: 'Ruta dins de public/, per exemple /images/assets/home-quisom.webp',
+  });
+
 const toneField = (values: string[], defaultValue: string) =>
   fields.select({ label: 'Fons', options: opts(values), defaultValue });
 
@@ -60,6 +74,8 @@ const sectionBlocks = {
         itemLabel: (props) => props.value,
       }),
       text: fields.text({ label: 'Text', multiline: true }),
+      image: imageField('Foto de capçalera'),
+      imageAlt: fields.text({ label: 'Text alternatiu de la foto' }),
       primaryCta: cta('Botó principal'),
       secondaryCta: cta('Botó secundari'),
     }),
@@ -118,13 +134,104 @@ const sectionBlocks = {
   stats: {
     label: 'Xifres',
     schema: fields.object({
+      title: fields.text({ label: 'Títol', multiline: true }),
       tone: toneField(['paper', 'soft', 'green', 'ink'], 'ink'),
       stats: fields.array(
         fields.object({
           value: fields.text({ label: 'Xifra' }),
           label: fields.text({ label: 'Etiqueta' }),
+          icon: fields.select({ label: 'Icona', options: opts(['', ...ICONS]), defaultValue: '' }),
         }),
         { label: 'Xifres', itemLabel: (props) => `${props.fields.value.value} ${props.fields.label.value}` },
+      ),
+      cta: cta('Botó'),
+    }),
+  },
+  infoStrip: {
+    label: 'Franja d’adreça i horari',
+    schema: fields.object({
+      addressLabel: fields.text({
+        label: 'Adreça',
+        description: 'Deixa-ho buit per fer servir l’adreça de la configuració del lloc.',
+      }),
+    }),
+  },
+  mediaSplit: {
+    label: 'Foto + text',
+    itemLabel: (props: any) => `Foto + text — ${props.fields.title.value || 'sense títol'}`,
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      text: fields.text({ label: 'Text', multiline: true }),
+      image: imageField(),
+      imageAlt: fields.text({ label: 'Text alternatiu' }),
+      reverse: fields.checkbox({ label: 'Foto a la dreta', defaultValue: false }),
+      tone: toneField(['paper', 'soft', 'green'], 'paper'),
+      cta: cta('Botó'),
+    }),
+  },
+  comparisonTable: {
+    label: 'Taula comparativa',
+    itemLabel: (props: any) => `Taula — ${props.fields.title.value || 'sense títol'}`,
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      intro: fields.text({ label: 'Introducció', multiline: true }),
+      tone: toneField(['paper', 'soft', 'green'], 'soft'),
+      columns: fields.array(
+        fields.object({
+          label: fields.text({ label: 'Columna' }),
+          featured: fields.checkbox({ label: 'Destacada', defaultValue: false }),
+        }),
+        { label: 'Columnes', itemLabel: (props) => props.fields.label.value },
+      ),
+      rows: fields.array(
+        fields.object({
+          label: fields.text({ label: 'Fila' }),
+          values: fields.array(
+            fields.text({
+              label: 'Valor',
+              description: 'Escriu "yes" per un tic, "no" per un guió, o qualsevol altre text.',
+            }),
+            { label: 'Valors (un per columna, en ordre)', itemLabel: (props) => props.value },
+          ),
+        }),
+        { label: 'Files', itemLabel: (props) => props.fields.label.value },
+      ),
+      primaryCta: cta('Botó principal'),
+      secondaryCta: cta('Botó secundari'),
+    }),
+  },
+  photoCards: {
+    label: 'Targetes amb foto',
+    itemLabel: (props: any) => `Targetes amb foto — ${props.fields.title.value || 'sense títol'}`,
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      intro: fields.text({ label: 'Introducció', multiline: true }),
+      layout: fields.select({
+        label: 'Format',
+        options: [
+          { label: 'Mosaic (foto + peu)', value: 'tile' },
+          { label: 'Targeta (foto, títol, text i enllaç)', value: 'card' },
+        ],
+        defaultValue: 'card',
+      }),
+      columns: fields.select({
+        label: 'Columnes',
+        options: opts(['2', '3', '4', '6']),
+        defaultValue: '3',
+      }),
+      tone: toneField(['paper', 'soft', 'green'], 'paper'),
+      items: fields.array(
+        fields.object({
+          image: imageField(),
+          imageAlt: fields.text({ label: 'Text alternatiu' }),
+          title: fields.text({ label: 'Títol' }),
+          text: fields.text({ label: 'Text', multiline: true }),
+          cta: cta('Enllaç'),
+        }),
+        { label: 'Elements', itemLabel: (props) => props.fields.title.value },
       ),
     }),
   },
@@ -138,6 +245,15 @@ const sectionBlocks = {
         defaultValue: 3,
         validation: { min: 1, max: 6 },
       }),
+    }),
+  },
+  priceCompare: {
+    label: 'Comparativa de preus (automàtica)',
+    schema: fields.object({
+      eyebrow: fields.text({ label: 'Etiqueta' }),
+      title: fields.text({ label: 'Títol' }),
+      intro: fields.text({ label: 'Introducció', multiline: true }),
+      tone: toneField(['paper', 'soft', 'green'], 'soft'),
     }),
   },
   ctaSection: {

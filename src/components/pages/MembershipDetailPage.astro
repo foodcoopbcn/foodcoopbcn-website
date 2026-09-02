@@ -1,11 +1,20 @@
 ---
+/*
+ * The two membership routes in detail.
+ *
+ * The `entitat` variant used to be four abstract bullets and a mailto. The old
+ * WordPress site had a real B2B offer behind /entitatamiga/ — price, staff
+ * discount, and the products they actually sell to organisations. That offer is
+ * restored here; figures live in `membership` (src/config/site.ts).
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import CTASection from '../sections/CTASection.astro';
+import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
-import { org } from '../../config/site';
+import { membership as m, org } from '../../config/site';
 
 interface Props {
   variant: 'persona' | 'entitat';
@@ -14,54 +23,137 @@ const { variant } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
+const signup = localizePath(m.signupPath, lang);
+const contact = localizePath('/contacte', lang);
+
 const content = {
   persona: {
     ca: {
       title: 'Fes-te sòcia com a persona',
-      intro: 'Com a sòcia consumidora ets copropietària del súper: hi participes, hi decideixes i hi estalvies.',
+      intro: `Com a sòcia consumidora ets copropietària del súper: hi participes, hi decideixes i hi estalvies. L’aportació és de ${m.capital} € i és retornable.`,
+      priceLabel: 'Aportació única, retornable',
+      price: `${m.capital} €`,
       benefitsTitle: 'Què inclou',
-      benefits: ['12% de descompte en tots els productes', 'Accés a la botiga en línia amb repartiment en bici', 'Vot i veu a l’assemblea', 'Formar part d’una comunitat de barri'],
+      benefits: [
+        `${m.discount}% de descompte en tots els productes`,
+        'Accés a la botiga en línia amb repartiment en bici',
+        'Vot i veu a l’assemblea',
+        'Tallers, xerrades i visites a productores',
+        'Preu de sòcia per a un adult convivent i les criatures',
+      ],
       commitTitle: 'Què s’espera de tu',
-      commit: ['Una aportació de capital social retornable', 'Dedicar unes 2-2,5 hores al mes a un torn', 'Participar en la vida del projecte'],
+      commit: [
+        `Una aportació de ${m.capital} € al capital social, que et tornem si et dones de baixa`,
+        `Un torn de ${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes, un cercle de treball o una quota trimestral des de ${m.quota.reduced} €`,
+        'Participar en la vida del projecte tant com vulguis',
+      ],
+      ctaPrimary: 'Comença l’alta',
+      ctaSecondary: 'Tinc dubtes',
+      finalTitle: 'Comencem?',
+      finalText: `Cinc minuts per l’alta, i la sessió de benvinguda de ${m.welcomeSessionMinutes} minuts abans de comprometre’t a res.`,
     },
     es: {
       title: 'Hazte socia como persona',
-      intro: 'Como socia consumidora eres copropietaria del súper: participas, decides y ahorras.',
+      intro: `Como socia consumidora eres copropietaria del súper: participas, decides y ahorras. La aportación es de ${m.capital} € y es reembolsable.`,
+      priceLabel: 'Aportación única, reembolsable',
+      price: `${m.capital} €`,
       benefitsTitle: 'Qué incluye',
-      benefits: ['12% de descuento en todos los productos', 'Acceso a la tienda online con reparto en bici', 'Voto y voz en la asamblea', 'Formar parte de una comunidad de barrio'],
+      benefits: [
+        `${m.discount}% de descuento en todos los productos`,
+        'Acceso a la tienda online con reparto en bici',
+        'Voto y voz en la asamblea',
+        'Talleres, charlas y visitas a productoras',
+        'Precio de socia para un adulto conviviente y los menores',
+      ],
       commitTitle: 'Qué se espera de ti',
-      commit: ['Una aportación de capital social retornable', 'Dedicar unas 2-2,5 horas al mes a un turno', 'Participar en la vida del proyecto'],
+      commit: [
+        `Una aportación de ${m.capital} € al capital social, que te devolvemos si te das de baja`,
+        `Un turno de ${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas, un círculo de trabajo o una cuota trimestral desde ${m.quota.reduced} €`,
+        'Participar en la vida del proyecto tanto como quieras',
+      ],
+      ctaPrimary: 'Empezar el alta',
+      ctaSecondary: 'Tengo dudas',
+      finalTitle: '¿Empezamos?',
+      finalText: `Cinco minutos para el alta, y la sesión de bienvenida de ${m.welcomeSessionMinutes} minutos antes de comprometerte a nada.`,
     },
   },
   entitat: {
     ca: {
-      title: 'Fes-te sòcia com a entitat',
-      intro: 'Cooperatives, associacions i empreses de l’economia social i solidària poden formar part del projecte.',
-      benefitsTitle: 'Per què sumar-s’hi',
-      benefits: ['Teixir aliances d’intercooperació', 'Compres col·lectives i sostenibles', 'Donar suport a un projecte de barri', 'Visibilitat dins la comunitat'],
-      commitTitle: 'Com funciona',
-      commit: ['Aportació de capital adaptada a l’entitat', 'Acord d’intercooperació a mida', 'Contacte directe amb el cercle de comunitat'],
+      title: 'La teva entitat, sòcia del súper cooperatiu',
+      intro: 'Cooperatives, associacions, escoles i empreses de l’economia social i solidària podeu ser entitat amiga de FoodCoop BCN.',
+      priceLabel: 'Aportació al capital social',
+      price: `${m.entityCapital} €`,
+      priceNote: `una vegada, o ${m.entityCapital} € l’any`,
+      benefitsTitle: 'Què hi guanyeu',
+      benefits: [
+        `${m.discount}% de descompte en tots els productes`,
+        'Accés a la botiga en línia amb repartiment en bici',
+        'Veu i vot a l’assemblea',
+        `${m.entityStaffDiscount}% de descompte per a les persones que treballen a la vostra entitat`,
+        'Activitats i visites a productores',
+        'Visibilitat dins la comunitat cooperativa',
+      ],
+      commitTitle: 'També sense ser sòcies',
+      commit: [
+        'Cistelles de fruita per a l’oficina',
+        'Càtering per a jornades i actes',
+        'Subministraments i material de neteja',
+        'Lots de regal per a l’equip',
+      ],
+      ctaPrimary: 'Parlem-ne',
+      ctaSecondary: 'Escriu-nos',
+      finalTitle: 'Ho parlem?',
+      finalText: 'Us expliquem la diferència entre l’aportació única i l’anual, i us fem pressupost del que necessiteu.',
     },
     es: {
-      title: 'Hazte socia como entidad',
-      intro: 'Cooperativas, asociaciones y empresas de la economía social y solidaria pueden formar parte del proyecto.',
-      benefitsTitle: 'Por qué sumarse',
-      benefits: ['Tejer alianzas de intercooperación', 'Compras colectivas y sostenibles', 'Apoyar un proyecto de barrio', 'Visibilidad dentro de la comunidad'],
-      commitTitle: 'Cómo funciona',
-      commit: ['Aportación de capital adaptada a la entidad', 'Acuerdo de intercooperación a medida', 'Contacto directo con el círculo de comunidad'],
+      title: 'Tu entidad, socia del súper cooperativo',
+      intro: 'Cooperativas, asociaciones, escuelas y empresas de la economía social y solidaria podéis ser entidad amiga de FoodCoop BCN.',
+      priceLabel: 'Aportación al capital social',
+      price: `${m.entityCapital} €`,
+      priceNote: `una vez, o ${m.entityCapital} € al año`,
+      benefitsTitle: 'Qué ganáis',
+      benefits: [
+        `${m.discount}% de descuento en todos los productos`,
+        'Acceso a la tienda online con reparto en bici',
+        'Voz y voto en la asamblea',
+        `${m.entityStaffDiscount}% de descuento para las personas que trabajan en vuestra entidad`,
+        'Actividades y visitas a productoras',
+        'Visibilidad dentro de la comunidad cooperativa',
+      ],
+      commitTitle: 'También sin ser socias',
+      commit: [
+        'Cestas de fruta para la oficina',
+        'Catering para jornadas y actos',
+        'Suministros y material de limpieza',
+        'Lotes de regalo para el equipo',
+      ],
+      ctaPrimary: 'Hablemos',
+      ctaSecondary: 'Escríbenos',
+      finalTitle: '¿Lo hablamos?',
+      finalText: 'Os explicamos la diferencia entre la aportación única y la anual, y os hacemos presupuesto de lo que necesitéis.',
     },
   },
 }[variant][lang];
+
+/* An organisation starts a conversation; a person starts a form. */
+const primaryHref = variant === 'persona' ? signup : contact;
 ---
 <BaseLayout title={content.title} description={content.intro}>
-  <PageHeader eyebrow={t('nav.festesocia')} title={content.title} intro={content.intro} />
+  <PageHeader eyebrow={t('nav.festesocia')} title={content.title} intro={content.intro}>
+    <Button href={primaryHref} size="lg" variant="primary">{content.ctaPrimary}</Button>
+    <Button href={contact} size="lg" variant="ghost">{content.ctaSecondary}</Button>
+  </PageHeader>
+
   <Section>
-    <div class="grid gap-10 md:grid-cols-2">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1fr_0.7fr]">
       <div>
         <h2 class="text-xl">{content.benefitsTitle}</h2>
         <ul class="mt-5 space-y-3">
           {content.benefits.map((b) => (
-            <li class="flex items-start gap-3"><Icon name="leaf" size={20} class="mt-0.5 shrink-0 text-brand" /> {b}</li>
+            <li class="flex items-start gap-3">
+              <Icon name="check" size={20} class="mt-0.5 shrink-0 text-brand-ink" />
+              <span>{b}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -69,16 +161,25 @@ const content = {
         <h2 class="text-xl text-brand-dark">{content.commitTitle}</h2>
         <ul class="mt-5 space-y-3">
           {content.commit.map((b) => (
-            <li class="flex items-start gap-3"><Icon name="vote" size={20} class="mt-0.5 shrink-0 text-brand" /> {b}</li>
+            <li class="flex items-start gap-3">
+              <Icon name="leaf" size={20} class="mt-0.5 shrink-0 text-brand-ink" />
+              <span>{b}</span>
+            </li>
           ))}
         </ul>
       </div>
+      <aside class="self-start rounded-2xl bg-ink p-8 text-center text-paper">
+        <p class="text-sm font-bold uppercase tracking-widest text-accent">{content.priceLabel}</p>
+        <p class="mt-2 font-display text-3xl font-extrabold">{content.price}</p>
+        {'priceNote' in content && <p class="mt-2 text-sm text-paper/70">{content.priceNote}</p>}
+      </aside>
     </div>
   </Section>
+
   <CTASection
-    title={lang === 'ca' ? 'Comença el procés' : 'Empieza el proceso'}
-    text={org.email}
-    primaryCta={{ label: t('cta.becomeMember'), href: `mailto:${org.email}` }}
-    secondaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+    title={content.finalTitle}
+    text={content.finalText}
+    primaryCta={{ label: content.ctaPrimary, href: primaryHref }}
+    secondaryCta={{ label: t('nav.faqs'), href: localizePath('/faqs', lang) }}
   />
 </BaseLayout>

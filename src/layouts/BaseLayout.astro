@@ -4,6 +4,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import CookieBanner from '../components/layout/CookieBanner.astro';
 import { getLang, otherLang, localizePath, stripLocale } from '../i18n/utils';
+import { alternateOf } from '../lib/posts';
 import { org } from '../config/site';
 
 interface Props {
@@ -17,16 +18,36 @@ interface Props {
 const {
   title,
   description = 'El primer supermercat cooperatiu, participatiu i sense ànim de lucre de Barcelona.',
-  image = '/og-default.svg',
+  image = '/og-default.jpg',
   noindex = false,
   jsonLd,
 } = Astro.props;
 
 const lang = getLang(Astro.currentLocale);
 const canonicalPath = stripLocale(Astro.url.pathname);
-const canonical = new URL(localizePath(canonicalPath, lang), Astro.site);
+
+/*
+ * The build emits directory-style URLs (/qui-som/index.html) and the sitemap
+ * lists them with a trailing slash, but the dev server and our internal links
+ * omit it. Normalising here keeps canonical, sitemap and hreflang byte-identical,
+ * which is what stops Google seeing two URLs for one page.
+ */
+const withSlash = (p: string) => (p === '/' || p.endsWith('/') ? p : `${p}/`);
+const abs = (p: string) => new URL(withSlash(p), Astro.site);
+
+const canonical = abs(localizePath(canonicalPath, lang));
 const altLang = otherLang(lang);
-const altHref = new URL(localizePath(canonicalPath, altLang), Astro.site);
+
+/*
+ * The other-language URL. For ordinary pages the routes mirror each other, but
+ * blog posts have different slugs per language, so `alternateOf` looks up the
+ * real pair and returns undefined when there isn't one. An hreflang pointing at
+ * a 404 makes Google throw away the whole cluster, so "no link" beats "a guess".
+ */
+const altPath = await alternateOf(Astro.url.pathname, localizePath(canonicalPath, altLang));
+const altHref = altPath ? abs(altPath) : undefined;
+const defaultPath = lang === 'ca' ? localizePath(canonicalPath, 'ca') : altPath;
+
 const ogImage = new URL(image, Astro.site);
 const fullTitle = title ? `${title} · ${org.name}` : org.name;
 ---
@@ -39,9 +60,16 @@ const fullTitle = title ? `${title} · ${org.name}` : org.name;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang={lang} href={canonical} />
-    <link rel="alternate" hreflang={altLang} href={altHref} />
-    <link rel="alternate" hreflang="x-default" href={new URL(localizePath(canonicalPath, 'ca'), Astro.site)} />
+    {altHref && <link rel="alternate" hreflang={lang} href={canonical} />}
+    {altHref && <link rel="alternate" hreflang={altLang} href={altHref} />}
+    {defaultPath && <link rel="alternate" hreflang="x-default" href={abs(defaultPath)} />}
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${org.name} — ${lang === 'ca' ? 'Actualitat' : 'Actualidad'}`}
+      href={new URL(lang === 'ca' ? '/rss.xml' : '/es/rss.xml', Astro.site)}
+    />
 
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website" />
@@ -49,12 +77,20 @@ const fullTitle = title ? `${title} · ${org.name}` : org.name;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image:alt" content={org.name} />
+    <!-- Networks reject SVG, so this must stay a raster image at 1200x630. -->
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content={lang === 'ca' ? 'ca_ES' : 'es_ES'} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Icons are cropped from the real badge by scripts/gen-social-assets.mjs. -->
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#009739" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     {

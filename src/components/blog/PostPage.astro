@@ -41,7 +41,7 @@ const jsonLd = {
   <article data-pagefind-body data-pagefind-meta={`image:${data.cover ?? ''}`}>
     <header class="bg-paper-green">
       <div class="container-narrow py-12 md:py-16">
-        <a href={localizePath('/actualitat', lang)} class="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:underline">
+        <a href={localizePath('/actualitat', lang)} class="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-ink hover:underline">
           ← {t('blog.backToList')}
         </a>
         <div class="mb-4 flex items-center gap-3">
@@ -72,7 +72,7 @@ const jsonLd = {
           <ul class="grid gap-1.5 sm:grid-cols-2">
             {data.ingredients.map((i: string) => (
               <li class="flex items-start gap-2 text-sm">
-                <Icon name="leaf" size={16} class="mt-0.5 shrink-0 text-brand" /> {i}
+                <Icon name="leaf" size={16} class="mt-0.5 shrink-0 text-brand-ink" /> {i}
               </li>
             ))}
           </ul>

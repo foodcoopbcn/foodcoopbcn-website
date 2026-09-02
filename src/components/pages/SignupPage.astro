@@ -1,0 +1,180 @@
+---
+/*
+ * The sign-up form — the end of the conversion funnel.
+ *
+ * ⚠️ TEMPORARY. The co-op runs Odoo (erp.foodcoopbcn.cat) and almost certainly has
+ * a real membership form there. As soon as that URL is confirmed, point
+ * `membership.signupPath` in src/config/site.ts at it and this page becomes a
+ * redirect. Until then this at least captures the lead instead of opening an
+ * empty mail client, which is what the page it replaced did.
+ *
+ * Netlify Forms detects the form from the static HTML at build time; the honeypot
+ * catches naive bots. Enable Netlify's own spam filtering in the site UI too —
+ * a named public form attracts spam within weeks.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m, org } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const action = localizePath('/gracies-alta', lang);
+const privacy = localizePath('/legal/privacitat', lang);
+
+const c = {
+  ca: {
+    eyebrow: 'Fes-te sòcia',
+    title: 'Comença l’alta',
+    intro: `Deixa’ns les teves dades i et contactem per tancar l’alta: l’aportació de ${m.capital} € i la sessió de benvinguda de ${m.welcomeSessionMinutes} minuts. No et comprometes a res fins que hi hagis vingut.`,
+    how: 'Com prefereixes participar?',
+    howNote: 'Ho pots canviar més endavant. Si encara no ho tens clar, tria l’última opció.',
+    ways: [
+      { v: 'torn', l: `Un torn al súper (${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes)` },
+      { v: 'cercle', l: 'Un cercle de treball (unes 2,5 h al mes)' },
+      { v: 'quota', l: `Una quota trimestral (des de ${m.quota.reduced} €)` },
+      { v: 'entitat', l: 'Represento una entitat' },
+      { v: 'nosecret', l: 'Encara no ho sé, expliqueu-m’ho' },
+    ],
+    name: 'Nom i cognoms',
+    phone: 'Telèfon (opcional)',
+    comments: 'Alguna cosa que vulguis dir-nos? (opcional)',
+    consent: 'He llegit i accepto la política de privacitat.',
+    consentNote: 'Farem servir les teves dades només per gestionar l’alta. Res més.',
+    submit: 'Envia l’alta',
+    asideTitle: 'Què passa després',
+    steps: [
+      'Rebem les teves dades i et responem en 2-3 dies feiners.',
+      `Et diem com fer l’aportació de ${m.capital} € (transferència o al mateix súper).`,
+      `Tries dia per a la sessió de benvinguda: ${m.welcomeSessionMinutes} minuts, presencial.`,
+      'Estrenes la targeta i comences a comprar amb descompte.',
+    ],
+    prefer: 'Prefereixes parlar-ne abans?',
+  },
+  es: {
+    eyebrow: 'Hazte socia',
+    title: 'Empezar el alta',
+    intro: `Déjanos tus datos y te contactamos para cerrar el alta: la aportación de ${m.capital} € y la sesión de bienvenida de ${m.welcomeSessionMinutes} minutos. No te comprometes a nada hasta que hayas venido.`,
+    how: '¿Cómo prefieres participar?',
+    howNote: 'Lo puedes cambiar más adelante. Si aún no lo tienes claro, elige la última opción.',
+    ways: [
+      { v: 'torn', l: `Un turno en el súper (${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas)` },
+      { v: 'cercle', l: 'Un círculo de trabajo (unas 2,5 h al mes)' },
+      { v: 'quota', l: `Una cuota trimestral (desde ${m.quota.reduced} €)` },
+      { v: 'entitat', l: 'Represento a una entidad' },
+      { v: 'nosecret', l: 'Todavía no lo sé, explicádmelo' },
+    ],
+    name: 'Nombre y apellidos',
+    phone: 'Teléfono (opcional)',
+    comments: '¿Algo que quieras contarnos? (opcional)',
+    consent: 'He leído y acepto la política de privacidad.',
+    consentNote: 'Usaremos tus datos solo para gestionar el alta. Nada más.',
+    submit: 'Enviar el alta',
+    asideTitle: 'Qué pasa después',
+    steps: [
+      'Recibimos tus datos y te respondemos en 2-3 días laborables.',
+      `Te decimos cómo hacer la aportación de ${m.capital} € (transferencia o en el mismo súper).`,
+      `Eliges día para la sesión de bienvenida: ${m.welcomeSessionMinutes} minutos, presencial.`,
+      'Estrenas la tarjeta y empiezas a comprar con descuento.',
+    ],
+    prefer: '¿Prefieres hablarlo antes?',
+  },
+}[lang];
+
+const field =
+  'w-full rounded-md border border-line bg-paper px-4 py-2.5 focus:border-brand-ink focus:outline-none focus:ring-2 focus:ring-brand/40';
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
+
+  <Section>
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+      <form
+        name="membership"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action={action}
+        class="space-y-5"
+      >
+        <input type="hidden" name="form-name" value="membership" />
+        <p class="hidden">
+          <label>{lang === 'ca' ? 'No omplir' : 'No rellenar'}: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold">{c.name}</span>
+            <input type="text" name="name" required autocomplete="name" class={field} />
+          </label>
+          <label class="block">
+            <span class="mb-1.5 block text-sm font-semibold">{t('form.email')}</span>
+            <input type="email" name="email" required autocomplete="email" class={field} />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">{c.phone}</span>
+          <input type="tel" name="phone" autocomplete="tel" class={field} />
+        </label>
+
+        <fieldset>
+          <legend class="mb-1.5 text-sm font-semibold">{c.how}</legend>
+          <p class="mb-3 text-sm text-ink-soft">{c.howNote}</p>
+          <div class="space-y-2">
+            {c.ways.map((w, i) => (
+              <label class="flex items-start gap-3 rounded-md border border-line p-3 text-sm">
+                <input type="radio" name="participation" value={w.v} required={i === 0} class="mt-1" />
+                <span>{w.l}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label class="block">
+          <span class="mb-1.5 block text-sm font-semibold">{c.comments}</span>
+          <textarea name="message" rows="4" class={field}></textarea>
+        </label>
+
+        <label class="flex items-start gap-3 text-sm">
+          <input type="checkbox" name="consent" required class="mt-1" />
+          <span>
+            {c.consent} <a href={privacy} class="text-brand-ink underline">{lang === 'ca' ? 'Llegeix-la' : 'Léela'}</a>.
+            <span class="block text-ink-soft">{c.consentNote}</span>
+          </span>
+        </label>
+
+        <button
+          type="submit"
+          class="rounded-pill bg-brand px-7 py-3 font-display font-extrabold text-paper hover:brightness-110"
+        >
+          {c.submit}
+        </button>
+      </form>
+
+      <aside class="self-start rounded-2xl bg-paper-green p-8">
+        <h2 class="flex items-center gap-2 font-display text-lg font-bold text-brand-dark">
+          <Icon name="check" size={18} /> {c.asideTitle}
+        </h2>
+        <ol class="mt-4 space-y-3 text-sm text-ink-soft">
+          {c.steps.map((s, i) => (
+            <li class="flex items-start gap-3">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-paper">
+                {i + 1}
+              </span>
+              <span>{s}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-6 border-t border-brand/20 pt-5 text-sm">
+          <strong class="block text-brand-dark">{c.prefer}</strong>
+          <a href={`mailto:${org.email}`} class="text-brand-ink underline">{org.email}</a>
+          {' · '}
+          <a href={`tel:${org.phone}`} class="text-brand-ink underline">{org.phoneDisplay}</a>
+        </p>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

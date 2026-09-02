@@ -88,6 +88,22 @@ saying out loud when handing over to editors.
   `src/config/site.ts`.
 - **A new section type**: add a component under `src/components/sections/`.
 
+## Price comparison ("Compara FoodCoop BCN amb altres supermercats")
+
+The homepage `priceCompare` block renders `src/data/prices.json`, which
+`scripts/fetch-prices.mjs` regenerates every morning from `.github/workflows/prices.yml`
+(cron + `workflow_dispatch`; the run commits the file and dispatches `deploy.yml`).
+
+- Basket and pinned product ids per shop: `scripts/lib/basket.mjs`. Find a product to pin
+  with `node scripts/find.mjs <store> "<query>"`.
+- Shop adapters: `scripts/stores/*.mjs` (FoodCoop's Odoo shop, Mercadona, Bonpreu/Esclat,
+  Ametller Origen, Condis). Carrefour is not included: its site blocks plain HTTP clients.
+- `npm run prices` collects and writes; `npm run prices -- --dry-run` only reports;
+  `npm run prices:test` runs the offline parser tests (also part of CI).
+- A shop that cannot be read keeps its last good value; `src/lib/prices.ts` hides any figure
+  older than 7 days and the whole block if FoodCoop's own prices are stale. Bonpreu sits
+  behind AWS WAF and may challenge a runner — check the workflow's step summary.
+
 ## Content migration from WordPress
 
 ```bash

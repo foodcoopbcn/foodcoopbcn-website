@@ -9,8 +9,20 @@ interface Props {
   text?: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
+  /** Large photo beside the copy. Falls back to the colour-block placeholder when unset. */
+  image?: string;
+  imageAlt?: string;
 }
-const { eyebrow, title, highlights = [], text, primaryCta, secondaryCta } = Astro.props;
+const {
+  eyebrow,
+  title,
+  highlights = [],
+  text,
+  primaryCta,
+  secondaryCta,
+  image,
+  imageAlt = '',
+} = Astro.props;
 ---
 <section class="relative overflow-hidden bg-paper-green">
   <!-- Subtle photo backdrop (members in front of the shop) -->
@@ -61,7 +73,18 @@ const { eyebrow, title, highlights = [], text, primaryCta, secondaryCta } = Astr
       </div>
     </div>
 
-    <!-- Illustration slot (swap for the brand illustration when available) -->
+    {image ? (
+      <img
+        src={image}
+        alt={imageAlt}
+        width="900"
+        height="900"
+        loading="eager"
+        fetchpriority="high"
+        class="mx-auto aspect-square w-full max-w-md rounded-[2.5rem] object-cover shadow-lg"
+      />
+    ) : (
+    /* Illustration placeholder — used until a hero photo is set on the section. */
     <div class="relative mx-auto aspect-square w-full max-w-md">
       <div class="absolute inset-0 rounded-[2.5rem] bg-paper shadow-lg"></div>
       <div class="absolute inset-6 grid grid-cols-2 gap-4">
@@ -74,5 +97,6 @@ const { eyebrow, title, highlights = [], text, primaryCta, secondaryCta } = Astr
         <Icon name="basket" size={84} class="text-ink" />
       </div>
     </div>
+    )}
   </div>
 </section>

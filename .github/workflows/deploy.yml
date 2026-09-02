@@ -30,6 +30,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Test the price collector (offline fixtures)
+        run: npm run prices:test
+
+      # Pulls the live member count from Odoo. A no-op without the secrets, and it
+      # never fails the build: a stale cached number beats a broken deploy.
+      - name: Refresh the member count from Odoo
+        run: node scripts/fetch-members.mjs
+        env:
+          ODOO_URL: ${{ secrets.ODOO_URL }}
+          ODOO_DB: ${{ secrets.ODOO_DB }}
+          ODOO_USER: ${{ secrets.ODOO_USER }}
+          ODOO_API_KEY: ${{ secrets.ODOO_API_KEY }}
+
       - name: Build (as production does — ENABLE_KEYSTATIC deliberately unset)
         run: npm run build
 

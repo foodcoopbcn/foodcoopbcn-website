@@ -1,49 +1,309 @@
 ---
+/*
+ * FAQs — grouped, and deliberately long.
+ *
+ * These answer the questions people actually ask at the till, and they are the
+ * single highest-value page for both featured snippets and AI answer engines:
+ * each answer states the fact in its first sentence, then elaborates. The
+ * FAQPage JSON-LD below is generated from the same array, so it can never drift.
+ *
+ * Figures come from `membership` (src/config/site.ts) — never retype them.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Accordion from '../ui/Accordion.astro';
-import { getLang, useTranslations } from '../../i18n/utils';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m, org, hours, dayKey, formatRanges } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
-const faqs = {
+/* Rendered into the "what are your hours?" answer so it can never contradict the footer. */
+const hoursLine = hours
+  .map((h) => `${t(dayKey(h.day))} ${formatRanges(h.ranges, lang === 'ca' ? 'tancat' : 'cerrado')}`)
+  .join('; ');
+
+const groups = {
   ca: [
-    { q: 'Cal ser sòcia per comprar?', a: 'No. El súper està obert a tothom. Les sòcies, però, gaudeixen del 12% de descompte, la botiga en línia i el vot a l’assemblea.' },
-    { q: 'Quant costa fer-se sòcia?', a: 'Es fa una aportació de capital social retornable. És una inversió que et fa copropietària del projecte, no una despesa.' },
-    { q: 'Quantes hores he de dedicar-hi?', a: 'Les sòcies consumidores dediquen unes 2-2,5 hores al mes a un torn per fer funcionar el súper.' },
-    { q: 'Què és el capital social?', a: 'És l’aportació econòmica que fa cada sòcia a la cooperativa. Si un dia te’n dones de baixa, se’t retorna.' },
-    { q: 'Com funciona la botiga en línia?', a: 'És exclusiva per a sòcies. Pots fer la comanda en línia i rebre-la a casa amb repartiment en bici de la cooperativa Mensakas.' },
-    { q: 'Una entitat pot fer-se sòcia?', a: 'Sí. Cooperatives, associacions i empreses de l’economia social poden formar-ne part mitjançant acords d’intercooperació.' },
+    {
+      title: 'Comprar-hi',
+      faqs: [
+        {
+          q: 'Cal ser sòcia per comprar-hi?',
+          a: 'No. El súper és obert a tothom des del 2023 i pots comprar-hi a preu públic sense cap compromís. Les sòcies, però, tenen un ' + m.discount + '% de descompte, accés a la botiga en línia i vot a l’assemblea.',
+        },
+        {
+          q: 'On sou i com s’hi arriba?',
+          a: `Som al ${org.address.street}, al barri de l’Antiga Esquerra de l’Eixample de Barcelona (${org.address.postalCode}). Les parades de metro més properes són Urgell (L1) i Hospital Clínic (L5).`,
+        },
+        { q: 'Quin horari feu?', a: hoursLine + '.' },
+        {
+          q: 'Sou més cars que un súper convencional?',
+          a: `En alguns productes, sí. No competim en preu amb la gran distribució: competim en qualitat, en origen i en saber qui ha cultivat el que menges. Amb el ${m.discount}% de descompte de sòcia, la diferència es fa petita.`,
+        },
+        {
+          q: 'Quins productes hi trobaré?',
+          a: 'Més de 1.200 referències: fruita i verdura de temporada, pa, frescos, rebost, granel, begudes, cosmètica i productes de neteja. Prioritzem productores catalanes i l’agroecologia.',
+        },
+        {
+          q: 'Tot és ecològic?',
+          a: 'La major part sí, però el criteri no és només el segell. Valorem la proximitat, la manera de produir i les condicions de treball de qui ho fa. Les sòcies decidim els criteris en assemblea.',
+        },
+        {
+          q: 'Puc comprar a granel amb els meus envasos?',
+          a: 'Sí. Porta els teus pots o bosses, els pesem buits a caixa i només et cobrem el producte. També en tenim de disponibles a la botiga.',
+        },
+        {
+          q: 'Com funciona la botiga en línia i què costa el repartiment?',
+          a: `La botiga en línia és exclusiva per a sòcies. Reps la comanda a casa en 24-48 h amb repartiment en bici de les cooperatives Mensakas i Les Mercedes: ${String(m.delivery.cheap).replace('.', ',')} € per a comandes de més de ${m.delivery.threshold} € i ${m.delivery.standard} € per sota.`,
+        },
+      ],
+    },
+    {
+      title: 'Fer-se sòcia',
+      faqs: [
+        {
+          q: 'Quant costa fer-se sòcia?',
+          a: `${m.capital} €, una sola vegada. No és una quota: és una aportació al capital social de la cooperativa i te la tornem si algun dia et dones de baixa.`,
+        },
+        {
+          q: `Els ${m.capital} € els recupero?`,
+          a: 'Sí. El capital social és teu. Quan et dones de baixa, la cooperativa te’l retorna segons el que preveuen els estatuts.',
+        },
+        {
+          q: 'Assumeixo algun risc econòmic?',
+          a: `No més enllà de l’aportació. La teva responsabilitat com a sòcia es limita al capital que has aportat: ${m.capital} €.`,
+        },
+        {
+          q: 'Quantes hores hi he de dedicar de veritat?',
+          a: `Un torn de ${m.shiftHours} hores cada ${m.shiftCycleWeeks} setmanes. No són hores setmanals: són unes dues hores i mitja al mes.`,
+        },
+        {
+          q: 'I si no puc fer torns?',
+          a: `Tens dues alternatives amb exactament els mateixos avantatges: treballar en un cercle (unes 2,5 h al mes, moltes des de casa) o pagar una quota trimestral de ${m.quota.standard} € (reduïda ${m.quota.reduced} € sense haver de justificar res, o solidària des de ${m.quota.standard} €).`,
+        },
+        {
+          q: 'Què es fa en un torn?',
+          a: 'Tasques senzilles del súper: reposar producte, cobrar a caixa, endreçar, rebre comandes i atendre les sòcies. No cal cap experiència prèvia i el primer dia sempre t’acompanya algú.',
+        },
+        {
+          q: 'I si un mes no hi puc anar?',
+          a: `Pots triar torn fix o torn mòbil, intercanviar-lo amb una altra sòcia i tens ${m.flexibleChanges} canvis flexibles l’any. La idea és que s’adapti a la teva vida, no al revés.`,
+        },
+        {
+          q: 'Hi ha excepcions al torn?',
+          a: 'Sí. Si tens més de 65 anys, mobilitat reduïda, una malaltia o estàs de maternitat o paternitat, el torn no és obligatori. Parla’n amb el cercle de comunitat.',
+        },
+        {
+          q: 'Qui més de casa meva pot comprar-hi a preu de sòcia?',
+          a: 'Un segon adult convivent i les criatures a càrrec. Amb una sola alta, la unitat de convivència compra amb descompte.',
+        },
+        {
+          q: 'Podem compartir el torn?',
+          a: 'Sí, és el torn en tàndem: dues persones que viviu juntes us repartiu les hores del mateix torn.',
+        },
+        {
+          q: 'Puc fer-me sòcia si no visc a Barcelona?',
+          a: `Sí, com a sòcia col·laboradora: aportes els ${m.capital} €, tens veu i vot a l’assemblea i sostens el projecte, però compres a preu públic.`,
+        },
+        {
+          q: 'Com em dono de baixa?',
+          a: 'Ho comuniques a la cooperativa i se’t retorna l’aportació al capital social segons els estatuts. Sense penalitzacions ni permanència.',
+        },
+      ],
+    },
+    {
+      title: 'Com funciona la cooperativa',
+      faqs: [
+        {
+          q: 'Què vol dir que és un supermercat cooperatiu?',
+          a: 'Que les persones que hi compren en són les propietàries. No hi ha inversors ni beneficis privats: les sòcies decidim què venem, a quin preu i què fem amb els excedents.',
+        },
+        {
+          q: 'Qui decideix què venem i a quin preu?',
+          a: 'Les sòcies, en assemblea, a partir del treball del cercle de compres. Els marges són els mateixos per a tothom i els fem públics.',
+        },
+        {
+          q: 'Què són els cercles i com m’hi apunto?',
+          a: 'Són els equips de treball que fan funcionar la cooperativa: Comunitat i cures, Compres, Operacions, Finances, Comunicació, IT, Governança i Local. T’hi pots apuntar en qualsevol moment escrivint-nos.',
+        },
+        {
+          q: 'Quan són les assemblees?',
+          a: 'Convoquem assemblea general periòdicament i sempre s’anuncia amb antelació a les sòcies per correu i a l’actualitat del web. Una sòcia, un vot.',
+        },
+        {
+          q: 'Una entitat pot fer-se’n sòcia?',
+          a: `Sí. Cooperatives, associacions, escoles i empreses de l’economia social poden ser entitat amiga amb una aportació de ${m.entityCapital} € (única o anual), que inclou un ${m.entityStaffDiscount}% de descompte per a les seves treballadores.`,
+        },
+      ],
+    },
   ],
+
   es: [
-    { q: '¿Hay que ser socia para comprar?', a: 'No. El súper está abierto a todo el mundo. Las socias, eso sí, disfrutan del 12% de descuento, la tienda online y el voto en la asamblea.' },
-    { q: '¿Cuánto cuesta hacerse socia?', a: 'Se hace una aportación de capital social retornable. Es una inversión que te hace copropietaria del proyecto, no un gasto.' },
-    { q: '¿Cuántas horas tengo que dedicar?', a: 'Las socias consumidoras dedican unas 2-2,5 horas al mes a un turno para hacer funcionar el súper.' },
-    { q: '¿Qué es el capital social?', a: 'Es la aportación económica que hace cada socia a la cooperativa. Si algún día te das de baja, se te devuelve.' },
-    { q: '¿Cómo funciona la tienda online?', a: 'Es exclusiva para socias. Puedes hacer el pedido online y recibirlo en casa con reparto en bici de la cooperativa Mensakas.' },
-    { q: '¿Una entidad puede hacerse socia?', a: 'Sí. Cooperativas, asociaciones y empresas de la economía social pueden formar parte mediante acuerdos de intercooperación.' },
+    {
+      title: 'Comprar aquí',
+      faqs: [
+        {
+          q: '¿Hay que ser socia para comprar?',
+          a: 'No. El súper está abierto a todo el mundo desde 2023 y puedes comprar a precio público sin ningún compromiso. Las socias, eso sí, tienen un ' + m.discount + '% de descuento, acceso a la tienda online y voto en la asamblea.',
+        },
+        {
+          q: '¿Dónde estáis y cómo se llega?',
+          a: `Estamos en el ${org.address.street}, en el barrio de la Antiga Esquerra de l’Eixample de Barcelona (${org.address.postalCode}). Las paradas de metro más cercanas son Urgell (L1) y Hospital Clínic (L5).`,
+        },
+        { q: '¿Qué horario hacéis?', a: hoursLine + '.' },
+        {
+          q: '¿Sois más caros que un súper convencional?',
+          a: `En algunos productos, sí. No competimos en precio con la gran distribución: competimos en calidad, en origen y en saber quién ha cultivado lo que comes. Con el ${m.discount}% de descuento de socia, la diferencia se hace pequeña.`,
+        },
+        {
+          q: '¿Qué productos encontraré?',
+          a: 'Más de 1.200 referencias: fruta y verdura de temporada, pan, frescos, despensa, granel, bebidas, cosmética y productos de limpieza. Priorizamos productoras catalanas y la agroecología.',
+        },
+        {
+          q: '¿Todo es ecológico?',
+          a: 'La mayor parte sí, pero el criterio no es solo el sello. Valoramos la proximidad, la manera de producir y las condiciones de trabajo de quien lo hace. Las socias decidimos los criterios en asamblea.',
+        },
+        {
+          q: '¿Puedo comprar a granel con mis envases?',
+          a: 'Sí. Trae tus tarros o bolsas, los pesamos vacíos en caja y solo te cobramos el producto. También tenemos disponibles en la tienda.',
+        },
+        {
+          q: '¿Cómo funciona la tienda online y qué cuesta el reparto?',
+          a: `La tienda online es exclusiva para socias. Recibes el pedido en casa en 24-48 h con reparto en bici de las cooperativas Mensakas y Les Mercedes: ${String(m.delivery.cheap).replace('.', ',')} € para pedidos de más de ${m.delivery.threshold} € y ${m.delivery.standard} € por debajo.`,
+        },
+      ],
+    },
+    {
+      title: 'Hacerse socia',
+      faqs: [
+        {
+          q: '¿Cuánto cuesta hacerse socia?',
+          a: `${m.capital} €, una sola vez. No es una cuota: es una aportación al capital social de la cooperativa y te la devolvemos si algún día te das de baja.`,
+        },
+        {
+          q: `¿Los ${m.capital} € los recupero?`,
+          a: 'Sí. El capital social es tuyo. Cuando te das de baja, la cooperativa te lo devuelve según lo que prevén los estatutos.',
+        },
+        {
+          q: '¿Asumo algún riesgo económico?',
+          a: `No más allá de la aportación. Tu responsabilidad como socia se limita al capital que has aportado: ${m.capital} €.`,
+        },
+        {
+          q: '¿Cuántas horas tengo que dedicar de verdad?',
+          a: `Un turno de ${m.shiftHours} horas cada ${m.shiftCycleWeeks} semanas. No son horas semanales: son unas dos horas y media al mes.`,
+        },
+        {
+          q: '¿Y si no puedo hacer turnos?',
+          a: `Tienes dos alternativas con exactamente las mismas ventajas: trabajar en un círculo (unas 2,5 h al mes, muchas desde casa) o pagar una cuota trimestral de ${m.quota.standard} € (reducida ${m.quota.reduced} € sin tener que justificar nada, o solidaria desde ${m.quota.standard} €).`,
+        },
+        {
+          q: '¿Qué se hace en un turno?',
+          a: 'Tareas sencillas del súper: reponer producto, cobrar en caja, ordenar, recibir pedidos y atender a las socias. No hace falta experiencia previa y el primer día siempre te acompaña alguien.',
+        },
+        {
+          q: '¿Y si un mes no puedo ir?',
+          a: `Puedes elegir turno fijo o turno móvil, intercambiarlo con otra socia y tienes ${m.flexibleChanges} cambios flexibles al año. La idea es que se adapte a tu vida, no al revés.`,
+        },
+        {
+          q: '¿Hay excepciones al turno?',
+          a: 'Sí. Si tienes más de 65 años, movilidad reducida, una enfermedad o estás de maternidad o paternidad, el turno no es obligatorio. Háblalo con el círculo de comunidad.',
+        },
+        {
+          q: '¿Quién más de mi casa puede comprar a precio de socia?',
+          a: 'Un segundo adulto conviviente y los menores a cargo. Con una sola alta, la unidad de convivencia compra con descuento.',
+        },
+        {
+          q: '¿Podemos compartir el turno?',
+          a: 'Sí, es el turno en tándem: dos personas que vivís juntas os repartís las horas del mismo turno.',
+        },
+        {
+          q: '¿Puedo hacerme socia si no vivo en Barcelona?',
+          a: `Sí, como socia colaboradora: aportas los ${m.capital} €, tienes voz y voto en la asamblea y sostienes el proyecto, pero compras a precio público.`,
+        },
+        {
+          q: '¿Cómo me doy de baja?',
+          a: 'Lo comunicas a la cooperativa y se te devuelve la aportación al capital social según los estatutos. Sin penalizaciones ni permanencia.',
+        },
+      ],
+    },
+    {
+      title: 'Cómo funciona la cooperativa',
+      faqs: [
+        {
+          q: '¿Qué quiere decir que es un supermercado cooperativo?',
+          a: 'Que las personas que compran en él son sus propietarias. No hay inversores ni beneficios privados: las socias decidimos qué vendemos, a qué precio y qué hacemos con los excedentes.',
+        },
+        {
+          q: '¿Quién decide qué vendemos y a qué precio?',
+          a: 'Las socias, en asamblea, a partir del trabajo del círculo de compras. Los márgenes son los mismos para todo el mundo y los hacemos públicos.',
+        },
+        {
+          q: '¿Qué son los círculos y cómo me apunto?',
+          a: 'Son los equipos de trabajo que hacen funcionar la cooperativa: Comunidad y cuidados, Compras, Operaciones, Finanzas, Comunicación, IT, Gobernanza y Local. Te puedes apuntar en cualquier momento escribiéndonos.',
+        },
+        {
+          q: '¿Cuándo son las asambleas?',
+          a: 'Convocamos asamblea general periódicamente y siempre se anuncia con antelación a las socias por correo y en la actualidad de la web. Una socia, un voto.',
+        },
+        {
+          q: '¿Una entidad puede hacerse socia?',
+          a: `Sí. Cooperativas, asociaciones, escuelas y empresas de la economía social pueden ser entidad amiga con una aportación de ${m.entityCapital} € (única o anual), que incluye un ${m.entityStaffDiscount}% de descuento para sus trabajadoras.`,
+        },
+      ],
+    },
   ],
 }[lang];
 
+const all = groups.flatMap((g) => g.faqs);
+
+/* Same array, so the rich result can never disagree with the visible page. */
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
+  mainEntity: all.map((f) => ({
     '@type': 'Question',
     name: f.q,
     acceptedAnswer: { '@type': 'Answer', text: f.a },
   })),
 };
+
+/* Slug for a per-question anchor, so an answer can be linked to directly. */
+const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 60);
 ---
-<BaseLayout title={t('nav.faqs')} jsonLd={jsonLd}>
-  <PageHeader eyebrow={t('nav.faqs')} title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'} />
+<BaseLayout
+  title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'}
+  description={lang === 'ca'
+    ? `Quant costa fer-se sòcia, quantes hores demana un torn, si cal ser sòcia per comprar-hi i tot el que ens pregunteu sobre FoodCoop BCN.`
+    : `Cuánto cuesta hacerse socia, cuántas horas pide un turno, si hay que ser socia para comprar y todo lo que nos preguntáis sobre FoodCoop BCN.`}
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    eyebrow={t('nav.faqs')}
+    title={lang === 'ca' ? 'Preguntes freqüents' : 'Preguntas frecuentes'}
+    intro={lang === 'ca'
+      ? 'Les que ens feu més sovint, agrupades. Si no hi trobes la teva, escriu-nos.'
+      : 'Las que nos hacéis más a menudo, agrupadas. Si no encuentras la tuya, escríbenos.'}
+  />
+
   <Section width="narrow">
-    {faqs.map((f, i) => (
-      <Accordion question={f.q} open={i === 0}>
-        <p>{f.a}</p>
-      </Accordion>
+    {groups.map((g, gi) => (
+      <div class="mb-12 last:mb-0">
+        <h2 class="mb-4 text-xl">{g.title}</h2>
+        {g.faqs.map((f, i) => (
+          <Accordion question={f.q} id={slug(f.q)} open={gi === 0 && i === 0}>
+            <p>{f.a}</p>
+          </Accordion>
+        ))}
+      </div>
     ))}
   </Section>
 </BaseLayout>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" width="960" height="720" role="img" aria-label="Qui som">
+  <rect width="960" height="720" fill="#e9fbe5"/>
+  <circle cx="748" cy="172" r="144" fill="#feec3f" opacity="0.65"/>
+  <path d="M153 532c0-187 144-324 201-324 -14 187 -144 324 -201 324Z" fill="#009739" opacity="0.85"/>
+  <text x="50%" y="662" text-anchor="middle" font-family="Open Sans, sans-serif" font-weight="800" font-size="54" fill="#06402a">Qui som</text>
+</svg>

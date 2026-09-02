@@ -44,7 +44,9 @@ check "files referencing the admin UI" \
 if [ "$fail" -ne 0 ]; then
   echo ""
   echo "The production build is shipping client-side JS."
-  echo "The two expected script tags are the JSON-LD block and the cookie-banner inline module."
+  echo "The two expected script tags are the JSON-LD block and the opening-hours inline"
+  echo "module (which only unhides today's pre-rendered row)."
+  echo "The cookie banner renders nothing while `analytics` is null in src/config/site.ts."
   echo "If you added a third intentionally, update the expected count here."
   exit 1
 fi

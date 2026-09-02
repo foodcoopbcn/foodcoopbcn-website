@@ -8,7 +8,9 @@
     "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "cms": "ENABLE_KEYSTATIC=true astro dev",
-    "astro": "astro"
+    "astro": "astro",
+    "prices": "node scripts/fetch-prices.mjs",
+    "prices:test": "node --test scripts/fetch-prices.test.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
@@ -26,8 +28,8 @@
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/open-sans": "^5.2.7",
-    "@keystatic/astro": "^5.1.0",
-    "@keystatic/core": "^0.5.50",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
     "@markdoc/markdoc": "^0.5.7",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^5.18.2",

@@ -1,0 +1,47 @@
+---
+/* Photo on one side, a short pitch and a link on the other. */
+import Section from './Section.astro';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  image?: string;
+  imageAlt?: string;
+  /** Put the image on the right instead of the left. */
+  reverse?: boolean;
+  tone?: 'paper' | 'soft' | 'green';
+  cta?: { label: string; href: string };
+}
+const { eyebrow, title, text, image, imageAlt = '', reverse, tone = 'paper', cta } = Astro.props;
+---
+<Section tone={tone}>
+  <div class="grid items-center gap-10 md:grid-cols-2">
+    {image && (
+      <img
+        src={image}
+        alt={imageAlt}
+        width="960"
+        height="720"
+        loading="lazy"
+        class:list={[
+          'aspect-[4/3] w-full rounded-lg object-cover shadow-sm',
+          reverse && 'md:order-2',
+        ]}
+      />
+    )}
+    <div>
+      {eyebrow && (
+        <p class="mb-3 text-sm font-bold uppercase tracking-wide text-brand-ink">{eyebrow}</p>
+      )}
+      <h2 class="text-2xl">{title}</h2>
+      {text && <p class="mt-4 text-lg opacity-80">{text}</p>}
+      {cta && (
+        <div class="mt-6">
+          <Button href={cta.href} variant="ghost">{cta.label}</Button>
+        </div>
+      )}
+    </div>
+  </div>
+</Section>

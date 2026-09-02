@@ -14,14 +14,15 @@ interface Props {
   features: Feature[];
   tone?: 'paper' | 'soft' | 'green';
   columns?: 2 | 3 | 4;
+  id?: string;
 }
-const { eyebrow, title, intro, features, tone = 'paper', columns = 3 } = Astro.props;
+const { eyebrow, title, intro, features, tone = 'paper', columns = 3, id } = Astro.props;
 const cols = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' }[columns];
 ---
-<Section tone={tone}>
+<Section tone={tone} id={id}>
   {(eyebrow || title || intro) && (
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand">{eyebrow}</p>}
+      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand-ink">{eyebrow}</p>}
       {title && <h2 class="text-2xl">{title}</h2>}
       {intro && <p class="mt-4 text-lg text-ink-soft">{intro}</p>}
     </div>
@@ -30,7 +31,7 @@ const cols = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:g
     {features.map((f) => (
       <div class="rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
         {f.icon && (
-          <div class="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-paper-green text-brand">
+          <div class="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-paper-green text-brand-ink">
             <Icon name={f.icon as any} size={24} />
           </div>
         )}

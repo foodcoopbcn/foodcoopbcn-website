@@ -23,7 +23,7 @@ const { eyebrow, title, intro, options, tone = 'soft' } = Astro.props;
 <Section tone={tone}>
   {(eyebrow || title || intro) && (
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand">{eyebrow}</p>}
+      {eyebrow && <p class="mb-3 text-sm font-bold uppercase tracking-widest text-brand-ink">{eyebrow}</p>}
       {title && <h2 class="text-2xl">{title}</h2>}
       {intro && <p class="mt-4 text-lg text-ink-soft">{intro}</p>}
     </div>
@@ -52,7 +52,7 @@ const { eyebrow, title, intro, options, tone = 'soft' } = Astro.props;
           <ul class="mt-5 space-y-2.5">
             {o.points.map((p) => (
               <li class="flex items-start gap-2.5 text-sm">
-                <Icon name="leaf" size={18} class={o.featured ? 'mt-0.5 shrink-0 text-accent' : 'mt-0.5 shrink-0 text-brand'} />
+                <Icon name="leaf" size={18} class={o.featured ? 'mt-0.5 shrink-0 text-accent' : 'mt-0.5 shrink-0 text-brand-ink'} />
                 <span class={o.featured ? 'text-paper/90' : 'text-ink'}>{p}</span>
               </li>
             ))}

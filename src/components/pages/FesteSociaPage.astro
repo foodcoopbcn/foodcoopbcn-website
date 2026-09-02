@@ -1,74 +1,327 @@
 ---
+/*
+ * The conversion page. Every euro amount and hour count comes from `membership`
+ * in src/config/site.ts — never hard-code them here, they are asked about
+ * constantly and must stay consistent with the FAQs and the entity page.
+ *
+ * Structure follows the objection order real visitors have:
+ *   what do I get → what does it cost me (money AND time) → how do I start →
+ *   the things still stopping me → person or organisation → start.
+ * The person/organisation split deliberately comes late: it is a taxonomy
+ * question nobody cares about until they have decided they want in.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
-import SplitCards from '../sections/SplitCards.astro';
 import Section from '../sections/Section.astro';
+import SplitCards from '../sections/SplitCards.astro';
 import CTASection from '../sections/CTASection.astro';
+import Accordion from '../ui/Accordion.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 
+const signup = localizePath(m.signupPath, lang);
+/* Info sessions have no page of their own yet, so the ask lands in the inbox. */
+const sessions = localizePath('/contacte', lang);
+
 const c = {
   ca: {
-    title: 'Fes-te sòcia',
-    intro: 'Forma part del projecte i ajuda’ns a construir una altra manera d’alimentar-nos. Pots sumar-t’hi com a persona o com a entitat.',
+    eyebrow: 'Fes-te sòcia',
+    title: 'Fes-te sòcia de FoodCoop BCN',
+    intro: `Amb una aportació única de ${m.capital} € —que et tornem si un dia pleges— passes a ser copropietària del súper. Tens un ${m.discount}% de descompte en tot, accés a la botiga en línia i vot a l’assemblea.`,
+    ctaPrimary: `Comença l’alta (${m.capital} €)`,
+    ctaSecondary: 'Vine a una sessió informativa',
+
+    benefitsTitle: 'Què hi guanyes',
+    benefits: [
+      `**${m.discount}% de descompte permanent** en tots els productes, sense mínim de compra.`,
+      `**Botiga en línia** amb repartiment en bici de Mensakas i Les Mercedes en 24-48 h: ${m.delivery.cheap.toString().replace('.', ',')} € per comandes de més de ${m.delivery.threshold} €, ${m.delivery.standard} € per sota.`,
+      '**Vot a l’assemblea**: una sòcia, un vot. Les decisions grosses les prenem totes.',
+      '**Tallers de cuina, xerrades i visites a productores** només per a sòcies.',
+      '**Compra a preu de sòcia per a qui viu amb tu**: un adult convivent més i les criatures a càrrec.',
+    ],
+    priceLabel: 'Aportació única',
+    priceNote: 'Capital social retornable. No és una quota ni una despesa: és teu i te’l tornem si et dones de baixa.',
+
+    waysTitle: 'Tries com hi participes',
+    waysIntro: 'Hi ha tres maneres, i totes valen igual. Pots canviar d’opció més endavant.',
+    ways: [
+      {
+        icon: 'basket',
+        badge: 'Opció 1',
+        title: `Un torn al súper`,
+        meta: `${m.shiftHours} h cada ${m.shiftCycleWeeks} setmanes`,
+        text: 'Reposar producte, cobrar a caixa, endreçar, atendre sòcies. No cal experiència: el primer dia sempre t’acompanya algú.',
+        points: [
+          'Torn fix (sempre el mateix dia i hora) o mòbil (el tries cada mes)',
+          `${m.flexibleChanges} canvis flexibles l’any`,
+          'Pots intercanviar el torn amb una altra sòcia',
+        ],
+      },
+      {
+        icon: 'vote',
+        badge: 'Opció 2',
+        title: 'Un cercle de treball',
+        meta: 'unes 2,5 h al mes, moltes des de casa',
+        text: 'Si tens una habilitat que ens pot servir, aquí és on encaixa. Els cercles fan funcionar la cooperativa fora del taulell.',
+        points: [
+          'Compres, Comunicació, Finances, IT',
+          'Governança, Comunitat i cures, Local, Operacions',
+          'Bona part de la feina es pot fer en remot',
+        ],
+      },
+      {
+        icon: 'clock',
+        badge: 'Opció 3',
+        title: 'Una quota trimestral',
+        meta: `des de ${m.quota.reduced} € al trimestre`,
+        text: 'Si ara mateix no pots dedicar-hi temps. Mantens absolutament tots els avantatges de sòcia.',
+        points: [
+          `Bàsica: ${m.quota.standard} € al trimestre`,
+          `Reduïda: ${m.quota.reduced} € al trimestre, sense haver de justificar res`,
+          `Solidària: des de ${m.quota.standard} €, hi poses el que vulguis`,
+        ],
+      },
+    ],
+    waysNote:
+      '**També:** si viviu juntes, podeu fer el **torn en tàndem** i repartir-vos-el. I si tens més de 65 anys, mobilitat reduïda, una malaltia o estàs de maternitat o paternitat, el torn no és obligatori — parla’n amb nosaltres.',
+
+    stepsTitle: 'Com t’hi fas, pas a pas',
+    steps: [
+      { n: '1', t: `Omple el formulari i fes l’aportació de ${m.capital} €`, d: 'Cinc minuts. L’aportació és teva: si un dia et dones de baixa, te la tornem.' },
+      { n: '2', t: 'Vine a la sessió de benvinguda', d: `Tres quarts d’hora. T’expliquem com funciona el súper i et resolem tots els dubtes. Sense compromís fins aquí.` },
+      { n: '3', t: 'Tria com hi participes', d: 'Torn, cercle o quota. Ho pots canviar més endavant.' },
+      { n: '4', t: 'Estrena la teva targeta', d: `Ja compres amb el ${m.discount}% de descompte i ja tens la botiga en línia oberta.` },
+    ],
+
+    doubtsTitle: 'Encara ho estàs pensant?',
+    doubts: [
+      {
+        q: `Els ${m.capital} € els perdo?`,
+        a: `No. És capital social: és teu i te’l tornem si et dones de baixa. La teva responsabilitat com a sòcia es limita a aquesta quantitat.`,
+      },
+      {
+        q: 'Sou més cars que el súper de sota casa?',
+        a: `En alguns productes, sí. No competim amb la gran distribució en preu: competim en qualitat, en origen i en què saps qui ho ha cultivat. Amb el ${m.discount}% de descompte, la diferència es fa petita.`,
+      },
+      {
+        q: 'I si no puc fer torns?',
+        a: 'Tries la quota trimestral o un cercle de treball. Cap de les tres opcions et deixa fora, i les tres et donen exactament els mateixos avantatges.',
+      },
+      {
+        q: 'No visc a Barcelona.',
+        a: `Fes-te **sòcia col·laboradora**: aportes els ${m.capital} €, tens veu i vot a l’assemblea i sostens el projecte, tot i que compres a preu públic.`,
+      },
+      {
+        q: 'Puc venir a veure-ho abans de decidir res?',
+        a: 'És clar. El súper és obert a tothom des del 2023: vine, compra el que vulguis i decideix un altre dia.',
+      },
+    ],
+
+    whoTitle: 'Com a persona o com a entitat?',
+    whoIntro: 'La cooperativa té dues portes d’entrada. Aquesta és la diferència.',
     options: [
       {
         title: 'Com a persona', featured: true, badge: 'Particulars',
         text: 'Fes-te sòcia consumidora i gaudeix de tots els avantatges del súper cooperatiu.',
-        points: ['12% de descompte', 'Botiga en línia', 'Vot a l’assemblea', 'Participació d’unes 2-2,5 h al mes'],
-        cta: { label: lang === 'ca' ? 'Saber-ne més' : 'Saber más', href: localizePath('/fes-te-socia/persona', lang) },
+        points: [`${m.discount}% de descompte`, 'Botiga en línia', 'Vot a l’assemblea', `Torn, cercle o quota: tries`],
+        cta: { label: 'Saber-ne més', href: localizePath('/fes-te-socia/persona', lang) },
       },
       {
         title: 'Com a entitat', badge: 'Col·lectius',
-        text: 'Cooperatives, associacions i empreses de l’economia social també poden formar-ne part.',
-        points: ['Intercooperació', 'Compres col·lectives', 'Aliances de barri'],
-        cta: { label: lang === 'ca' ? 'Saber-ne més' : 'Saber más', href: localizePath('/fes-te-socia/entitat', lang) },
+        text: 'Cooperatives, associacions, escoles i empreses de l’economia social també poden formar-ne part.',
+        points: [`${m.entityCapital} € d’aportació`, `${m.entityStaffDiscount}% per a les treballadores`, 'Cistelles, càtering i lots'],
+        cta: { label: 'Saber-ne més', href: localizePath('/fes-te-socia/entitat', lang) },
       },
     ],
-    stepsTitle: 'Com m’hi faig sòcia?',
-    steps: [
-      { n: '1', t: 'Informa-te’n', d: 'Llegeix les condicions o vine a una sessió informativa.' },
-      { n: '2', t: 'Aporta el capital social', d: 'Una aportació retornable que et fa copropietària del projecte.' },
-      { n: '3', t: 'Tria el teu torn', d: 'Dedica unes 2-2,5 h al mes a fer funcionar el súper.' },
-      { n: '4', t: 'Comença a comprar', d: 'Gaudeix del descompte i de la botiga en línia.' },
-    ],
+
+    finalTitle: 'Comencem?',
+    finalText: 'L’alta són cinc minuts. Si prefereixes que t’ho expliquem primer, apunta’t a la propera sessió informativa.',
   },
+
   es: {
-    title: 'Hazte socia',
-    intro: 'Forma parte del proyecto y ayúdanos a construir otra manera de alimentarnos. Puedes sumarte como persona o como entidad.',
+    eyebrow: 'Hazte socia',
+    title: 'Hazte socia de FoodCoop BCN',
+    intro: `Con una aportación única de ${m.capital} € —que te devolvemos si algún día lo dejas— pasas a ser copropietaria del súper. Tienes un ${m.discount}% de descuento en todo, acceso a la tienda online y voto en la asamblea.`,
+    ctaPrimary: `Empezar el alta (${m.capital} €)`,
+    ctaSecondary: 'Ven a una sesión informativa',
+
+    benefitsTitle: 'Qué ganas',
+    benefits: [
+      `**${m.discount}% de descuento permanente** en todos los productos, sin mínimo de compra.`,
+      `**Tienda online** con reparto en bici de Mensakas y Les Mercedes en 24-48 h: ${m.delivery.cheap.toString().replace('.', ',')} € para pedidos de más de ${m.delivery.threshold} €, ${m.delivery.standard} € por debajo.`,
+      '**Voto en la asamblea**: una socia, un voto. Las decisiones grandes las tomamos todas.',
+      '**Talleres de cocina, charlas y visitas a productoras** solo para socias.',
+      '**Compra a precio de socia para quien vive contigo**: un adulto conviviente más y los menores a cargo.',
+    ],
+    priceLabel: 'Aportación única',
+    priceNote: 'Capital social reembolsable. No es una cuota ni un gasto: es tuyo y te lo devolvemos si te das de baja.',
+
+    waysTitle: 'Eliges cómo participas',
+    waysIntro: 'Hay tres maneras, y todas valen igual. Puedes cambiar de opción más adelante.',
+    ways: [
+      {
+        icon: 'basket',
+        badge: 'Opción 1',
+        title: 'Un turno en el súper',
+        meta: `${m.shiftHours} h cada ${m.shiftCycleWeeks} semanas`,
+        text: 'Reponer producto, cobrar en caja, ordenar, atender socias. No hace falta experiencia: el primer día siempre te acompaña alguien.',
+        points: [
+          'Turno fijo (siempre el mismo día y hora) o móvil (lo eliges cada mes)',
+          `${m.flexibleChanges} cambios flexibles al año`,
+          'Puedes intercambiar el turno con otra socia',
+        ],
+      },
+      {
+        icon: 'vote',
+        badge: 'Opción 2',
+        title: 'Un círculo de trabajo',
+        meta: 'unas 2,5 h al mes, muchas desde casa',
+        text: 'Si tienes una habilidad que nos puede servir, aquí es donde encaja. Los círculos hacen funcionar la cooperativa fuera del mostrador.',
+        points: [
+          'Compras, Comunicación, Finanzas, IT',
+          'Gobernanza, Comunidad y cuidados, Local, Operaciones',
+          'Buena parte del trabajo se puede hacer en remoto',
+        ],
+      },
+      {
+        icon: 'clock',
+        badge: 'Opción 3',
+        title: 'Una cuota trimestral',
+        meta: `desde ${m.quota.reduced} € al trimestre`,
+        text: 'Si ahora mismo no puedes dedicarle tiempo. Mantienes absolutamente todas las ventajas de socia.',
+        points: [
+          `Básica: ${m.quota.standard} € al trimestre`,
+          `Reducida: ${m.quota.reduced} € al trimestre, sin tener que justificar nada`,
+          `Solidaria: desde ${m.quota.standard} €, pones lo que quieras`,
+        ],
+      },
+    ],
+    waysNote:
+      '**También:** si vivís juntas, podéis hacer el **turno en tándem** y repartíroslo. Y si tienes más de 65 años, movilidad reducida, una enfermedad o estás de maternidad o paternidad, el turno no es obligatorio — háblalo con nosotras.',
+
+    stepsTitle: 'Cómo te haces socia, paso a paso',
+    steps: [
+      { n: '1', t: `Rellena el formulario y haz la aportación de ${m.capital} €`, d: 'Cinco minutos. La aportación es tuya: si algún día te das de baja, te la devolvemos.' },
+      { n: '2', t: 'Ven a la sesión de bienvenida', d: 'Tres cuartos de hora. Te explicamos cómo funciona el súper y te resolvemos todas las dudas. Sin compromiso hasta aquí.' },
+      { n: '3', t: 'Elige cómo participas', d: 'Turno, círculo o cuota. Lo puedes cambiar más adelante.' },
+      { n: '4', t: 'Estrena tu tarjeta', d: `Ya compras con el ${m.discount}% de descuento y ya tienes la tienda online abierta.` },
+    ],
+
+    doubtsTitle: '¿Todavía lo estás pensando?',
+    doubts: [
+      {
+        q: `¿Los ${m.capital} € los pierdo?`,
+        a: 'No. Es capital social: es tuyo y te lo devolvemos si te das de baja. Tu responsabilidad como socia se limita a esa cantidad.',
+      },
+      {
+        q: '¿Sois más caros que el súper de debajo de casa?',
+        a: `En algunos productos, sí. No competimos con la gran distribución en precio: competimos en calidad, en origen y en que sabes quién lo ha cultivado. Con el ${m.discount}% de descuento, la diferencia se hace pequeña.`,
+      },
+      {
+        q: '¿Y si no puedo hacer turnos?',
+        a: 'Eliges la cuota trimestral o un círculo de trabajo. Ninguna de las tres opciones te deja fuera, y las tres te dan exactamente las mismas ventajas.',
+      },
+      {
+        q: 'No vivo en Barcelona.',
+        a: `Hazte **socia colaboradora**: aportas los ${m.capital} €, tienes voz y voto en la asamblea y sostienes el proyecto, aunque compres a precio público.`,
+      },
+      {
+        q: '¿Puedo venir a verlo antes de decidir nada?',
+        a: 'Claro. El súper está abierto a todo el mundo desde 2023: ven, compra lo que quieras y decide otro día.',
+      },
+    ],
+
+    whoTitle: '¿Como persona o como entidad?',
+    whoIntro: 'La cooperativa tiene dos puertas de entrada. Esta es la diferencia.',
     options: [
       {
         title: 'Como persona', featured: true, badge: 'Particulares',
         text: 'Hazte socia consumidora y disfruta de todas las ventajas del súper cooperativo.',
-        points: ['12% de descuento', 'Tienda online', 'Voto en la asamblea', 'Participación de unas 2-2,5 h al mes'],
+        points: [`${m.discount}% de descuento`, 'Tienda online', 'Voto en la asamblea', 'Turno, círculo o cuota: eliges'],
         cta: { label: 'Saber más', href: localizePath('/fes-te-socia/persona', lang) },
       },
       {
         title: 'Como entidad', badge: 'Colectivos',
-        text: 'Cooperativas, asociaciones y empresas de la economía social también pueden formar parte.',
-        points: ['Intercooperación', 'Compras colectivas', 'Alianzas de barrio'],
+        text: 'Cooperativas, asociaciones, escuelas y empresas de la economía social también pueden formar parte.',
+        points: [`${m.entityCapital} € de aportación`, `${m.entityStaffDiscount}% para las trabajadoras`, 'Cestas, catering y lotes'],
         cta: { label: 'Saber más', href: localizePath('/fes-te-socia/entitat', lang) },
       },
     ],
-    stepsTitle: '¿Cómo me hago socia?',
-    steps: [
-      { n: '1', t: 'Infórmate', d: 'Lee las condiciones o ven a una sesión informativa.' },
-      { n: '2', t: 'Aporta el capital social', d: 'Una aportación retornable que te hace copropietaria del proyecto.' },
-      { n: '3', t: 'Elige tu turno', d: 'Dedica unas 2-2,5 h al mes a hacer funcionar el súper.' },
-      { n: '4', t: 'Empieza a comprar', d: 'Disfruta del descuento y de la tienda online.' },
-    ],
+
+    finalTitle: '¿Empezamos?',
+    finalText: 'El alta son cinco minutos. Si prefieres que te lo expliquemos primero, apúntate a la próxima sesión informativa.',
   },
 }[lang];
+
+/* Minimal **bold** support so editors can emphasise a phrase without raw HTML. */
+const bold = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 ---
-<BaseLayout title={c.title} description={c.intro}>
-  <PageHeader eyebrow={c.title} title={c.title} intro={c.intro} />
+<BaseLayout title={c.eyebrow} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
+    <Button href={signup} size="lg" variant="primary">{c.ctaPrimary}</Button>
+    <Button href={sessions} size="lg" variant="ghost">{c.ctaSecondary}</Button>
+  </PageHeader>
 
-  <SplitCards options={c.options} tone="paper" />
+  <!-- What you get, with the price stated plainly instead of implied. -->
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <div>
+        <h2 class="text-2xl">{c.benefitsTitle}</h2>
+        <ul class="mt-6 space-y-4">
+          {c.benefits.map((b) => (
+            <li class="flex items-start gap-3">
+              <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-paper">
+                <Icon name="check" size={14} />
+              </span>
+              <span set:html={bold(b)} />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <aside class="self-start rounded-2xl bg-paper-green p-8 text-center">
+        <p class="text-sm font-bold uppercase tracking-widest text-brand-dark">{c.priceLabel}</p>
+        <p class="mt-2 font-display text-3xl font-extrabold text-brand-dark">{m.capital} €</p>
+        <p class="mt-3 text-sm text-ink-soft">{c.priceNote}</p>
+      </aside>
+    </div>
+  </Section>
 
+  <!-- The block the rebuild was missing: three equally valid ways to take part. -->
   <Section tone="soft">
-    <h2 class="mb-10 text-center text-2xl">{c.stepsTitle}</h2>
+    <div class="mb-10 max-w-2xl">
+      <h2 class="text-2xl">{c.waysTitle}</h2>
+      <p class="mt-3 text-lg text-ink-soft">{c.waysIntro}</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {c.ways.map((w) => (
+        <div class="flex flex-col rounded-2xl bg-paper p-7 shadow-sm ring-1 ring-line">
+          <span class="mb-4 inline-flex w-fit items-center gap-2 rounded-pill bg-paper-green px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand-dark">
+            <Icon name={w.icon as any} size={14} /> {w.badge}
+          </span>
+          <h3 class="text-lg">{w.title}</h3>
+          <p class="mt-1 text-sm font-bold text-brand-ink">{w.meta}</p>
+          <p class="mt-3 text-sm text-ink-soft">{w.text}</p>
+          <ul class="mt-4 space-y-2 border-t border-line pt-4">
+            {w.points.map((p) => (
+              <li class="flex items-start gap-2 text-sm">
+                <Icon name="check" size={16} class="mt-0.5 shrink-0 text-brand-ink" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="mt-8 max-w-3xl text-ink-soft" set:html={bold(c.waysNote)} />
+  </Section>
+
+  <Section>
+    <h2 class="mb-10 text-2xl">{c.stepsTitle}</h2>
     <ol class="grid gap-6 md:grid-cols-4">
       {c.steps.map((s) => (
         <li class="rounded-lg bg-paper p-6 shadow-sm ring-1 ring-line">
@@ -80,10 +333,22 @@ const c = {
     </ol>
   </Section>
 
+  <!-- Objections, answered where they arise rather than parked on /faqs. -->
+  <Section tone="soft" width="narrow">
+    <h2 class="mb-6 text-2xl">{c.doubtsTitle}</h2>
+    {c.doubts.map((d, i) => (
+      <Accordion question={d.q} open={i === 0}>
+        <p set:html={bold(d.a)} />
+      </Accordion>
+    ))}
+  </Section>
+
+  <SplitCards title={c.whoTitle} intro={c.whoIntro} options={c.options} tone="paper" />
+
   <CTASection
-    title={lang === 'ca' ? 'Tens dubtes?' : '¿Tienes dudas?'}
-    text={lang === 'ca' ? 'Mira les preguntes freqüents o escriu-nos.' : 'Mira las preguntas frecuentes o escríbenos.'}
-    primaryCta={{ label: t('nav.faqs'), href: localizePath('/faqs', lang) }}
-    secondaryCta={{ label: t('nav.contacte'), href: localizePath('/contacte', lang) }}
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: c.ctaPrimary, href: signup }}
+    secondaryCta={{ label: c.ctaSecondary, href: sessions }}
   />
 </BaseLayout>

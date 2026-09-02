@@ -1,0 +1,76 @@
+---
+/*
+ * 404. Until now Netlify served its own unbranded English page, which is a poor
+ * landing spot for the several hundred people who will arrive here from an old
+ * WordPress link during the migration. Give them the shop's address, the two
+ * things they were most likely looking for, and a search box.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { org } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const c = {
+  ca: {
+    title: 'Aquesta pàgina no hi és',
+    text: 'Pot ser que l’haguem canviat de lloc en estrenar el web nou, o que l’enllaç estigui malament. Aquí tens per on continuar.',
+    links: [
+      { label: 'Torna a l’inici', href: '/', primary: true },
+      { label: 'Fes-te sòcia', href: '/fes-te-socia' },
+      { label: 'Horari i com arribar-hi', href: '/el-super' },
+      { label: 'Actualitat', href: '/actualitat' },
+    ],
+    searchLabel: 'O busca el que necessites',
+    searchCta: 'Cerca al web',
+    visit: 'I si passaves a veure’ns?',
+  },
+  es: {
+    title: 'Esta página no está',
+    text: 'Puede que la hayamos cambiado de sitio al estrenar la web nueva, o que el enlace esté mal. Aquí tienes por dónde seguir.',
+    links: [
+      { label: 'Volver al inicio', href: '/', primary: true },
+      { label: 'Hazte socia', href: '/fes-te-socia' },
+      { label: 'Horario y cómo llegar', href: '/el-super' },
+      { label: 'Actualidad', href: '/actualitat' },
+    ],
+    searchLabel: 'O busca lo que necesitas',
+    searchCta: 'Buscar en la web',
+    visit: '¿Y si te pasas a vernos?',
+  },
+}[lang];
+---
+<BaseLayout title="404" noindex={true}>
+  <section class="section">
+    <div class="container-narrow text-center">
+      <p class="font-display text-3xl font-extrabold text-brand-ink">404</p>
+      <h1 class="mt-4 text-2xl">{c.title}</h1>
+      <p class="mx-auto mt-4 max-w-md text-lg text-ink-soft">{c.text}</p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        {c.links.map((l) => (
+          <Button href={localizePath(l.href, lang)} variant={l.primary ? 'primary' : 'ghost'}>
+            {l.label}
+          </Button>
+        ))}
+      </div>
+
+      <p class="mt-10 text-sm text-ink-soft">
+        {c.searchLabel}:{' '}
+        <a href={localizePath('/actualitat/cerca', lang)} class="font-semibold text-brand-ink underline">
+          {c.searchCta}
+        </a>
+      </p>
+
+      <p class="mt-10 border-t border-line pt-8 text-sm text-ink-soft">
+        <strong class="block text-ink">{c.visit}</strong>
+        <a href={org.mapUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-brand-ink underline">
+          <Icon name="pin" size={16} /> {org.address.street}, {org.address.postalCode} {org.address.locality}
+        </a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -4,8 +4,24 @@
     {
       "name": "astro-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 4321
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 4321,
+      "autoPort": true
+    },
+    {
+      "name": "dist",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "-d",
+        "dist"
+      ],
+      "port": 8765
     }
   ]
 }

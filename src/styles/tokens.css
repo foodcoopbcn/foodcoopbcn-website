@@ -4,8 +4,15 @@
  * Palette extracted from the live foodcoopbcn.cat brand (green / yellow / red on ink).
  */
 :root {
-  /* --- Brand palette --- */
-  --color-brand: #009739; /* primary green */
+  /* --- Brand palette ---
+   *
+   * The green has two jobs and needs two values. #009739 on white is 3.83:1,
+   * which is fine behind white text at display sizes but fails WCAG AA as text
+   * or as a small-button fill. So: `brand` fills, `brand-ink` writes.
+   */
+  --color-brand: #009739; /* primary green — fills, bands, badges */
+  --color-brand-ink: #007a2e; /* 5.1:1 on white — links, icons, small text, focus */
+  --color-brand-hover: #00812f; /* one considered step, instead of a brightness() filter */
   --color-brand-dark: #06402a; /* deep forest green */
   --color-brand-olive: #8aa41f; /* secondary olive/lime */
   --color-accent: #feec3f; /* highlight yellow */
@@ -14,7 +21,7 @@
   /* --- Neutrals --- */
   --color-ink: #282828; /* primary text / dark sections */
   --color-ink-soft: #5a5a5a; /* secondary text */
-  --color-muted: #949494; /* tertiary text / borders */
+  --color-muted: #6f6f6f; /* tertiary text — was #949494, which failed AA at 3.03:1 */
   --color-line: #e6e6e6; /* hairlines */
   --color-paper: #ffffff; /* page background */
   --color-paper-soft: #f7f7f7; /* alternating section background */

@@ -7,12 +7,29 @@ import SplitCards from '../sections/SplitCards.astro';
 import Stats from '../sections/Stats.astro';
 import CTASection from '../sections/CTASection.astro';
 import NewsTeaser from '../sections/NewsTeaser.astro';
+import InfoStrip from '../sections/InfoStrip.astro';
+import MediaSplit from '../sections/MediaSplit.astro';
+import ComparisonTable from '../sections/ComparisonTable.astro';
+import PhotoCards from '../sections/PhotoCards.astro';
+import PriceCompare from '../sections/PriceCompare.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { getAllPosts, getCategoryLabels } from '../../lib/posts';
-import { org } from '../../config/site';
+import { buildCompareView } from '../../lib/prices';
+import { org, hours } from '../../config/site';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
+
+/** schema.org day names, indexed the same way as Date#getDay(). */
+const DAY_NAMES = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
 
 /* Page copy is editor-owned: edited at /keystatic, stored as an ordered list of sections in
    src/content/pages/{ca,es}/home/index.yaml. Section types are defined in both
@@ -24,6 +41,8 @@ const { sections } = entry.data;
 /* Derived, never editor-facing. */
 const posts = await getAllPosts(lang);
 const labels = await getCategoryLabels(lang);
+/* Null when the collected prices are missing or stale: the block is then simply not rendered. */
+const compare = buildCompareView(lang);
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
@@ -41,7 +60,31 @@ const orgJsonLd = {
     addressCountry: org.address.country,
   },
   sameAs: ['https://www.instagram.com/foodcoopbcn/', 'https://www.facebook.com/foodcoopbcn'],
+  /* Structured hours let search engines show the open/closed state directly in results. */
+  openingHoursSpecification: hours
+    .filter((h) => h.ranges.length > 0)
+    .flatMap((h) =>
+      h.ranges.map(([opens, closes]) => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: `https://schema.org/${DAY_NAMES[h.day]}`,
+        opens,
+        closes,
+      })),
+    ),
 };
+
+/*
+ * Figures that change on their own.
+ *
+ * An editor writes `{socies}` as a stat value and it renders the live member
+ * count from Odoo (see scripts/fetch-members.mjs) instead of a number that goes
+ * stale the week after someone types it. Anything else passes through untouched.
+ */
+const liveValues: Record<string, string> = {
+  socies: org.members.toLocaleString(lang === 'ca' ? 'ca-ES' : 'es-ES'),
+  socias: org.members.toLocaleString(lang === 'ca' ? 'ca-ES' : 'es-ES'),
+};
+const live = (v: string) => v.replace(/\{(\w+)\}/g, (m, key) => liveValues[key] ?? m);
 
 /* Content stores canonical (ca) paths; localise at render. External URLs pass through. */
 const href = (h: string) => (h.startsWith('/') ? localizePath(h, lang) : h);
@@ -61,8 +104,32 @@ const link = (c?: { label: string; href: string }) =>
         const { options, ...p } = s.value;
         return <SplitCards {...p} options={options.map((o) => ({ ...o, cta: link(o.cta) }))} />;
       }
-      case 'stats':
-        return <Stats {...s.value} />;
+      case 'stats': {
+        const { cta, stats, ...p } = s.value;
+        return <Stats {...p} stats={stats.map((st) => ({ ...st, value: live(st.value) }))} cta={link(cta)} />;
+      }
+      case 'infoStrip':
+        return <InfoStrip {...s.value} />;
+      case 'mediaSplit': {
+        const { cta, ...p } = s.value;
+        return <MediaSplit {...p} cta={link(cta)} />;
+      }
+      case 'comparisonTable': {
+        const { primaryCta, secondaryCta, ...p } = s.value;
+        return (
+          <ComparisonTable
+            {...p}
+            yesLabel={t('form.yes')}
+            noLabel={t('form.no')}
+            primaryCta={link(primaryCta)}
+            secondaryCta={link(secondaryCta)}
+          />
+        );
+      }
+      case 'photoCards': {
+        const { items, ...p } = s.value;
+        return <PhotoCards {...p} items={items.map((i) => ({ ...i, cta: link(i.cta) }))} />;
+      }
       case 'newsTeaser': {
         const { limit, ...p } = s.value;
         return (
@@ -75,6 +142,8 @@ const link = (c?: { label: string; href: string }) =>
           />
         );
       }
+      case 'priceCompare':
+        return compare ? <PriceCompare {...s.value} data={compare} /> : null;
       case 'ctaSection': {
         const { primaryCta, secondaryCta, ...p } = s.value;
         return <CTASection {...p} primaryCta={link(primaryCta)} secondaryCta={link(secondaryCta)} />;
