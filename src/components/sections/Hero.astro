@@ -1,4 +1,25 @@
 ---
+/*
+ * Homepage hero: one full-bleed photograph, a forest scrim, the headline in the
+ * brand yellow.
+ *
+ * What this replaces, and why:
+ *  - Two images were fighting. A photo sat behind the whole section at 60%
+ *    opacity AND a second image sat in a card beside the copy. Fading a
+ *    photograph to 60% over a pale mint tint desaturates it into a wash: it read
+ *    as a stain, not as a picture of the shop.
+ *  - The scrim was left-to-right only, so on a phone the body copy landed on the
+ *    busiest part of the photo at nearly full strength. This one is vertical on
+ *    small screens and diagonal from 768px up, so the text always has ground
+ *    under it.
+ *  - Two decorative blurred colour orbs, a startup-landing-page trope with
+ *    nothing to do with food or Barcelona, are gone.
+ *  - On a phone the CTA started around y=1100: a screen and a half of scrolling
+ *    before a single action. The buttons now come before the highlights list, so
+ *    they land inside the first screen.
+ *
+ * An editor sets one photo instead of two, which is also less to get wrong.
+ */
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 
@@ -9,7 +30,7 @@ interface Props {
   text?: string;
   primaryCta?: { label: string; href: string };
   secondaryCta?: { label: string; href: string };
-  /** Large photo beside the copy. Falls back to the colour-block placeholder when unset. */
+  /** The hero photograph. Falls back to the shop photo shipped with the site. */
   image?: string;
   imageAlt?: string;
 }
@@ -23,80 +44,60 @@ const {
   image,
   imageAlt = '',
 } = Astro.props;
+
+/* An SVG placeholder is not a photograph: ignore it and use the real one. */
+const photo = image && !image.endsWith('.svg') ? image : '/images/assets/foodcoop_hero.webp';
 ---
-<section class="relative overflow-hidden bg-paper-green">
-  <!-- Subtle photo backdrop (members in front of the shop) -->
+<section class="relative isolate overflow-hidden bg-brand-dark">
   <img
-    src="/images/assets/foodcoop_hero.webp"
-    alt=""
-    aria-hidden="true"
+    src={photo}
+    alt={imageAlt}
     loading="eager"
     fetchpriority="high"
-    class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-60"
+    class="absolute inset-0 -z-10 h-full w-full object-cover object-center"
   />
-  <!-- Left-weighted green tint keeps the heading readable while the photo stays visible -->
+  <!-- Deep forest scrim: yellow on it is 10.7:1, white better still. -->
   <div
-    class="absolute inset-0 bg-gradient-to-r from-paper-green via-paper-green/60 to-paper-green/15"
+    class="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(6,64,42,0.95),rgba(6,64,42,0.72)_55%,rgba(6,64,42,0.45))] md:bg-[linear-gradient(100deg,rgba(6,64,42,0.94),rgba(6,64,42,0.78)_45%,rgba(6,64,42,0.35))]"
     aria-hidden="true"
   ></div>
 
-  <div class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-accent/40 blur-3xl" aria-hidden="true"></div>
-  <div class="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-brand/20 blur-3xl" aria-hidden="true"></div>
-
-  <div class="container-page relative grid items-center gap-10 pb-16 pt-24 md:pb-24 md:pt-28 lg:grid-cols-[1.1fr_0.9fr]">
-    <div>
+  <div class="container-page relative pb-16 pt-24 md:pb-24 md:pt-28">
+    <div class="max-w-2xl">
       {eyebrow && (
-        <p class="mb-4 inline-flex items-center gap-2 rounded-pill bg-paper px-4 py-1.5 text-sm font-bold text-brand-dark shadow-sm">
-          <Icon name="leaf" size={16} /> {eyebrow}
+        <p class="mb-5 inline-flex items-center gap-2 rounded-pill bg-on-ink-strong/15 px-4 py-1.5 text-sm font-bold text-on-ink-strong ring-1 ring-on-ink-soft/30">
+          <Icon name="pin" size={15} /> {eyebrow}
         </p>
       )}
-      <h1 class="text-3xl text-ink">{title}</h1>
+
+      <h1 class="text-3xl text-accent">{title}</h1>
+
+      {text && <p class="mt-5 max-w-xl text-lg text-on-ink-base">{text}</p>}
+
+      <!-- Before the highlights, so it is reachable without scrolling on a phone. -->
+      <div class="mt-8 flex flex-wrap gap-3">
+        {primaryCta && <Button href={primaryCta.href} size="lg" variant="accent">{primaryCta.label}</Button>}
+        {secondaryCta && (
+          <Button
+            href={secondaryCta.href}
+            size="lg"
+            class="bg-transparent text-on-ink-strong ring-1 ring-on-ink-soft/50 hover:bg-on-ink-strong/10"
+          >
+            {secondaryCta.label}
+          </Button>
+        )}
+      </div>
 
       {highlights.length > 0 && (
-        <ul class="mt-6 space-y-2">
+        <ul class="mt-9 flex flex-col gap-2.5 border-t border-on-ink-soft/25 pt-6 sm:flex-row sm:flex-wrap sm:gap-x-7">
           {highlights.map((h) => (
-            <li class="flex items-start gap-3 text-lg font-semibold text-brand-dark">
-              <span class="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-paper">
-                <Icon name="leaf" size={14} />
-              </span>
+            <li class="flex items-start gap-2.5 text-on-ink-base">
+              <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
               {h}
             </li>
           ))}
         </ul>
       )}
-
-      {text && <p class="mt-6 max-w-xl text-lg text-ink-soft">{text}</p>}
-
-      <div class="mt-8 flex flex-wrap gap-3">
-        {primaryCta && <Button href={primaryCta.href} size="lg" variant="primary">{primaryCta.label}</Button>}
-        {secondaryCta && <Button href={secondaryCta.href} size="lg" variant="ghost">{secondaryCta.label}</Button>}
-      </div>
     </div>
-
-    {image ? (
-      <img
-        src={image}
-        alt={imageAlt}
-        width="900"
-        height="900"
-        loading="eager"
-        fetchpriority="high"
-        class="mx-auto aspect-square w-full max-w-md rounded-[2.5rem] object-cover shadow-lg"
-      />
-    ) : (
-    /* Illustration placeholder — used until a hero photo is set on the section. */
-    <div class="relative mx-auto aspect-square w-full max-w-md">
-      <div class="absolute inset-0 rounded-[2.5rem] bg-paper shadow-lg"></div>
-      <div class="absolute inset-6 grid grid-cols-2 gap-4">
-        <div class="rounded-3xl bg-brand"></div>
-        <div class="rounded-3xl bg-accent"></div>
-        <div class="rounded-3xl bg-brand-olive"></div>
-        <div class="rounded-3xl bg-danger/80"></div>
-      </div>
-      <div class="absolute inset-0 grid place-items-center">
-        <Icon name="basket" size={84} class="text-ink" />
-      </div>
-    </div>
-    )}
   </div>
 </section>

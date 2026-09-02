@@ -4,7 +4,6 @@ import mdx from '@astrojs/mdx';
 import markdoc from '@astrojs/markdoc';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import netlify from '@astrojs/netlify';
 import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -18,9 +17,15 @@ export default defineConfig({
   /* Lets the desktop app's preview pick a free port; astro dev ignores PORT otherwise. */
   server: { port: Number(process.env.PORT) || 4321 },
   site: 'https://foodcoopbcn.cat',
-  // Pages are static by default (great SEO, zero CSR).
+  /*
+   * Static, and with no adapter on purpose. `output: 'static'` produces a plain
+   * dist/ that Netlify serves directly, and netlify.toml already handles headers
+   * and redirects by hand. The Netlify adapter added nothing to the output —
+   * removing it left the 135 built files byte-identical — while starting a Deno
+   * edge-function server and a local Postgres in dev, which crashed on every
+   * `astro dev` boot.
+   */
   output: 'static',
-  adapter: netlify(),
   i18n: {
     locales: ['ca', 'es'],
     defaultLocale: 'ca',

@@ -38,6 +38,36 @@ const recipes = defineCollection({
   }),
 });
 
+/**
+ * FAQs, one file per language.
+ *
+ * They were 25 question/answer pairs per locale hard-coded in a TypeScript object
+ * inside FaqsPage.astro — the content that changes most often, and the content
+ * search engines and AI assistants quote most, locked behind a code change.
+ *
+ * Answers may contain `{capital}`, `{discount}`, `{hours}` and friends; the page
+ * substitutes them from src/config/site.ts at render, so an editor never retypes
+ * a figure that could then drift.
+ */
+const faqs = defineCollection({
+  loader: glob({
+    pattern: '**/*.{yaml,yml}',
+    base: './src/content/faqs',
+    /* ca/index.yaml -> "ca", matching how the pages collection is addressed. */
+    generateId: ({ entry }) => entry.replace(/\/index\.ya?ml$/, ''),
+  }),
+  schema: z.object({
+    groups: z
+      .array(
+        z.object({
+          title: z.string(),
+          faqs: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
+        }),
+      )
+      .default([]),
+  }),
+});
+
 /** Editable taxonomy for categories (label per language). */
 const categories = defineCollection({
   loader: glob({ pattern: '**/*.{md,json}', base: './src/content/categories' }),
@@ -177,6 +207,8 @@ const photoCardsSection = block('photoCards', {
       }),
     )
     .default([]),
+  /** Pulls this block up against the one above it, for two grids that are one idea. */
+  tight: z.boolean().catch(false),
 });
 
 /** Post cards are generated from the news/recipes collections — only the heading is editable. */
@@ -237,4 +269,5 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { news, recipes, categories, pages };
+export const collections = {
+  faqs, news, recipes, categories, pages };

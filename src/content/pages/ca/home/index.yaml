@@ -178,6 +178,7 @@ sections:
     value:
       layout: card
       columns: '3'
+      tight: true
       tone: soft
       items:
         - image: /images/assets/card-cistella.svg

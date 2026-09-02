@@ -2,20 +2,22 @@
 /* Generic section wrapper — controls background tone and width. Compose pages from these. */
 interface Props {
   tone?: 'paper' | 'soft' | 'green' | 'ink';
+  /** Pulls this section up against the one above it. */
+  tight?: boolean;
   width?: 'page' | 'narrow';
   id?: string;
   class?: string;
 }
-const { tone = 'paper', width = 'page', id, class: className = '' } = Astro.props;
+const { tone = 'paper', width = 'page', id, tight = false, class: className = '' } = Astro.props;
 const tones = {
   paper: 'bg-paper text-ink',
   soft: 'bg-paper-soft text-ink',
   green: 'bg-paper-green text-brand-dark',
-  ink: 'bg-ink text-paper',
+  ink: 'bg-brand-dark text-paper',
 };
 const container = width === 'narrow' ? 'container-narrow' : 'container-page';
 ---
-<section id={id} class:list={['section', tones[tone], className]}>
+<section id={id} class:list={['section', tight && 'section-tight', tones[tone], className]}>
   <div class={container}>
     <slot />
   </div>

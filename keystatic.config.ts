@@ -224,6 +224,7 @@ const sectionBlocks = {
         defaultValue: '3',
       }),
       tone: toneField(['paper', 'soft', 'green'], 'paper'),
+      tight: fields.checkbox({ label: 'Enganxa a la secció de sobre', defaultValue: false }),
       items: fields.array(
         fields.object({
           image: imageField(),
@@ -324,6 +325,33 @@ const storage = import.meta.env?.DEV
   ? ({ kind: 'local' } as const)
   : ({ kind: 'github', repo: { owner: 'foodcoopbcn', name: 'foodcoopbcn-website' } } as const);
 
+/*
+ * FAQs. Answers may contain {capital}, {discount}, {hours}, {street} and the other
+ * tokens listed below; the page substitutes them from src/config/site.ts, so never
+ * type a figure straight into an answer — it would then drift from the rest of the
+ * site the next time the co-op changes it.
+ */
+const faqSchema = {
+  groups: fields.array(
+    fields.object({
+      title: fields.text({ label: 'Títol del grup' }),
+      faqs: fields.array(
+        fields.object({
+          q: fields.text({ label: 'Pregunta' }),
+          a: fields.text({
+            label: 'Resposta',
+            multiline: true,
+            description:
+              'Pots fer servir {capital}, {discount}, {quotaStandard}, {quotaReduced}, {entityCapital}, {shiftHours}, {shiftCycleWeeks}, {flexibleChanges}, {deliveryThreshold}, {deliveryCheap}, {deliveryStandard}, {street}, {postalCode} i {hours}.',
+          }),
+        }),
+        { label: 'Preguntes', itemLabel: (p) => p.fields.q.value || 'Nova pregunta' },
+      ),
+    }),
+    { label: 'Grups', itemLabel: (p) => p.fields.title.value || 'Nou grup' },
+  ),
+};
+
 export default config({
   storage,
   ui: {
@@ -334,6 +362,18 @@ export default config({
     },
   },
   singletons: {
+    faqsCa: {
+      label: 'FAQs (CA)',
+      path: 'src/content/faqs/ca/index',
+      format: { data: 'yaml' },
+      schema: faqSchema,
+    },
+    faqsEs: {
+      label: 'FAQs (ES)',
+      path: 'src/content/faqs/es/index',
+      format: { data: 'yaml' },
+      schema: faqSchema,
+    },
     homeCa: homePage('ca', 'Inici (CA)'),
     homeEs: homePage('es', 'Inicio (ES)'),
   },

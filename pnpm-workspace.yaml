@@ -1,5 +1,12 @@
-allowBuilds:
-  esbuild: true
-  netlify-cli: true
-  sharp: true
-  unix-dgram: true
+# Single-package repo, but pnpm treats the presence of this file as a workspace
+# root and refuses to run anything without a `packages` list — which is why
+# `pnpm run` and `pnpm install` were failing outright.
+packages:
+  - '.'
+
+# Packages allowed to run install scripts. pnpm blocks them by default; these
+# four genuinely need to build a native binary or download one.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unix-dgram

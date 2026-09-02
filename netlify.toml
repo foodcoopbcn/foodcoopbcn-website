@@ -1,6 +1,6 @@
 # Netlify configuration for the Astro (static + Keystatic) site.
 [build]
-  command = "npm run build"
+  command = "pnpm run build"
   publish = "dist"
 
 [build.environment]

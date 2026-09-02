@@ -4,3 +4,7 @@ Disallow: /keystatic
 Disallow: /api/
 
 Sitemap: https://foodcoopbcn.cat/sitemap-index.xml
+
+# Search result pages generate endless ?q= variants.
+Disallow: /actualitat/cerca
+Disallow: /es/actualitat/cerca

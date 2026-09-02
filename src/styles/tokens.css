@@ -22,15 +22,23 @@
   --color-ink: #282828; /* primary text / dark sections */
   --color-ink-soft: #5a5a5a; /* secondary text */
   --color-muted: #6f6f6f; /* tertiary text — was #949494, which failed AA at 3.03:1 */
-  --color-line: #e6e6e6; /* hairlines */
+  --color-line: #e4e1d8; /* hairlines, warmed to match the tinted surfaces */
   --color-paper: #ffffff; /* page background */
-  --color-paper-soft: #f7f7f7; /* alternating section background */
+  /*
+   * The alternating band. It was a dead neutral grey; the co-op's printed
+   * identity tints with a pale yellow (#fff894), so this is that colour at
+   * section strength. It also sits better under food photography than grey.
+   */
+  --color-paper-soft: #fffbe8;
   --color-paper-green: #e9fbe5; /* tinted green section background */
 
   /* --- Typography --- */
   --font-body: 'Open Sans Variable', 'Open Sans', system-ui, -apple-system, Arial, sans-serif;
-  --font-display: 'Open Sans Variable', 'Open Sans', system-ui, sans-serif; /* swap to 'Anton' etc. for a redesign */
-  --font-weight-display: 800;
+  /* Set this to var(--font-body) to go back to a single-typeface site. */
+  --font-display: 'Archivo Variable', 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-weight-display: 700;
+  /* A heavy grotesque needs negative tracking at display sizes to hold together. */
+  --tracking-display: -0.025em;
 
   /* Fluid type scale */
   --text-xs: 0.8125rem;
@@ -39,18 +47,31 @@
   --text-lg: 1.25rem;
   --text-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
   --text-2xl: clamp(2rem, 1.5rem + 2vw, 3rem);
-  --text-3xl: clamp(2.6rem, 1.8rem + 3.4vw, 4.25rem);
+  --text-3xl: clamp(2.5rem, 1.8rem + 3.2vw, 4rem);
+  --text-4xl: clamp(3rem, 2rem + 4.4vw, 5rem);
 
   /* --- Spacing rhythm --- */
   --space-section: clamp(3.5rem, 2rem + 6vw, 7rem);
+  /* For a section that belongs with the one above it, rather than standing alone. */
+  --space-section-tight: clamp(2rem, 1.2rem + 3vw, 3.5rem);
   --container-max: 1180px;
   --container-narrow: 760px;
 
-  /* --- Shape --- */
-  --radius-sm: 6px;
-  --radius: 12px;
-  --radius-lg: 22px;
+  /* --- Shape ---
+   * Rounder than this reads as a 2021 SaaS landing page rather than a food shop.
+   * Pills are kept for tags and the language switch only.
+   */
+  --radius-sm: 4px;
+  --radius: 10px;
+  --radius-lg: 16px;
   --radius-pill: 999px;
+
+  /* --- Text on the dark band ---
+   * The footer used five different white alphas with no token behind any of them.
+   */
+  --on-ink-strong: rgba(255, 255, 255, 0.96);
+  --on-ink-base: rgba(255, 255, 255, 0.82);
+  --on-ink-soft: rgba(255, 255, 255, 0.62);
 
   /* --- Elevation --- */
   --shadow-sm: 0 1px 3px rgba(40, 40, 40, 0.08);

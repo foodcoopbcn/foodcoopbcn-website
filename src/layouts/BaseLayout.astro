@@ -69,13 +69,8 @@ const fullTitle = title ? `${title} · ${org.name}` : org.name;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Discovered before the stylesheet parses, which removes the flash of fallback text. -->
-    <link
-      rel="preload"
-      href="/fonts/open-sans-latin.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/open-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}

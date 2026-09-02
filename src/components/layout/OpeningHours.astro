@@ -105,6 +105,11 @@ const ranges = Object.fromEntries(hours.map((h) => [h.day, h.ranges]));
     background: var(--color-brand);
     color: var(--color-paper);
   }
+  /* The one place a status colour earns its keep. */
+  .fc-hours[data-open='false'] .fc-closed {
+    background: var(--color-danger);
+    color: var(--color-paper);
+  }
   /* Once today is resolved, the week fallback is redundant. */
   .fc-hours[data-open] .fc-hours-week {
     display: none;

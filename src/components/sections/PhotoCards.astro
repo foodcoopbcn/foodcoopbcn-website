@@ -17,6 +17,8 @@ interface Item {
   cta?: { label: string; href: string };
 }
 interface Props {
+  /** Pulls this block up against the one above it. */
+  tight?: boolean;
   eyebrow?: string;
   title?: string;
   intro?: string;
@@ -33,6 +35,7 @@ const {
   columns = 3,
   items,
   tone = 'paper',
+  tight = false,
 } = Astro.props;
 
 const cols = {
@@ -43,7 +46,7 @@ const cols = {
 }[columns];
 const tile = layout === 'tile';
 ---
-<Section tone={tone}>
+<Section tone={tone} tight={tight}>
   {
     (title || intro || eyebrow) && (
       <div class="mb-10 max-w-2xl">
