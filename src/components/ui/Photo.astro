@@ -1,0 +1,96 @@
+---
+/*
+ * A photograph from the curated set in public/images/photos/.
+ *
+ * Emits AVIF with a WebP fallback and a real srcset, so a phone downloads a
+ * phone-sized file instead of a desktop one. Widths come from
+ * src/data/photos.json, which scripts/build-photos.mjs generates alongside the
+ * files themselves — the component never guesses which variants exist.
+ *
+ * `src` accepts either the slug ("fam-granel") or a full path to one of the
+ * generated files, so the Keystatic image picker keeps working: an editor
+ * chooses a real file and this still upgrades it to the full set.
+ *
+ * Anything not in the manifest renders as a plain <img>, which is what makes it
+ * safe to point at an image that has not been through the pipeline.
+ */
+import photos from '../../data/photos.json';
+
+interface Props {
+  /** Slug from the manifest, or a path to one of its generated files. */
+  src: string;
+  alt: string;
+  /** The `sizes` attribute. Get this right or the srcset does nothing useful. */
+  sizes?: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'auto';
+  /** Overrides the manifest ratio, for a slot with its own aspect. */
+  ratio?: number;
+  /**
+   * A differently-cropped version for narrow screens (art direction).
+   * A landscape frame inside a tall phone viewport loses its sides to
+   * object-cover; a portrait cut of the same scene keeps the subject.
+   */
+  narrowSrc?: string;
+  /** Where the narrow crop stops applying. */
+  narrowMedia?: string;
+}
+
+const {
+  src,
+  alt,
+  sizes = '100vw',
+  class: className = '',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  ratio: ratioProp,
+  narrowSrc,
+  narrowMedia = '(max-width: 639px)',
+} = Astro.props;
+
+/** "/images/photos/fam-granel-400.webp" and "fam-granel" both resolve. */
+const slug = src
+  .replace(/^.*\/images\/photos\//, '')
+  .replace(/-\d+\.(avif|webp|jpe?g|png)$/i, '')
+  .replace(/\.(avif|webp|jpe?g|png|svg)$/i, '');
+
+const table = photos as Record<string, { widths: number[]; ratio: number }>;
+const entry = table[slug];
+
+const setFor = (name: string, ext: 'avif' | 'webp') =>
+  table[name].widths.map((w) => `/images/photos/${name}-${w}.${ext} ${w}w`).join(', ');
+const set = (ext: 'avif' | 'webp') => setFor(slug, ext);
+
+const narrow = narrowSrc && table[narrowSrc] ? narrowSrc : undefined;
+
+/* Intrinsic size reserves the space, so a late image cannot shift the layout. */
+const widest = entry ? entry.widths[entry.widths.length - 1] : undefined;
+const ratio = ratioProp ?? entry?.ratio;
+---
+{
+  entry ? (
+    <picture>
+      {narrow && (
+        <source media={narrowMedia} type="image/avif" srcset={setFor(narrow, 'avif')} sizes={sizes} />
+      )}
+      {narrow && (
+        <source media={narrowMedia} type="image/webp" srcset={setFor(narrow, 'webp')} sizes={sizes} />
+      )}
+      <source type="image/avif" srcset={set('avif')} sizes={sizes} />
+      <source type="image/webp" srcset={set('webp')} sizes={sizes} />
+      <img
+        src={`/images/photos/${slug}-${widest}.webp`}
+        alt={alt}
+        width={widest}
+        height={Math.round(widest! / ratio!)}
+        loading={loading}
+        fetchpriority={fetchpriority}
+        decoding={loading === 'eager' ? 'sync' : 'async'}
+        class={className}
+      />
+    </picture>
+  ) : (
+    <img src={src} alt={alt} loading={loading} decoding="async" class={className} />
+  )
+}

@@ -9,6 +9,7 @@ import CTASection from '../sections/CTASection.astro';
 import { hours, dayKey, formatRanges, org } from '../../config/site';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -79,6 +80,14 @@ const c = {
           <Icon name="pin" size={16} class="inline text-brand-ink" /> {org.address.street}, {org.address.postalCode} {org.address.locality}
         </p>
         <p class="mt-2 text-sm text-ink-soft">{c.transit}</p>
+        <Photo
+          src="passatge-rotul"
+          alt={lang === 'ca'
+            ? 'Rètol al passatge: passatge particular, pas restringit excepte FoodCoop, obert a tothom'
+            : 'Cartel en el pasaje: pasaje particular, paso restringido excepto FoodCoop, abierto a todo el mundo'}
+          sizes="(min-width: 768px) 40vw, 90vw"
+          class="mt-5 w-full rounded-lg object-cover"
+        />
         <a
           href={org.mapUrl}
           target="_blank"

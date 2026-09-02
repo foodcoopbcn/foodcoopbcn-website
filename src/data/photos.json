@@ -1,0 +1,142 @@
+{
+  "hero-entrada": {
+    "widths": [
+      768,
+      1280,
+      1920
+    ],
+    "ratio": 1.7778
+  },
+  "hero-entrada-tall": {
+    "widths": [
+      480,
+      720,
+      960
+    ],
+    "ratio": 0.8
+  },
+  "banner-assemblea": {
+    "widths": [
+      768,
+      1280,
+      1920
+    ],
+    "ratio": 1.7778
+  },
+  "socies-davantal": {
+    "widths": [
+      420,
+      720
+    ],
+    "ratio": 0.8
+  },
+  "grup-comunitat": {
+    "widths": [
+      520,
+      900
+    ],
+    "ratio": 1.5
+  },
+  "torn-caixa": {
+    "widths": [
+      520,
+      900,
+      1200
+    ],
+    "ratio": 1.5
+  },
+  "torn-reposant": {
+    "widths": [
+      520,
+      900,
+      1200
+    ],
+    "ratio": 1.5
+  },
+  "passatge-rotul": {
+    "widths": [
+      420,
+      720,
+      1000
+    ],
+    "ratio": 1.3333
+  },
+  "fam-fruita-verdura": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "fam-frescos": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "fam-rebost": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "fam-granel": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "fam-forn": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "fam-llar-cura": {
+    "widths": [
+      240,
+      400,
+      560
+    ],
+    "ratio": 1
+  },
+  "card-cistella": {
+    "widths": [
+      400,
+      700,
+      960
+    ],
+    "ratio": 1.3333
+  },
+  "card-proveidors": {
+    "widths": [
+      400,
+      700,
+      960
+    ],
+    "ratio": 1.3333
+  },
+  "card-criteris": {
+    "widths": [
+      400,
+      700,
+      960
+    ],
+    "ratio": 1.3333
+  },
+  "og-base": {
+    "widths": [
+      1200
+    ],
+    "ratio": 1.9048
+  }
+}

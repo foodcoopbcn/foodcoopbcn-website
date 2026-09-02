@@ -212,13 +212,15 @@
   /*
    * Every section had identical padding above and below, so two adjacent ones
    * left 14rem of gap and nothing on the page read as belonging together.
-   * `.section-tight` closes the gap between siblings that are one idea.
+   * `.section-tight` closes that gap for siblings that are one idea.
+   *
+   * It stays symmetric on purpose. An earlier version zeroed the top padding
+   * when following another section, which pushed the content flush against the
+   * top edge of its own background band — the cards looked jammed in, with all
+   * the breathing room below them and none above.
    */
   .section-tight {
     padding-block: var(--space-section-tight);
-  }
-  .section + .section-tight {
-    padding-top: 0;
   }
 
   /* Long-form content (legal pages, blog posts) */

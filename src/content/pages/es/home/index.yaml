@@ -11,8 +11,8 @@ sections:
         Somos el primer supermercado cooperativo, participativo y sin ánimo de
         lucro de Barcelona. Más de 1.200 productos a un precio justo, porque
         aquí nadie se lleva el margen.
-      image: /images/assets/home-hero.svg
-      imageAlt: Socias de FoodCoop BCN delante del supermercado
+      image: hero-entrada
+      imageAlt: Socias de FoodCoop BCN entrando y saliendo del súper en el pasaje de Aragó
       primaryCta:
         label: Hazte socia
         href: /fes-te-socia
@@ -57,8 +57,8 @@ sections:
         propietarias, le dedican unas horas al mes y deciden su rumbo en
         asamblea. Ni inversores, ni beneficios privados: solo buena comida a un
         precio justo.
-      image: /images/assets/home-quisom.svg
-      imageAlt: Socias trabajando en el supermercado cooperativo
+      image: socies-davantal
+      imageAlt: Dos socias con el delantal de FoodCoop, con setas y verdura recién recibidas
       reverse: false
       tone: paper
       cta:
@@ -139,41 +139,41 @@ sections:
       columns: '6'
       tone: paper
       items:
-        - image: /images/assets/fam-fruita-verdura.svg
-          imageAlt: Fruta y verdura fresca
+        - image: fam-fruita-verdura
+          imageAlt: Ciruelas de temporada en el mostrador de fruta
           title: Fruta y verdura
           cta:
             label: Ver fruta y verdura
             href: /productes
-        - image: /images/assets/fam-frescos.svg
-          imageAlt: Productos frescos
+        - image: fam-frescos
+          imageAlt: Nevera de producto fresco del súper
           title: Frescos
           cta:
             label: Ver frescos
             href: /productes
-        - image: /images/assets/fam-rebost.svg
-          imageAlt: Productos de despensa
+        - image: fam-rebost
+          imageAlt: Estantes de conservas y tarros de cristal
           title: Despensa
           cta:
             label: Ver despensa
             href: /productes
-        - image: /images/assets/fam-granel.svg
-          imageAlt: Productos a granel
+        - image: fam-granel
+          imageAlt: Tarros y dispensadores de la zona de granel
           title: Granel
           cta:
             label: Ver granel
             href: /productes
-        - image: /images/assets/fam-llar-neteja.svg
-          imageAlt: Productos de hogar y limpieza
-          title: Hogar y limpieza
+        - image: fam-llar-cura
+          imageAlt: Pasillo de droguería y productos de limpieza
+          title: Hogar y cuidado
           cta:
-            label: Ver hogar y limpieza
+            label: Ver hogar y cuidado
             href: /productes
-        - image: /images/assets/fam-cura-personal.svg
-          imageAlt: Productos de cuidado personal
-          title: Cuidado personal
+        - image: fam-forn
+          imageAlt: Panes de masa madre en un estante
+          title: Horno y pan
           cta:
-            label: Ver cuidado personal
+            label: Ver horno y pan
             href: /productes
   - discriminant: photoCards
     value:
@@ -182,22 +182,22 @@ sections:
       tight: true
       tone: soft
       items:
-        - image: /images/assets/card-cistella.svg
-          imageAlt: Cesta con productos básicos
+        - image: card-cistella
+          imageAlt: Socia eligiendo verdura con la cesta amarilla del súper
           title: Cesta básica
           text: 55 productos esenciales a precios accesibles.
           cta:
             label: Ver cesta
             href: /comparativa
-        - image: /images/assets/card-proveidors.svg
-          imageAlt: Productores en el campo
+        - image: card-proveidors
+          imageAlt: Reparto de pan con bici de carga en la puerta del súper
           title: Proveedores
           text: Conoce a las personas y proyectos que hay detrás de los productos.
           cta:
             label: Ver proveedores
             href: /productes
-        - image: /images/assets/card-criteris.svg
-          imageAlt: Verduras de hoja verde
+        - image: card-criteris
+          imageAlt: Mapa ilustrado del origen de los productos que vendemos
           title: Los criterios
           text: Así decidimos qué vendemos y con qué principios trabajamos.
           cta:

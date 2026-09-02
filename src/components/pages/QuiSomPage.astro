@@ -6,6 +6,7 @@ import FeatureGrid from '../sections/FeatureGrid.astro';
 import CTASection from '../sections/CTASection.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { org } from '../../config/site';
+import Photo from '../ui/Photo.astro';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -137,6 +138,23 @@ const c = {
       {c.story.map((p) => <p>{p}</p>)}
     </div>
   </Section>
+
+  <!-- Full-bleed: the assembly is the evidence behind "we decide together". -->
+  <figure class="relative">
+    <Photo
+      src="banner-assemblea"
+      alt={lang === 'ca'
+        ? 'Sòcies votant amb la mà alçada durant una assemblea al supermercat'
+        : 'Socias votando con la mano alzada durante una asamblea en el supermercado'}
+      sizes="100vw"
+      class="h-[38vh] min-h-[240px] w-full object-cover md:h-[46vh]"
+    />
+    <figcaption class="container-page -mt-14 relative">
+      <p class="inline-block rounded-md bg-brand-dark px-4 py-2 text-sm font-semibold text-on-ink-strong">
+        {lang === 'ca' ? 'Assemblea general: una sòcia, un vot.' : 'Asamblea general: una socia, un voto.'}
+      </p>
+    </figcaption>
+  </figure>
 
   <FeatureGrid id="governanca" title={c.govTitle} intro={c.govIntro} features={c.circles} tone="soft" columns={4} />
 

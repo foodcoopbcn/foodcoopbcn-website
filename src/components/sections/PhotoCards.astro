@@ -7,6 +7,7 @@
  */
 import Section from './Section.astro';
 import Card from '../ui/Card.astro';
+import Photo from '../ui/Photo.astro';
 import Icon from '../ui/Icon.astro';
 
 interface Item {
@@ -62,12 +63,15 @@ const tile = layout === 'tile';
       items.map((item) => (
         <Card href={item.cta?.href}>
           {item.image && (
-            <img
+            <Photo
               src={item.image}
               alt={item.imageAlt || ''}
-              width="600"
-              height={tile ? '600' : '450'}
-              loading="lazy"
+              ratio={tile ? 1 : 4 / 3}
+              sizes={
+                tile
+                  ? '(min-width: 1024px) 12vw, (min-width: 640px) 24vw, 45vw'
+                  : '(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw'
+              }
               class:list={[
                 'w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]',
                 tile ? 'aspect-square' : 'aspect-[4/3]',

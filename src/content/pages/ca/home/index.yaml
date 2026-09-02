@@ -11,8 +11,8 @@ sections:
         Som el primer supermercat cooperatiu, participatiu i sense ànim de lucre
         de Barcelona. Més de 1.200 productes a un preu just, perquè aquí ningú
         no s’emporta el marge.
-      image: /images/assets/home-hero.svg
-      imageAlt: Sòcies de FoodCoop BCN davant del supermercat
+      image: hero-entrada
+      imageAlt: Sòcies de FoodCoop BCN entrant i sortint del súper al passatge d’Aragó
       primaryCta:
         label: Fes-te sòcia
         href: /fes-te-socia
@@ -56,8 +56,8 @@ sections:
         propietàries, hi dediquen unes hores al mes i en decideixen el rumb en
         assemblea. Ni inversors, ni beneficis privats: només bon menjar a un
         preu just.
-      image: /images/assets/home-quisom.svg
-      imageAlt: Sòcies treballant al supermercat cooperatiu
+      image: socies-davantal
+      imageAlt: Dues sòcies amb el davantal de FoodCoop, amb bolets i verdura acabats de rebre
       reverse: false
       tone: paper
       cta:
@@ -138,41 +138,41 @@ sections:
       columns: '6'
       tone: paper
       items:
-        - image: /images/assets/fam-fruita-verdura.svg
-          imageAlt: Fruita i verdura fresca
+        - image: fam-fruita-verdura
+          imageAlt: Prunes de temporada al taulell de fruita
           title: Fruita i verdura
           cta:
             label: Veure fruita i verdura
             href: /productes
-        - image: /images/assets/fam-frescos.svg
-          imageAlt: Productes frescos
+        - image: fam-frescos
+          imageAlt: Nevera de producte fresc del súper
           title: Frescos
           cta:
             label: Veure frescos
             href: /productes
-        - image: /images/assets/fam-rebost.svg
-          imageAlt: Productes de rebost
+        - image: fam-rebost
+          imageAlt: Prestatges de conserves i pots de vidre
           title: Rebost
           cta:
             label: Veure rebost
             href: /productes
-        - image: /images/assets/fam-granel.svg
-          imageAlt: Productes a granel
+        - image: fam-granel
+          imageAlt: Pots i dispensadors de la zona de granel
           title: Granel
           cta:
             label: Veure granel
             href: /productes
-        - image: /images/assets/fam-llar-neteja.svg
-          imageAlt: Productes de llar i neteja
-          title: Llar i neteja
+        - image: fam-llar-cura
+          imageAlt: Passadís de drogueria i productes de neteja
+          title: Llar i cura
           cta:
-            label: Veure llar i neteja
+            label: Veure llar i cura
             href: /productes
-        - image: /images/assets/fam-cura-personal.svg
-          imageAlt: Productes de cura personal
-          title: Cura personal
+        - image: fam-forn
+          imageAlt: Pans de massa mare en un prestatge
+          title: Forn i pa
           cta:
-            label: Veure cura personal
+            label: Veure forn i pa
             href: /productes
   - discriminant: photoCards
     value:
@@ -181,22 +181,22 @@ sections:
       tight: true
       tone: soft
       items:
-        - image: /images/assets/card-cistella.svg
-          imageAlt: Cistella amb productes bàsics
+        - image: card-cistella
+          imageAlt: Sòcia triant verdura amb la cistella groga del súper
           title: Cistella bàsica
           text: 55 productes essencials a preus accessibles.
           cta:
             label: Veure cistella
             href: /comparativa
-        - image: /images/assets/card-proveidors.svg
-          imageAlt: Productors al camp
+        - image: card-proveidors
+          imageAlt: Repartiment de pa amb bici de càrrega a la porta del súper
           title: Proveïdors
           text: Coneix les persones i projectes que hi ha darrere dels productes.
           cta:
             label: Veure proveïdors
             href: /productes
-        - image: /images/assets/card-criteris.svg
-          imageAlt: Verdures de fulla verda
+        - image: card-criteris
+          imageAlt: Mapa il·lustrat de l’origen dels productes que venem
           title: Els criteris
           text: Així decidim què venem i amb quins principis treballem.
           cta:

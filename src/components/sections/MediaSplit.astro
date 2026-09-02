@@ -1,6 +1,7 @@
 ---
 /* Photo on one side, a short pitch and a link on the other. */
 import Section from './Section.astro';
+import Photo from '../ui/Photo.astro';
 import Button from '../ui/Button.astro';
 
 interface Props {
@@ -19,14 +20,12 @@ const { eyebrow, title, text, image, imageAlt = '', reverse, tone = 'paper', cta
 <Section tone={tone}>
   <div class="grid items-center gap-10 md:grid-cols-2">
     {image && (
-      <img
+      <Photo
         src={image}
         alt={imageAlt}
-        width="960"
-        height="720"
-        loading="lazy"
+        sizes="(min-width: 768px) 46vw, 92vw"
         class:list={[
-          'aspect-[4/3] w-full rounded-lg object-cover shadow-sm',
+          'aspect-[4/5] w-full rounded-lg object-cover shadow-sm sm:aspect-[4/3]',
           reverse && 'md:order-2',
         ]}
       />

@@ -14,6 +14,7 @@ import CTASection from '../sections/CTASection.astro';
 import Accordion from '../ui/Accordion.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { membership as m } from '../../config/site';
 
@@ -172,6 +173,14 @@ const c = {
   <Section tone="soft">
     <div class="grid gap-10 lg:grid-cols-2">
       <div>
+        <Photo
+          src="torn-reposant"
+          alt={lang === 'ca'
+            ? 'Un soci reposant ous a la lleixa del súper'
+            : 'Un socio reponiendo huevos en la estantería del súper'}
+          sizes="(min-width: 1024px) 46vw, 92vw"
+          class="mb-8 w-full rounded-lg object-cover shadow-sm"
+        />
         <h2 class="text-2xl">{c.tasksTitle}</h2>
         <ul class="mt-6 grid gap-3 sm:grid-cols-2">
           {c.tasks.map((task) => (
@@ -184,6 +193,14 @@ const c = {
         <p class="mt-6 rounded-lg bg-paper p-5 text-sm text-ink-soft ring-1 ring-line">{c.tasksNote}</p>
       </div>
       <div>
+        <Photo
+          src="torn-caixa"
+          alt={lang === 'ca'
+            ? 'Un soci atenent a la caixa del supermercat'
+            : 'Un socio atendiendo en la caja del supermercado'}
+          sizes="(min-width: 1024px) 46vw, 92vw"
+          class="mb-8 w-full rounded-lg object-cover shadow-sm"
+        />
         <h2 class="text-2xl">{c.typesTitle}</h2>
         <div class="mt-6 space-y-4">
           {c.types.map((ty) => (

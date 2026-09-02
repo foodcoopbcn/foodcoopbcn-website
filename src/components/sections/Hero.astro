@@ -22,6 +22,7 @@
  */
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
+import Photo from '../ui/Photo.astro';
 
 interface Props {
   eyebrow?: string;
@@ -45,13 +46,16 @@ const {
   imageAlt = '',
 } = Astro.props;
 
-/* An SVG placeholder is not a photograph: ignore it and use the real one. */
-const photo = image && !image.endsWith('.svg') ? image : '/images/assets/foodcoop_hero.webp';
+/* An SVG placeholder is not a photograph: ignore it and use the curated one. */
+const photo = image && !image.endsWith('.svg') ? image : 'hero-entrada';
 ---
 <section class="relative isolate overflow-hidden bg-brand-dark">
-  <img
+  <!-- The LCP element: eager, high priority, and served at the viewport's width. -->
+  <Photo
     src={photo}
+    narrowSrc={photo === 'hero-entrada' ? 'hero-entrada-tall' : undefined}
     alt={imageAlt}
+    sizes="100vw"
     loading="eager"
     fetchpriority="high"
     class="absolute inset-0 -z-10 h-full w-full object-cover object-center"

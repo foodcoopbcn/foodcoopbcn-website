@@ -72,8 +72,11 @@ const c = {
             <span class="block text-base font-normal text-ink-soft">{h.basis}</span>
           </h3>
 
-          <div class="mt-6 grid items-end gap-6 sm:grid-cols-2">
-            <div class="rounded-lg bg-paper-green p-5">
+          {/* No items-end here: the default stretch makes both boxes the same
+              height, and top-aligning the contents puts the two prices on the
+              same line even though only the member card carries a third line. */}
+          <div class="mt-6 grid gap-6 sm:grid-cols-2">
+            <div class="flex flex-col rounded-lg bg-paper-green p-5">
               <p class="text-xs font-bold uppercase tracking-wide text-brand-dark">{c.ours}</p>
               <p class="mt-1 font-display text-3xl font-extrabold tabular-nums text-brand-dark">
                 {h.memberPrice}
@@ -82,9 +85,11 @@ const c = {
                 {`${c.publicIs}: `}<span class="tabular-nums">{h.publicPrice}</span>
               </p>
             </div>
-            <div class="rounded-lg p-5 ring-1 ring-line">
+            <div class="flex flex-col rounded-lg p-5 ring-1 ring-line">
               <p class="text-xs font-bold uppercase tracking-wide text-muted">{h.rivalLabel}</p>
-              <p class="mt-1 font-display text-3xl font-extrabold tabular-nums text-ink-soft">{h.rivalPrice}</p>
+              <p class="mt-1 font-display text-3xl font-extrabold tabular-nums text-ink-soft">
+                {h.rivalPrice}
+              </p>
             </div>
           </div>
 
