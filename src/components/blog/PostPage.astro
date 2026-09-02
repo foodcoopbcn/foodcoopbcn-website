@@ -6,6 +6,7 @@ import Icon from '../ui/Icon.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { getCategoryLabels, type PostType, type AnyPost } from '../../lib/posts';
 import { org } from '../../config/site';
+import { graph, organization, breadcrumbs, isoDuration, ID } from '../../lib/schema';
 
 interface Props {
   entry: AnyPost;
@@ -25,17 +26,43 @@ const dateStr = new Intl.DateTimeFormat(lang === 'ca' ? 'ca-ES' : 'es-ES', {
 }).format(data.date);
 
 const isRecipe = type === 'recipes';
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': isRecipe ? 'Recipe' : 'Article',
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+/*
+ * BlogPosting rather than the generic Article, with the publisher Google requires
+ * for an article rich result — and `totalTime` as an ISO 8601 duration. It used
+ * to pass the raw "40 min", which the recipe validator rejects outright.
+ */
+const post = {
+  '@type': isRecipe ? 'Recipe' : 'BlogPosting',
   headline: data.title,
+  name: data.title,
+  description: data.excerpt,
   datePublished: data.date.toISOString(),
+  dateModified: data.date.toISOString(),
+  inLanguage: lang === 'ca' ? 'ca-ES' : 'es-ES',
+  url,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
   image: data.cover ? new URL(data.cover, Astro.site).href : undefined,
-  author: { '@type': 'Organization', name: org.name },
+  author: { '@id': ID.org },
+  publisher: { '@id': ID.org },
   ...(isRecipe
-    ? { recipeYield: data.servings, totalTime: data.time, recipeIngredient: data.ingredients }
-    : {}),
+    ? {
+        recipeYield: data.servings,
+        totalTime: isoDuration(data.time),
+        recipeIngredient: data.ingredients,
+        recipeCategory: labels[data.category] ?? data.category,
+      }
+    : { articleSection: labels[data.category] ?? data.category }),
 };
+
+const crumbs = breadcrumbs([
+  { name: lang === 'ca' ? 'Inici' : 'Inicio', path: localizePath('/', lang) },
+  { name: t('blog.title'), path: localizePath('/actualitat', lang) },
+  { name: data.title, path: Astro.url.pathname },
+]);
+
+const jsonLd = graph(organization(lang), post, crumbs);
 ---
 <BaseLayout title={data.title} description={data.excerpt} image={data.cover} jsonLd={jsonLd}>
   <article data-pagefind-body data-pagefind-meta={`image:${data.cover ?? ''}`}>
@@ -57,7 +84,7 @@ const jsonLd = {
 
     {data.cover && (
       <div class="container-narrow -mt-2 pt-8">
-        <img src={data.cover} alt="" class="aspect-[16/9] w-full rounded-lg object-cover shadow-sm" />
+        <img src={data.cover} alt={data.coverAlt ?? ''} width="1280" height="720" decoding="async" class="aspect-[16/9] w-full rounded-lg object-cover shadow-sm" />
       </div>
     )}
 

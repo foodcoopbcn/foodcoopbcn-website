@@ -11,11 +11,11 @@ import InfoStrip from '../sections/InfoStrip.astro';
 import MediaSplit from '../sections/MediaSplit.astro';
 import ComparisonTable from '../sections/ComparisonTable.astro';
 import PhotoCards from '../sections/PhotoCards.astro';
-import PriceCompare from '../sections/PriceCompare.astro';
+import PriceTeaser from '../sections/PriceTeaser.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { getAllPosts, getCategoryLabels } from '../../lib/posts';
-import { buildCompareView } from '../../lib/prices';
 import { org, hours } from '../../config/site';
+import { graph, organization, groceryStore, webSite } from '../../lib/schema';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -42,36 +42,20 @@ const { sections } = entry.data;
 const posts = await getAllPosts(lang);
 const labels = await getCategoryLabels(lang);
 /* Null when the collected prices are missing or stale: the block is then simply not rendered. */
-const compare = buildCompareView(lang);
 
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'GroceryStore',
-  name: org.name,
-  legalName: org.legalName,
-  email: org.email,
-  telephone: org.phone,
-  url: Astro.site?.href,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: org.address.street,
-    addressLocality: org.address.locality,
-    postalCode: org.address.postalCode,
-    addressCountry: org.address.country,
+const { title: homeTitle, description: homeDescription } = {
+  ca: {
+    title: 'Supermercat cooperatiu de Barcelona',
+    description: `Supermercat cooperatiu, participatiu i sense ànim de lucre a l'Eixample de Barcelona. Obert a tothom, amb ${org.members.toLocaleString('ca-ES')} sòcies i més de 1.200 productes agroecològics i de proximitat.`,
   },
-  sameAs: ['https://www.instagram.com/foodcoopbcn/', 'https://www.facebook.com/foodcoopbcn'],
-  /* Structured hours let search engines show the open/closed state directly in results. */
-  openingHoursSpecification: hours
-    .filter((h) => h.ranges.length > 0)
-    .flatMap((h) =>
-      h.ranges.map(([opens, closes]) => ({
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: `https://schema.org/${DAY_NAMES[h.day]}`,
-        opens,
-        closes,
-      })),
-    ),
-};
+  es: {
+    title: 'Supermercado cooperativo de Barcelona',
+    description: `Supermercado cooperativo, participativo y sin ánimo de lucro en el Eixample de Barcelona. Abierto a todo el mundo, con ${org.members.toLocaleString('es-ES')} socias y más de 1.200 productos agroecológicos y de proximidad.`,
+  },
+}[lang];
+
+/* Organization + the physical shop + the site, cross-referenced by @id. */
+const orgJsonLd = graph(organization(lang), groceryStore(lang), webSite(lang));
 
 /*
  * Figures that change on their own.
@@ -91,7 +75,7 @@ const href = (h: string) => (h.startsWith('/') ? localizePath(h, lang) : h);
 const link = (c?: { label: string; href: string }) =>
   c ? { label: c.label, href: href(c.href) } : undefined;
 ---
-<BaseLayout title="" jsonLd={orgJsonLd}>
+<BaseLayout title={homeTitle} description={homeDescription} jsonLd={orgJsonLd}>
   {sections.map((s) => {
     switch (s.discriminant) {
       case 'hero': {
@@ -142,8 +126,8 @@ const link = (c?: { label: string; href: string }) =>
           />
         );
       }
-      case 'priceCompare':
-        return compare ? <PriceCompare {...s.value} data={compare} /> : null;
+      case 'priceTeaser':
+        return <PriceTeaser {...s.value} />;
       case 'ctaSection': {
         const { primaryCta, secondaryCta, ...p } = s.value;
         return <CTASection {...p} primaryCta={link(primaryCta)} secondaryCta={link(secondaryCta)} />;

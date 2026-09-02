@@ -186,11 +186,15 @@ const newsTeaserSection = block('newsTeaser', {
   tone: z.enum(['paper', 'soft', 'green']).catch('paper'),
 });
 
-/** Prices are collected daily into src/data/prices.json — only the heading is editable. */
-const priceCompareSection = block('priceCompare', {
+/*
+ * A teaser for the price comparison, which lives on its own page at /comparativa.
+ * The full five-column table used to sit on the homepage; it is ~70 KB of HTML and
+ * far more detail than a first visit needs. Only the heading is editable — the
+ * product shown is chosen from live data by pickHighlight().
+ */
+const priceTeaserSection = block('priceTeaser', {
   eyebrow: optionalText(),
-  title: z.string(),
-  intro: optionalText(),
+  title: optionalText(),
   tone: z.enum(['paper', 'soft', 'green']).catch('soft'),
 });
 
@@ -225,7 +229,7 @@ const pages = defineCollection({
           comparisonTableSection,
           photoCardsSection,
           newsTeaserSection,
-          priceCompareSection,
+          priceTeaserSection,
           ctaSectionSchema,
         ]),
       )

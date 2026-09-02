@@ -6,23 +6,59 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Security + caching headers
+# --- Headers -------------------------------------------------------------------
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
+    # Force HTTPS on repeat visits. Subdomains included: botiga. and gestio. are
+    # both HTTPS-only. Deliberately NOT preloaded — that is hard to undo.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # The site needs no device APIs at all, so switch them off.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), midi=(), magnetometer=(), accelerometer=(), gyroscope=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    # Everything is first-party: no CDN, no embedded fonts, no third-party scripts.
+    # `unsafe-inline` covers the two inline blocks Astro emits (JSON-LD, which is a
+    # data block, and the opening-hours toggle). Hashes would be stricter, but they
+    # would not defend against the realistic threat here — a compromised dependency
+    # writing a script at build time hashes cleanly too. What this does buy is a
+    # hard block on every EXTERNAL script origin, on framing, and on <base>.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; frame-src 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
 
+# Astro hashes these filenames, so they can never go stale.
 [[headers]]
   for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Self-hosted fonts. The filenames are stable, so give a new name if the font is
+# ever swapped rather than shortening this.
 [[headers]]
   for = "/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Editors replace images in place, so these get a long-but-finite life instead of
+# `immutable`. Previously they had no cache header at all and were revalidated on
+# every single navigation.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/docs/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Pagefind ships a large prebuilt index that only changes when content does.
+[[headers]]
+  for = "/pagefind/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
 
 # --- Redirects from the old WordPress site -------------------------------------
 #

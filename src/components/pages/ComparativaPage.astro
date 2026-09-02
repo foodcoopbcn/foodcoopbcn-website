@@ -1,0 +1,120 @@
+---
+/*
+ * The full price comparison, moved off the homepage.
+ *
+ * It was a 70 KB table two thirds of the way down the front page, which is a lot
+ * of weight and a lot of detail for a first visit. Here it can be as thorough as
+ * it needs to be, and the homepage links to it with a single example.
+ *
+ * The section renders nothing if FoodCoop's own prices are stale, so this page
+ * always explains what it is even when the table cannot be drawn.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../sections/PageHeader.astro';
+import Section from '../sections/Section.astro';
+import CTASection from '../sections/CTASection.astro';
+import PriceCompare from '../sections/PriceCompare.astro';
+import { buildCompareView } from '../../lib/prices';
+import { getLang, useTranslations, localizePath } from '../../i18n/utils';
+import { membership as m } from '../../config/site';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const compare = buildCompareView(lang);
+
+const c = {
+  ca: {
+    eyebrow: 'Preus',
+    title: 'Compara’ns amb altres supermercats',
+    intro:
+      'Els preus d’avui d’una selecció de productes bàsics a FoodCoop BCN i a quatre supermercats de Barcelona. Els recollim automàticament cada dia de les botigues en línia de cadascun.',
+    unavailableTitle: 'Avui no podem mostrar la comparativa',
+    unavailableText:
+      'Les dades de preus són massa antigues o no s’han pogut recollir. Preferim no ensenyar-te números que potser ja no són certs. Torna-ho a provar d’aquí a unes hores.',
+    honestTitle: 'Per què publiquem això',
+    honest: [
+      {
+        t: 'No sempre som els més barats',
+        d: 'I no ho amaguem. En producte fresc i de proximitat acostumem a estar-hi bé; en marques blanques industrials, no hi competim. La taula ho ensenya tot, inclosos els productes on perdem.',
+      },
+      {
+        t: 'Comparem el que és comparable',
+        d: 'Cada fila busca el producte equivalent més proper a cada botiga i, si en té, la versió ecològica. Quan una cosa és eco i l’altra no, ho marquem, perquè no és el mateix producte.',
+      },
+      {
+        t: 'Els preus són els públics de cada botiga',
+        d: 'Es recullen de les botigues en línia de cada establiment per a Barcelona, cada dia, de manera automàtica. No triem el moment ni la selecció segons ens convingui.',
+      },
+      {
+        t: 'El descompte de sòcia hi surt a part',
+        d: `A FoodCoop mostrem el preu de sòcia (amb el ${m.discount}% de descompte) i, a sota, el preu públic que paga qualsevol persona que entri.`,
+      },
+    ],
+    finalTitle: 'Val la pena fer-se’n sòcia?',
+    finalText: `Depèn del que compris. Amb el ${m.discount}% de descompte permanent, la resposta acostuma a ser que sí — però mira els números tu mateixa.`,
+  },
+  es: {
+    eyebrow: 'Precios',
+    title: 'Compáranos con otros supermercados',
+    intro:
+      'Los precios de hoy de una selección de productos básicos en FoodCoop BCN y en cuatro supermercados de Barcelona. Los recogemos automáticamente cada día de las tiendas en línea de cada uno.',
+    unavailableTitle: 'Hoy no podemos mostrar la comparativa',
+    unavailableText:
+      'Los datos de precios son demasiado antiguos o no se han podido recoger. Preferimos no enseñarte números que quizá ya no sean ciertos. Vuelve a probar dentro de unas horas.',
+    honestTitle: 'Por qué publicamos esto',
+    honest: [
+      {
+        t: 'No siempre somos los más baratos',
+        d: 'Y no lo escondemos. En producto fresco y de proximidad solemos estar bien; en marcas blancas industriales, no competimos. La tabla lo enseña todo, incluidos los productos donde perdemos.',
+      },
+      {
+        t: 'Comparamos lo que es comparable',
+        d: 'Cada fila busca el producto equivalente más cercano en cada tienda y, si lo tiene, la versión ecológica. Cuando una cosa es eco y la otra no, lo marcamos, porque no es el mismo producto.',
+      },
+      {
+        t: 'Los precios son los públicos de cada tienda',
+        d: 'Se recogen de las tiendas en línea de cada establecimiento para Barcelona, cada día, de forma automática. No elegimos el momento ni la selección según nos convenga.',
+      },
+      {
+        t: 'El descuento de socia va aparte',
+        d: `En FoodCoop mostramos el precio de socia (con el ${m.discount}% de descuento) y, debajo, el precio público que paga cualquier persona que entre.`,
+      },
+    ],
+    finalTitle: '¿Vale la pena hacerse socia?',
+    finalText: `Depende de lo que compres. Con el ${m.discount}% de descuento permanente, la respuesta suele ser que sí — pero mira los números tú misma.`,
+  },
+}[lang];
+---
+<BaseLayout title={c.title} description={c.intro}>
+  <PageHeader eyebrow={c.eyebrow} title={c.title} intro={c.intro} />
+
+  {
+    compare ? (
+      <PriceCompare title={c.title} data={compare} tone="paper" id="comparativa" />
+    ) : (
+      <Section width="narrow">
+        <h2 class="text-2xl">{c.unavailableTitle}</h2>
+        <p class="mt-4 text-lg text-ink-soft">{c.unavailableText}</p>
+      </Section>
+    )
+  }
+
+  <Section tone="soft">
+    <h2 class="mb-8 text-2xl">{c.honestTitle}</h2>
+    <div class="grid gap-6 md:grid-cols-2">
+      {c.honest.map((h) => (
+        <div class="rounded-lg bg-paper p-7 shadow-sm ring-1 ring-line">
+          <h3 class="text-lg">{h.t}</h3>
+          <p class="mt-2 text-ink-soft">{h.d}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <CTASection
+    title={c.finalTitle}
+    text={c.finalText}
+    primaryCta={{ label: t('cta.becomeMember'), href: localizePath('/fes-te-socia', lang) }}
+    secondaryCta={{ label: lang === 'ca' ? 'Preus i quotes' : 'Precios y cuotas', href: localizePath('/fes-te-socia/preus', lang) }}
+  />
+</BaseLayout>

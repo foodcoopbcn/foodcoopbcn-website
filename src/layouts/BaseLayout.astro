@@ -17,7 +17,7 @@ interface Props {
 
 const {
   title,
-  description = 'El primer supermercat cooperatiu, participatiu i sense ànim de lucre de Barcelona.',
+  description,
   image = '/og-default.jpg',
   noindex = false,
   jsonLd,
@@ -49,6 +49,18 @@ const altHref = altPath ? abs(altPath) : undefined;
 const defaultPath = lang === 'ca' ? localizePath(canonicalPath, 'ca') : altPath;
 
 const ogImage = new URL(image, Astro.site);
+
+/*
+ * The one hard-coded Catalan fallback used to be emitted on 20 pages, including
+ * every Spanish one. Pages should pass their own; this is the last resort and it
+ * is at least in the right language.
+ */
+const fallbackDescription = {
+  ca: 'El primer supermercat cooperatiu, participatiu i sense ànim de lucre de Barcelona. Més de 1.200 productes ecològics i de proximitat al passatge d’Aragó, a l’Eixample. Obert a tothom.',
+  es: 'El primer supermercado cooperativo, participativo y sin ánimo de lucro de Barcelona. Más de 1.200 productos ecológicos y de proximidad en el pasaje de Aragó, en el Eixample. Abierto a todo el mundo.',
+}[lang];
+const metaDescription = description || fallbackDescription;
+
 const fullTitle = title ? `${title} · ${org.name}` : org.name;
 ---
 <!doctype html>
@@ -56,8 +68,16 @@ const fullTitle = title ? `${title} · ${org.name}` : org.name;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Discovered before the stylesheet parses, which removes the flash of fallback text. -->
+    <link
+      rel="preload"
+      href="/fonts/open-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <title>{fullTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
     <link rel="canonical" href={canonical} />
     {altHref && <link rel="alternate" hreflang={lang} href={canonical} />}
@@ -75,7 +95,7 @@ const fullTitle = title ? `${title} · ${org.name}` : org.name;
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={org.name} />
     <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image:alt" content={org.name} />
     <!-- Networks reject SVG, so this must stay a raster image at 1200x630. -->

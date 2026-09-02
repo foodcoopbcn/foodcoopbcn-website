@@ -5,14 +5,16 @@ const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
 ---
 <BaseLayout title={t('blog.search')} noindex={true}>
+  <link slot="head" href="/pagefind/pagefind-ui.css" rel="stylesheet" />
   <section class="bg-paper-green">
     <div class="container-page py-12">
       <h1 class="text-3xl text-ink">{t('blog.search')}</h1>
     </div>
   </section>
   <div class="container-page py-12">
-    <!-- Pagefind UI: the index is generated at build time (`pagefind --site dist`). -->
-    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <!-- Pagefind UI: the index is generated at build time (`pagefind --site dist`).
+         The stylesheet goes through the head slot; in the body it is discovered
+         late and restyles the results after they have already painted. -->
     <div id="search" data-lang={lang}></div>
   </div>
 

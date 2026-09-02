@@ -124,13 +124,10 @@ sections:
       secondaryCta:
         label: Hazte socia
         href: /fes-te-socia
-  - discriminant: priceCompare
+  - discriminant: priceTeaser
     value:
-      eyebrow: Cesta básica
-      title: Compara FoodCoop BCN con otros supermercados
-      intro: >-
-        Los precios de hoy de la cesta básica en FoodCoop y en cuatro supermercados de
-        Barcelona. Los números son públicos: saca tus propias conclusiones.
+      eyebrow: ''
+      title: ''
       tone: soft
   - discriminant: photoCards
     value:
@@ -190,7 +187,7 @@ sections:
           text: 55 productos esenciales a precios accesibles.
           cta:
             label: Ver cesta
-            href: /#compara
+            href: /comparativa
         - image: /images/assets/card-proveidors.svg
           imageAlt: Productores en el campo
           title: Proveedores

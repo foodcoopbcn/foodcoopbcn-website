@@ -123,13 +123,10 @@ sections:
       secondaryCta:
         label: Fes-te’n sòcia
         href: /fes-te-socia
-  - discriminant: priceCompare
+  - discriminant: priceTeaser
     value:
-      eyebrow: Cistella bàsica
-      title: Compara FoodCoop BCN amb altres supermercats
-      intro: >-
-        Els preus d’avui de la cistella bàsica a FoodCoop i a quatre supermercats de
-        Barcelona. Els números són públics: treu-ne les teves conclusions.
+      eyebrow: ''
+      title: ''
       tone: soft
   - discriminant: photoCards
     value:
@@ -189,7 +186,7 @@ sections:
           text: 55 productes essencials a preus accessibles.
           cta:
             label: Veure cistella
-            href: /#compara
+            href: /comparativa
         - image: /images/assets/card-proveidors.svg
           imageAlt: Productors al camp
           title: Proveïdors

@@ -150,3 +150,74 @@ export function buildCompareView(lang: Lang, now: Date = new Date()): CompareVie
     discount,
   };
 }
+
+
+/** One product, priced at the co-op and at the cheapest of the other shops. */
+export interface PriceHighlight {
+  label: string;
+  basis: string;
+  /** FoodCoop's member price, and the public one below it. */
+  memberPrice: string;
+  publicPrice: string;
+  eco: boolean;
+  /** The cheapest comparable price found elsewhere today. */
+  rivalLabel: string;
+  rivalPrice: string;
+  rivalEco: boolean;
+  /** How much less the member price is, in whole percent. */
+  savingPct: number;
+  updatedAt: string;
+}
+
+/**
+ * Picks one product for the homepage teaser: the one where the member price beats
+ * the cheapest of the other shops by the widest margin.
+ *
+ * This is deliberately a *favourable example*, not an average — so whatever
+ * renders it has to say so and link to the full table. It is chosen from live
+ * data rather than hard-coded, which means it can never claim a saving that has
+ * stopped being true: if no product is cheaper today, this returns null and the
+ * teaser disappears rather than quietly showing a stale win.
+ */
+export function pickHighlight(lang: Lang, now: Date = new Date()): PriceHighlight | null {
+  const view = buildCompareView(lang, now);
+  if (!view) return null;
+
+  const fcIndex = view.stores.findIndex((s) => s.featured);
+  if (fcIndex < 0) return null;
+
+  let best: PriceHighlight | null = null;
+
+  for (const item of view.items) {
+    const ours = item.cells[fcIndex];
+    if (!ours?.memberPrice) continue;
+
+    /* Compare like with like: an eco product is only measured against eco ones. */
+    const rivals = item.cells
+      .map((cell, i) => ({ cell, store: view.stores[i] }))
+      .filter((r) => r.cell && !r.store.featured && r.cell.eco === ours.eco);
+    if (!rivals.length) continue;
+
+    const cheapest = rivals.reduce((a, b) => (a.cell!.priceValue <= b.cell!.priceValue ? a : b));
+    const memberValue = ours.priceValue * (1 - view.discount / 100);
+    const savingPct = Math.round((1 - memberValue / cheapest.cell!.priceValue) * 100);
+    if (savingPct < 1) continue;
+
+    if (!best || savingPct > best.savingPct) {
+      best = {
+        label: item.label,
+        basis: item.basis,
+        memberPrice: ours.memberPrice,
+        publicPrice: ours.price,
+        eco: ours.eco,
+        rivalLabel: cheapest.store.label,
+        rivalPrice: cheapest.cell!.price,
+        rivalEco: cheapest.cell!.eco,
+        savingPct,
+        updatedAt: view.updatedAt,
+      };
+    }
+  }
+
+  return best;
+}

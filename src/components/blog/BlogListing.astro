@@ -42,6 +42,7 @@ const labels = await getCategoryLabels(lang);
             date={entry.data.date}
             excerpt={entry.data.excerpt}
             cover={entry.data.cover}
+          coverAlt={entry.data.coverAlt}
             category={labels[entry.data.category] ?? entry.data.category}
           />
         ))}

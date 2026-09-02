@@ -30,6 +30,7 @@ const ROUTES = [
   '/fes-te-socia/persona',
   '/fes-te-socia/entitat',
   '/productes',
+  '/comparativa',
   '/actualitat',
   '/contacte',
   '/faqs',
@@ -247,12 +248,11 @@ const sectionBlocks = {
       }),
     }),
   },
-  priceCompare: {
-    label: 'Comparativa de preus (automàtica)',
+  priceTeaser: {
+    label: 'Preus: un exemple (automàtic)',
     schema: fields.object({
-      eyebrow: fields.text({ label: 'Etiqueta' }),
-      title: fields.text({ label: 'Títol' }),
-      intro: fields.text({ label: 'Introducció', multiline: true }),
+      eyebrow: fields.text({ label: 'Etiqueta', description: 'Deixa-ho buit per al text per defecte.' }),
+      title: fields.text({ label: 'Títol', description: 'Deixa-ho buit per al text per defecte.' }),
       tone: toneField(['paper', 'soft', 'green'], 'soft'),
     }),
   },
@@ -293,6 +293,16 @@ function postSchema(folder: 'news' | 'recipes') {
       label: 'Cover image',
       directory: `public/images/${folder}`,
       publicPath: `/images/${folder}/`,
+    }),
+    coverAlt: fields.text({
+      label: 'Cover alt text',
+      description:
+        'What the photo shows, for people using a screen reader. Leave empty only if the image adds nothing the headline does not already say.',
+    }),
+    translationKey: fields.text({
+      label: 'Translation key',
+      description:
+        'Give the Catalan and Spanish versions of the same post the SAME key so they link to each other. Slugs differ per language, so without it the language switch and the hreflang tags point at a 404.',
     }),
     draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
     content: fields.markdoc({

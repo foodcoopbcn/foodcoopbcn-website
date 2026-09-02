@@ -11,12 +11,13 @@ const year = new Date().getFullYear();
 
 const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-brand-dark';
 ---
-<footer class="mt-auto">
+<footer aria-labelledby="footer-heading" class="mt-auto">
+  <h2 id="footer-heading" class="sr-only">{t('footer.landmark')}</h2>
   <!-- Practical band: where we are, when we're open, how to follow us, how to subscribe -->
   <div class="border-t border-line bg-paper-soft text-ink">
     <div class="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4">
       <div>
-        <h2 class={heading}><Icon name="pin" size={16} /> {t('footer.visit')}</h2>
+        <p class={heading}><Icon name="pin" size={16} /> {t('footer.visit')}</p>
         <address class="space-y-2 text-sm not-italic text-ink-soft">
           <p>{org.address.street}<br />{org.address.postalCode} {org.address.locality}</p>
           <p><a href={`tel:${org.phone}`} class="hover:text-brand-ink">{org.phoneDisplay}</a></p>
@@ -33,7 +34,7 @@ const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracki
       </div>
 
       <div>
-        <h2 class={heading}><Icon name="clock" size={16} /> {t('hours.today')}</h2>
+        <p class={heading}><Icon name="clock" size={16} /> {t('hours.today')}</p>
         <OpeningHours variant="stacked" class="text-ink-soft" />
         <a
           href={`${localizePath('/el-super', lang)}#horaris`}
@@ -44,7 +45,7 @@ const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracki
       </div>
 
       <div>
-        <h2 class={heading}>{t('footer.follow')}</h2>
+        <p class={heading}>{t('footer.follow')}</p>
         <div class="flex flex-wrap gap-2">
           {
             social.map((s) => (
@@ -64,7 +65,7 @@ const heading = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracki
       </div>
 
       <div>
-        <h2 class={heading}><Icon name="mail" size={16} /> {t('footer.newsletter')}</h2>
+        <p class={heading}><Icon name="mail" size={16} /> {t('footer.newsletter')}</p>
         <Newsletter />
       </div>
     </div>

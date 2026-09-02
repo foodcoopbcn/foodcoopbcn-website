@@ -41,8 +41,18 @@ const data: Record<Slug, Record<'ca' | 'es', { title: string; intro?: string; do
 };
 
 const d = data[slug][lang];
+
+/*
+ * noindex was applied to all six pages alike. But the statutes, the annual report
+ * and the social audit are not boilerplate: they are the evidence behind every
+ * transparency claim the site makes, and exactly the kind of page that earns
+ * trust in search and gets cited by AI assistants. Only the true boilerplate —
+ * legal notice, privacy, cookies — stays out of the index.
+ */
+const boilerplate: Slug[] = ['avis-legal', 'privacitat', 'cookies'];
+const noindex = boilerplate.includes(slug);
 ---
-<BaseLayout title={d.title} description={d.intro} noindex={true}>
+<BaseLayout title={d.title} description={d.intro} noindex={noindex}>
   <PageHeader title={d.title} intro={d.intro} tone="soft" />
   <Section width="narrow">
     <div class="prose-content text-ink" set:html={d.body} />

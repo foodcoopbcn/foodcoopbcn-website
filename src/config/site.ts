@@ -167,6 +167,7 @@ export const mainNav: NavItem[] = [
       { key: 'nav.elsuper.horaris', path: '/el-super' },
       { key: 'nav.productes', path: '/productes' },
       { key: 'nav.comfunciona', path: '/com-funciona' },
+      { key: 'nav.comparativa', path: '/comparativa' },
     ],
   },
   {

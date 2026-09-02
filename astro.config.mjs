@@ -32,7 +32,22 @@ export default defineConfig({
     mdx(),
     markdoc(),
     ...(enableKeystatic ? [react(), keystatic()] : []),
-    sitemap(),
+    /*
+     * The sitemap told Google to index 14 URLs whose own pages say noindex — a
+     * contradiction that wastes crawl budget and can suppress the pages that do
+     * matter. Keep those out.
+     *
+     * Deliberately NOT using the `i18n` option: it pairs locales by mirroring the
+     * path, and our blog slugs differ per language (millores-2025 / mejoras-2025),
+     * so it would write alternates pointing at 404s. The per-page hreflang tags in
+     * BaseLayout resolve the real pairs instead.
+     */
+    sitemap({
+      filter: (page) =>
+        !/\/(gracies|gracies-newsletter|gracies-alta|404)\/?$/.test(page) &&
+        !/\/actualitat\/cerca\/?$/.test(page) &&
+        !/\/legal\/(avis-legal|privacitat|cookies)\/?$/.test(page),
+    }),
   ],
   vite: {
     plugins: [tailwindcss()],

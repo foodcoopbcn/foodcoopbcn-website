@@ -52,11 +52,15 @@ const pill =
         class="absolute left-3 top-0 z-50 block"
         aria-label={org.name}
       >
+        <!-- 5 KB WebP instead of the 103 KB source PNG, which was being downloaded on
+             every page to paint a 104px badge. The link already carries the name, so
+             the image itself is decorative. -->
         <img
-          src="/logo_foodcoop.png"
-          alt={org.name}
-          width="120"
-          height="120"
+          src="/logo-104.webp"
+          srcset="/logo-104.webp 1x, /logo-208.webp 2x"
+          alt=""
+          width="104"
+          height="104"
           class="h-16 w-16 drop-shadow-md md:h-[104px] md:w-[104px]"
         />
       </a>

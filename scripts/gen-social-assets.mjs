@@ -91,6 +91,14 @@ await icon(32, 'public/favicon-32.png');
 await icon(192, 'public/favicon-192.png');
 await icon(512, 'public/favicon-512.png');
 
+/* --- Header badge -----------------------------------------------------------
+ * The header shipped the full 424x424 PNG (103 KB) to paint a 104px badge on
+ * every single page. Two WebP variants cover 1x and 2x for a ~95% saving.
+ */
+for (const w of [104, 208]) {
+  await sharp(logo).resize(w, w).webp({ quality: 88 }).toFile(`public/logo-${w}.webp`);
+}
+
 await writeFile(
   'public/site.webmanifest',
   JSON.stringify(
@@ -112,4 +120,4 @@ await writeFile(
   ) + '\n',
 );
 
-console.log('Wrote og-default.jpg, apple-touch-icon.png, favicon-{32,192,512}.png, site.webmanifest');
+console.log('Wrote og-default.jpg, apple-touch-icon.png, favicon-{32,192,512}.png, logo-{104,208}.webp, site.webmanifest');

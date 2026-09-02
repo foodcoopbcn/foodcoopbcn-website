@@ -10,7 +10,8 @@
     "cms": "ENABLE_KEYSTATIC=true astro dev",
     "astro": "astro",
     "prices": "node scripts/fetch-prices.mjs",
-    "prices:test": "node --test scripts/fetch-prices.test.mjs"
+    "prices:test": "node --test scripts/fetch-prices.test.mjs",
+    "fonts": "cp node_modules/@fontsource-variable/open-sans/files/open-sans-latin-wght-normal.woff2 public/fonts/open-sans-latin.woff2 && cp node_modules/@fontsource-variable/open-sans/files/open-sans-latin-ext-wght-normal.woff2 public/fonts/open-sans-latin-ext.woff2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
