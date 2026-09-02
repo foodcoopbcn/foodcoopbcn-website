@@ -15,7 +15,15 @@ const lang = getLang(Astro.currentLocale);
 const target = otherLang(lang);
 const canonicalPath = stripLocale(Astro.url.pathname);
 
-const mirrored = localizePath(canonicalPath, target);
+/*
+ * On the 404 page there is nothing to translate, and Astro emits the Catalan one
+ * as /404.html rather than /404/, so mirroring the path produces a link that
+ * itself 404s. Send people to the other language's home instead.
+ */
+const mirrored =
+  canonicalPath.replace(/\/$/, '') === '/404'
+    ? localizePath('/', target)
+    : localizePath(canonicalPath, target);
 const resolved = await alternateOf(Astro.url.pathname, mirrored);
 /* No translated post: the closest honest destination is that language's index. */
 const href = resolved ?? localizePath('/actualitat', target);
