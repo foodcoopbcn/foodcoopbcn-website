@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
+import Button from '../ui/Button.astro';
 import { getLang } from '../../i18n/utils';
 import { org } from '../../config/site';
 
@@ -57,9 +58,9 @@ const noindex = boilerplate.includes(slug);
   <Section width="narrow">
     <div class="prose-content text-ink" set:html={d.body} />
     {d.doc && (
-      <a href={d.doc} class="mt-8 inline-flex items-center gap-2 rounded-pill bg-brand px-6 py-3 font-bold text-paper hover:brightness-110" target="_blank" rel="noopener">
+      <Button href={d.doc} class="mt-8" target="_blank" rel="noopener">
         {lang === 'ca' ? 'Descarrega el PDF' : 'Descargar el PDF'} ↓
-      </a>
+      </Button>
     )}
   </Section>
 </BaseLayout>

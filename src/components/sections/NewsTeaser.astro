@@ -23,7 +23,7 @@ const { title, posts, labels, allNewsHref, allNewsLabel, tone = 'paper' } = Astr
     <h2 class="text-2xl">{title}</h2>
     <Button href={allNewsHref} variant="ghost">{allNewsLabel}</Button>
   </div>
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="reveal-stagger grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {posts.map(({ type, entry }) => (
       <PostCard
         href={postPath(type, entryLang(entry.id), entrySlug(entry.id))}

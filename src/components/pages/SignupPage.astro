@@ -16,6 +16,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { membership as m, org } from '../../config/site';
 
@@ -146,22 +147,17 @@ const field =
           </span>
         </label>
 
-        <button
-          type="submit"
-          class="rounded-pill bg-brand px-7 py-3 font-display font-extrabold text-paper hover:brightness-110"
-        >
-          {c.submit}
-        </button>
+        <Button type="submit" size="lg">{c.submit}</Button>
       </form>
 
-      <aside class="self-start rounded-2xl bg-paper-green p-8">
+      <aside class="self-start rounded-lg bg-paper-green p-8">
         <h2 class="flex items-center gap-2 font-display text-lg font-bold text-brand-dark">
           <Icon name="check" size={18} /> {c.asideTitle}
         </h2>
         <ol class="mt-4 space-y-3 text-sm text-ink-soft">
           {c.steps.map((s, i) => (
             <li class="flex items-start gap-3">
-              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-bold text-paper">
+              <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-ink text-xs font-bold text-paper">
                 {i + 1}
               </span>
               <span>{s}</span>

@@ -49,7 +49,14 @@ const {
 /* An SVG placeholder is not a photograph: ignore it and use the curated one. */
 const photo = image && !image.endsWith('.svg') ? image : 'hero-entrada';
 ---
-<section class="relative isolate overflow-hidden bg-brand-dark">
+<!--
+  The hero had no min-height, so it was exactly as tall as its copy — on a short
+  string it stopped being a photograph and became a green strip. `svh` rather
+  than `vh` so the mobile URL bar collapsing does not resize it mid-scroll.
+-->
+<section
+  class="relative isolate flex min-h-[78svh] items-center overflow-hidden bg-brand-dark md:min-h-[86svh]"
+>
   <!-- The LCP element: eager, high priority, and served at the viewport's width. -->
   <Photo
     src={photo}
@@ -60,13 +67,23 @@ const photo = image && !image.endsWith('.svg') ? image : 'hero-entrada';
     fetchpriority="high"
     class="absolute inset-0 -z-10 h-full w-full object-cover object-center"
   />
-  <!-- Deep forest scrim: yellow on it is 10.7:1, white better still. -->
+  <!--
+    Deep forest scrim. Yellow on it is 10.7:1, white better still.
+
+    The mobile stack used to start at 0.95 and only reach 0.45 at the top, which
+    on a phone left the photograph as a green wash with a shape in it. It now
+    holds full strength only under the copy block and clears the upper third, so
+    the shopfront actually reads. The type sits on the dense end either way.
+
+    Both gradients are built from --color-brand-dark rather than a literal, so
+    retinting the brand does not leave the hero behind.
+  -->
   <div
-    class="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgba(6,64,42,0.95),rgba(6,64,42,0.72)_55%,rgba(6,64,42,0.45))] md:bg-[linear-gradient(100deg,rgba(6,64,42,0.94),rgba(6,64,42,0.78)_45%,rgba(6,64,42,0.35))]"
+    class="scrim absolute inset-0 -z-10"
     aria-hidden="true"
   ></div>
 
-  <div class="container-page relative pb-16 pt-24 md:pb-24 md:pt-28">
+  <div class="container-page relative w-full pb-16 pt-24 md:pb-24 md:pt-28">
     <div class="max-w-2xl">
       {eyebrow && (
         <p class="mb-5 inline-flex items-center gap-2 rounded-pill bg-on-ink-strong/15 px-4 py-1.5 text-sm font-bold text-on-ink-strong ring-1 ring-on-ink-soft/30">
@@ -105,3 +122,25 @@ const photo = image && !image.endsWith('.svg') ? image : 'hero-entrada';
     </div>
   </div>
 </section>
+
+<style>
+  .scrim {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-brand-dark) 92%, transparent) 0%,
+      color-mix(in srgb, var(--color-brand-dark) 74%, transparent) 42%,
+      color-mix(in srgb, var(--color-brand-dark) 30%, transparent) 100%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .scrim {
+      background: linear-gradient(
+        100deg,
+        color-mix(in srgb, var(--color-brand-dark) 92%, transparent) 0%,
+        color-mix(in srgb, var(--color-brand-dark) 72%, transparent) 45%,
+        color-mix(in srgb, var(--color-brand-dark) 25%, transparent) 100%
+      );
+    }
+  }
+</style>

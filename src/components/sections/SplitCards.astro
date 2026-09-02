@@ -28,12 +28,12 @@ const { eyebrow, title, intro, options, tone = 'soft' } = Astro.props;
       {intro && <p class="mt-4 text-lg text-ink-soft">{intro}</p>}
     </div>
   )}
-  <div class="grid gap-6 md:grid-cols-2">
+  <div class="reveal-stagger grid gap-6 md:grid-cols-2">
     {options.map((o) => (
       <div
         class:list={[
-          'flex flex-col rounded-2xl p-8 ring-1',
-          o.featured ? 'bg-paper text-ink ring-2 ring-brand shadow' : 'bg-paper text-ink ring-line shadow-sm',
+          'flex flex-col rounded-lg p-8 ring-1',
+          o.featured ? 'bg-paper text-ink ring-2 ring-brand shadow-md' : 'bg-paper text-ink ring-line shadow-sm',
         ]}
       >
         {o.badge && (

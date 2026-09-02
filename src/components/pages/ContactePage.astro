@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../sections/PageHeader.astro';
 import Section from '../sections/Section.astro';
 import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
 import { getLang, useTranslations, localizePath } from '../../i18n/utils';
 import { org, hours, dayKey, formatRanges, social } from '../../config/site';
 
@@ -105,12 +106,10 @@ const c = {
           </span>
         </label>
 
-        <button type="submit" class="rounded-pill bg-brand px-7 py-3 font-display font-extrabold text-paper hover:brightness-110">
-          {t('form.send')}
-        </button>
+        <Button type="submit" size="lg">{t('form.send')}</Button>
       </form>
 
-      <aside class="space-y-6 rounded-2xl bg-paper-green p-8">
+      <aside class="space-y-6 rounded-lg bg-paper-green p-8">
         <div>
           <h2 class="mb-2 flex items-center gap-2 font-display text-lg font-bold text-brand-dark"><Icon name="pin" size={18} /> {t('footer.contact')}</h2>
           <address class="space-y-1 text-sm not-italic text-ink-soft">
@@ -129,7 +128,7 @@ const c = {
         </div>
         <div class="flex gap-2">
           {social.map((s) => (
-            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand-ink hover:bg-brand hover:text-paper">
+            <a href={s.href} target="_blank" rel="noopener" aria-label={s.name} class="grid h-10 w-10 place-items-center rounded-full bg-paper text-brand-ink hover:bg-brand-ink hover:text-paper">
               <Icon name={s.icon as any} size={18} />
             </a>
           ))}

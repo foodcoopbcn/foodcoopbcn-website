@@ -158,7 +158,7 @@ const c = {
         <li
           class:list={[
             'rounded-lg p-4 text-center text-sm font-semibold',
-            i === 0 ? 'bg-brand text-paper' : 'bg-paper-soft text-muted',
+            i === 0 ? 'bg-brand-ink text-paper' : 'bg-paper-soft text-muted',
           ]}
         >
           {lang === 'ca' ? 'Set.' : 'Sem.'} {i + 1}
@@ -205,7 +205,7 @@ const c = {
         <div class="mt-6 space-y-4">
           {c.types.map((ty) => (
             <div class="flex gap-4 rounded-lg bg-paper p-6 shadow-sm ring-1 ring-line">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-paper-green text-brand-ink">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-paper-green text-brand-ink">
                 <Icon name={ty.icon as any} size={20} />
               </span>
               <div>

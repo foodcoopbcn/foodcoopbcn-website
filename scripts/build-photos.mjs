@@ -22,7 +22,7 @@
  */
 import { createRequire } from 'node:module';
 import { readdirSync, mkdirSync, statSync, existsSync, writeFileSync } from 'node:fs';
-import { resolve, join, basename, extname } from 'node:path';
+import { resolve, join, basename, extname, dirname } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 const require = createRequire(import.meta.url);
@@ -145,3 +145,65 @@ writeFileSync('src/data/photos.json', JSON.stringify(manifest, null, 2) + '\n');
 
 console.log(`\n${PHOTOS.length} photos, ${Math.round(total / 1024)} KB total written to ${OUT}/`);
 console.log('src/data/photos.json updated');
+
+/*
+ * --- Editorial covers --------------------------------------------------------
+ *
+ * Blog and recipe covers are NOT Photo.astro slots. They are Keystatic
+ * `fields.image` values (keystatic.config.ts -> postSchema), which means:
+ *
+ *   - the CMS stores one plain path, `/images/<folder>/<file>`, in the .mdoc
+ *     frontmatter, and an editor can replace the file from the admin UI. So a
+ *     cover has to be a single file in the directory Keystatic points at, not a
+ *     manifest entry with a srcset behind it.
+ *   - the format has to be one Keystatic's uploader and every browser accept.
+ *
+ * JPEG rather than AVIF/WebP, deliberately: PostPage passes a raster cover
+ * straight through to og:image, and the social networks are unreliable with
+ * WebP. 1600x900 covers the largest slot that renders it (PostPage's 1280x720)
+ * and is wide enough to serve as a share card.
+ *
+ * Stories with no honest photograph in the bank keep placeholder.svg. An
+ * approximately-related stock shot is worse than an obvious placeholder,
+ * because the reader assumes the picture shows the thing being reported.
+ */
+const COVERS = [
+  {
+    /* A member being served at the till: the news is that anyone can now buy
+       here, so the picture is someone buying. */
+    out: 'public/images/news/obrim-a-no-socies.jpg',
+    src: `${M}/_F1A5451 copia.jpg`,
+    position: 'attention',
+  },
+  {
+    /* A wide, well-stocked shop floor with people in it — the piece is about
+       what has improved in the shop over the year. */
+    out: 'public/images/news/millores-2025.jpg',
+    src: `${M}/_F1A5367 copia.jpg`,
+    position: 'attention',
+  },
+  {
+    /* Squash in the crate it is sold from, for the pumpkin-and-mushroom
+       risotto. */
+    out: 'public/images/recipes/risotto-carbassa-bolets.jpg',
+    src: `${R}/P1240023.JPG`,
+    position: 'attention',
+  },
+];
+
+const COVER_W = 1600;
+const COVER_H = 900;
+let coverTotal = 0;
+
+for (const { out, src, position = 'attention' } of COVERS) {
+  mkdirSync(dirname(out), { recursive: true });
+  await sharp(decodable(src), { failOn: 'none' })
+    .rotate()
+    .resize(COVER_W, COVER_H, { fit: 'cover', position })
+    .jpeg({ quality: 80, mozjpeg: true })
+    .toFile(out);
+  coverTotal += statSync(out).size;
+  console.log(`  ${out}  ${kb(out)} KB`);
+}
+
+console.log(`${COVERS.length} covers, ${Math.round(coverTotal / 1024)} KB written`);

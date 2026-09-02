@@ -74,6 +74,7 @@
   --color-brand-dark: var(--color-brand-dark);
   --color-brand-olive: var(--color-brand-olive);
   --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
   --color-danger: var(--color-danger);
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
@@ -119,10 +120,45 @@
   --text-4xl: var(--text-4xl);
   --text-4xl--line-height: 0.95;
 
+  /*
+   * Radius.
+   *
+   * `--radius-DEFAULT` used to sit here. It does nothing in Tailwind v4 — the
+   * build emitted `.rounded{border-radius:.25rem}` from Tailwind's own fallback
+   * and `--radius: 10px` reached exactly one rule on the whole site. The middle
+   * step is `--radius-md` in v4, so that is where the 10px belongs; it is what
+   * every form field, nav item and the language switch use, and they were all
+   * rendering Tailwind's off-scale 6px.
+   *
+   * `--radius-2xl` is deliberately NOT declared. Tailwind's default 2xl is 1rem,
+   * identical to our `--radius-lg`, so the 19 `rounded-lg` uses were a second
+   * name for a value we already had; they have been folded into `rounded-lg`.
+   */
   --radius-sm: var(--radius-sm);
-  --radius-DEFAULT: var(--radius);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius-lg);
   --radius-pill: var(--radius-pill);
+
+  /*
+   * Elevation.
+   *
+   * tokens.css defined three warm, ink-tinted shadows and none of them ever
+   * reached the page: without these keys Tailwind inlined its own stock
+   * 10%-black at build time, so all 23 `shadow-sm` utilities rendered a
+   * shadow the design system had not chosen. `--shadow` (the raised step) maps
+   * to `md` because v4 aliases the bare `shadow` utility onto `shadow-sm`.
+   */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow);
+  --shadow-lg: var(--shadow-lg);
+
+  /*
+   * Motion. See the rationale in tokens.css. Tailwind exposes the easing
+   * namespace as `ease-*`, so these become `ease-out-soft` / `ease-spring`.
+   * Durations have no theme namespace in v4 and are used as vars directly.
+   */
+  --ease-out-soft: var(--ease-out-soft);
+  --ease-spring: var(--ease-spring);
 }
 
 @layer base {
@@ -223,9 +259,82 @@
     padding-block: var(--space-section-tight);
   }
 
+  /*
+   * --- Motion ---------------------------------------------------------------
+   *
+   * The whole system is CSS. Nothing here adds a byte of JavaScript, which is
+   * the constraint the site is built around (scripts/check-no-client-js.sh
+   * budgets one inline script per page and it is already spent on OpeningHours).
+   *
+   * Two rules govern everything below:
+   *
+   * 1. It lives inside `prefers-reduced-motion: no-preference`. The global
+   *    `reduce` block zeroes transition and animation DURATIONS, but a
+   *    scroll-driven animation is driven by a timeline, not a duration, so it
+   *    would survive that block. Opting in explicitly is the only safe way.
+   *
+   * 2. It lives inside `@supports (animation-timeline: view())`. Without the
+   *    guard, a browser that does not understand the timeline would still parse
+   *    `animation: reveal-rise linear both` — with no duration, that resolves to
+   *    0s and `both` fill, which is harmless, but the guard also keeps the
+   *    unsupported path from paying for the keyframes at all. Firefox and Safari
+   *    simply get the static page, which is the correct fallback.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      /* One block rising as it enters. */
+      .reveal {
+        animation: reveal-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 20%;
+      }
+
+      /*
+       * A grid whose children arrive one after another.
+       *
+       * There is no `animation-delay` in timeline space, so the stagger is made
+       * by pushing each child's range further into the scroll instead. Cards in
+       * the same row share a top edge, so without this they would all resolve on
+       * the same frame and the grid would read as one slab.
+       */
+      .reveal-stagger > * {
+        animation: reveal-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 16%;
+      }
+      .reveal-stagger > *:nth-child(2) {
+        animation-range: entry 0% cover 22%;
+      }
+      .reveal-stagger > *:nth-child(3) {
+        animation-range: entry 0% cover 28%;
+      }
+      .reveal-stagger > *:nth-child(4) {
+        animation-range: entry 0% cover 34%;
+      }
+      .reveal-stagger > *:nth-child(n + 5) {
+        animation-range: entry 0% cover 40%;
+      }
+    }
+  }
+
+  @keyframes reveal-rise {
+    from {
+      opacity: 0;
+      translate: 0 1.75rem;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
   /* Long-form content (legal pages, blog posts) */
   .prose-content {
-    max-width: var(--container-narrow);
+    /*
+     * Was --container-narrow (760px), which at a 17px base runs to ~88
+     * characters. Measured in ch so it tracks the font rather than the viewport.
+     */
+    max-width: var(--measure);
   }
   .prose-content > * + * {
     margin-top: 1.1em;
@@ -253,5 +362,52 @@
   }
   .prose-content img {
     border-radius: var(--radius);
+  }
+}
+
+/*
+ * --- Cross-document view transitions -----------------------------------------
+ *
+ * `navigation: auto` is the whole implementation. This is the MPA form of the
+ * View Transitions API: no ClientRouter, no island, no script — the browser
+ * holds a snapshot of the outgoing page and cross-fades it into the incoming
+ * one. Astro's <ClientRouter /> would do something similar and cost ~9 KB of
+ * JavaScript; this costs nothing and cannot break the no-JS budget.
+ *
+ * Browsers without support navigate normally. Nothing is conditional on it.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-fade-out var(--duration-fast) var(--ease-out-soft) both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-fade-in var(--duration-base) var(--ease-out-soft) both;
+  }
+
+  /*
+   * The header and the logo badge are on every page and in the same place on
+   * every page. Naming them takes them out of the root snapshot so they hold
+   * still through the transition instead of cross-fading with the body.
+   */
+  .site-header {
+    view-transition-name: site-header;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    translate: 0 0.75rem;
   }
 }

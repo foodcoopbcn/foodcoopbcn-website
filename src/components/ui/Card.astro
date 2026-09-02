@@ -4,7 +4,12 @@ interface Props {
   class?: string;
 }
 const { href, class: className = '' } = Astro.props;
-const cls = `group block bg-paper rounded-lg shadow-sm ring-1 ring-line overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:border-brand/40 hover:shadow ${className}`;
+/*
+ * `hover:border-brand/40` used to sit in here and had never once fired: the card
+ * is drawn with `ring-1`, not a border, so there is no border-width for a
+ * border-colour to paint. The ring is what needs to warm up on hover.
+ */
+const cls = `group block bg-paper rounded-lg shadow-sm ring-1 ring-line overflow-hidden transition-all duration-[var(--duration-base)] ease-out-soft hover:-translate-y-0.5 hover:ring-brand/40 hover:shadow-md ${className}`;
 const Tag = href ? 'a' : 'div';
 ---
 <Tag class={cls} href={href}><slot /></Tag>

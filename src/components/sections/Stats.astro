@@ -27,7 +27,7 @@ const cols =
   <div class="flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
     {title && <h2 class="max-w-md text-center text-xl lg:text-left">{title}</h2>}
 
-    <dl class:list={['grid flex-1 gap-8 text-center', cols]}>
+    <dl class:list={['reveal-stagger grid flex-1 gap-8 text-center', cols]}>
       {stats.map((s) => (
         <div>
           {s.icon && (
