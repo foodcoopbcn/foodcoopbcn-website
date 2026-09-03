@@ -34,16 +34,18 @@ jobs:
         with:
           ref: main
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Test the collector (offline fixtures)
-        run: npm run prices:test
+        run: pnpm run prices:test
 
       - name: Collect today's prices
         run: node scripts/fetch-prices.mjs ${{ inputs.dry_run && '--dry-run' || '' }}
