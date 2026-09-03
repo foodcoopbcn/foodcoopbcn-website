@@ -55,7 +55,14 @@ async function token(ctx) {
 
 const UNIT = { KG: ['kg', 1], G: ['kg', 1 / 1000], L: ['l', 1], ML: ['l', 1 / 1000], UN: ['unit', 1], U: ['unit', 1] };
 
-export function normalise(h) {
+/*
+ * `fallback` is the basket's own packQty/unit for this item. The search endpoint
+ * returns a size on every hit, but the single-product endpoint does not, so a
+ * product sold loose by the piece (fresh produce) has nothing to parse out of its
+ * name. The basket already documents an override for that case; it just needed to
+ * reach the adapter, since a throw here happens before the caller can apply it.
+ */
+export function normalise(h, fallback) {
   const il = h.c_instaleapHit ?? {};
   const name = h.productName ?? h.name;
   const packPrice = Number(h.price);
@@ -67,8 +74,14 @@ export function normalise(h) {
     packQty = round(Number(il.quantity) * u[1]);
   } else {
     const s = parseSize(name);
-    if (!s) throw new Error(`ametller ${h.productId ?? h.id}: cannot derive pack size`);
-    ({ qty: packQty, unit } = s);
+    if (s) {
+      ({ qty: packQty, unit } = s);
+    } else if (fallback?.packQty) {
+      packQty = fallback.packQty;
+      unit = fallback.unit ?? 'unit';
+    } else {
+      throw new Error(`ametller ${h.productId ?? h.id}: cannot derive pack size`);
+    }
   }
   const id = String(h.productId ?? h.id);
   return {
@@ -107,6 +120,6 @@ export default {
       `${API}/product/shopper-products/v1/organizations/${ORG}/products/${cfg.productId}?siteId=${SITE_ID}&locale=ca`,
       { headers: { authorization: `Bearer ${t}` } },
     );
-    return normalise(p);
+    return normalise(p, cfg);
   },
 };

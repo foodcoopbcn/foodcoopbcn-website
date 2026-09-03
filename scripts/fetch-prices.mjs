@@ -58,7 +58,13 @@ async function collectStore(store, previous, now) {
   const adapter = ADAPTERS[store.id];
   const prev = previous.stores[store.id] ?? { fetchedAt: null, lastAttemptAt: null, lastError: null, items: {} };
   const ctx = { cache: {} };
-  const items = { ...prev.items };
+  /*
+   * Carry forward only what is still in the basket. Seeding from `prev.items`
+   * wholesale kept products that had been removed from BASKET alive in the file
+   * for ever: they never rendered, but they did feed the "last updated" date the
+   * site shows.
+   */
+  const items = Object.fromEntries(BASKET.map((b) => [b.id, prev.items[b.id]]).filter(([, v]) => v));
   let ok = 0;
   let failed = 0;
   const report = {};

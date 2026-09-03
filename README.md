@@ -98,7 +98,7 @@ saying out loud when handing over to editors.
 
 ## Price comparison ("Compara FoodCoop BCN amb altres supermercats")
 
-The homepage `priceCompare` block renders `src/data/prices.json`, which
+`/comparativa` (and the homepage `priceTeaser` block) render `src/data/prices.json`, which
 `scripts/fetch-prices.mjs` regenerates every morning from `.github/workflows/prices.yml`
 (cron + `workflow_dispatch`; the run commits the file and dispatches `deploy.yml`).
 
@@ -106,6 +106,8 @@ The homepage `priceCompare` block renders `src/data/prices.json`, which
   with `node scripts/find.mjs <store> "<query>"`.
 - Shop adapters: `scripts/stores/*.mjs` (FoodCoop's Odoo shop, Mercadona, Bonpreu/Esclat,
   Ametller Origen, Condis). Carrefour is not included: its site blocks plain HTTP clients.
+  Veritas is not included either: it publishes no API and sits behind a Cloudflare managed
+  challenge that 403s every non-browser request, robots.txt included.
 - `npm run prices` collects and writes; `npm run prices -- --dry-run` only reports;
   `npm run prices:test` runs the offline parser tests (also part of CI).
 - A shop that cannot be read keeps its last good value; `src/lib/prices.ts` hides any figure

@@ -21,8 +21,10 @@ const alignCls = align === 'right' ? 'text-right items-end' : 'text-center items
       <span class="font-display text-lg font-extrabold tabular-nums leading-tight">
         {cell.memberPrice ?? cell.price}
       </span>
+      {/* The member price is the figure this page leads with; the public one is a
+          footnote under it, not a second headline competing for the same glance. */}
       {cell.memberPrice && (
-        <span class="text-xs font-semibold text-brand-strong">
+        <span class="text-[11px] font-normal text-muted">
           {labels.public}: <span class="tabular-nums">{cell.price}</span>
         </span>
       )}

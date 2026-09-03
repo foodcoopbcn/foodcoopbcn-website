@@ -13,6 +13,20 @@
  * A store entry may override `packQty`/`unit` when the shop's own unit is not the useful
  * one (tea sold by weight but compared by bag; fuet compared by piece).
  *
+ * What goes in the basket: everyday staples across the categories a real weekly shop
+ * covers, including fresh produce, one product per category. Two entries for the same
+ * thing (two milks, or pasta twice in a different shape) double-weight that category and
+ * are not kept. Quantities are what a household actually buys, and each shop is matched
+ * on its standard format rather than on whichever pack size happens to look best.
+ *
+ * Most items come from the co-op's C. BÀSICA range; fresh produce lives outside it, so
+ * those entries carry their own `search`.
+ *
+ * A category drops out when the co-op stops selling anything the supermarkets also sell
+ * in an equivalent form. Sliced bread went that way: the loaf this compared was
+ * discontinued and what is left is artisan spelt at roughly four times the price of an
+ * industrial sliced loaf, which measures the two products rather than the two shops.
+ *
  * To pin a new product: `node scripts/find.mjs <store> "<query>"`.
  */
 
@@ -36,19 +50,6 @@ export const BASKET = [
       bonpreu: { productId: '81177', query: 'llet sencera' },
       ametller: { productId: '19157' },
       condis: { productId: '704049', query: 'leche entera' },
-    },
-  },
-  {
-    id: 'llet-semidesnatada',
-    label: { ca: 'Llet semidesnatada', es: 'Leche semidesnatada' },
-    qty: 1,
-    unit: 'l',
-    stores: {
-      foodcoop: { productId: '2970', brand: 'Campllong', packQty: 1, unit: 'l', nameMustInclude: 'llet semidesnatada' },
-      mercadona: { productId: '10382' },
-      bonpreu: { productId: '81178', query: 'llet semidesnatada' },
-      ametller: { productId: '19156' },
-      condis: { productId: '704048', query: 'leche semidesnatada' },
     },
   },
   {
@@ -81,6 +82,49 @@ export const BASKET = [
     },
   },
   {
+    id: 'patata',
+    label: { ca: 'Patata', es: 'Patata' },
+    qty: 1,
+    unit: 'kg',
+    stores: {
+      /* Fresh produce sits outside the C. BÀSICA listing, so this one names its own search. */
+      foodcoop: { productId: '2710', brand: '', packQty: 1, unit: 'kg', nameMustInclude: 'patata vermella', search: 'PATATA' },
+      /* The bag a household actually buys, not the single loose potato. */
+      mercadona: { productId: '69166' },
+      bonpreu: { productId: '04657', query: 'patata' },
+      /* Sold loose by the piece here, so the weight it is priced against is set explicitly. */
+      ametller: { productId: '214', packQty: 0.2, unit: 'kg' },
+      condis: { productId: '191640', query: 'patata' },
+    },
+  },
+  {
+    id: 'ceba',
+    label: { ca: 'Ceba', es: 'Cebolla' },
+    qty: 1,
+    unit: 'kg',
+    stores: {
+      foodcoop: { productId: '1994', brand: '', packQty: 1, unit: 'kg', nameMustInclude: 'ceba seca', search: 'CEBA' },
+      mercadona: { productId: '69089' },
+      bonpreu: { productId: '07375', query: 'ceba' },
+      ametller: { productId: '55893' },
+      condis: { productId: '191095', query: 'cebolla' },
+    },
+  },
+  {
+    id: 'poma',
+    label: { ca: 'Poma', es: 'Manzana' },
+    qty: 1,
+    unit: 'kg',
+    stores: {
+      /* Not certified organic at the co-op, so the conventional apple is the match everywhere. */
+      foodcoop: { productId: '5182', brand: '', packQty: 1, unit: 'kg', nameMustInclude: 'poma gala', search: 'POMA' },
+      mercadona: { productId: '3269' },
+      bonpreu: { productId: '49235', query: 'poma golden' },
+      ametller: { productId: '22', packQty: 0.2, unit: 'kg' },
+      condis: { productId: '190530', query: 'manzana golden' },
+    },
+  },
+  {
     id: 'beguda-civada',
     label: { ca: 'Beguda de civada', es: 'Bebida de avena' },
     qty: 1,
@@ -94,19 +138,6 @@ export const BASKET = [
     },
   },
   {
-    id: 'pa-de-motlle',
-    label: { ca: 'Pa de motlle integral', es: 'Pan de molde integral' },
-    qty: 0.4,
-    unit: 'kg',
-    stores: {
-      foodcoop: { productId: '5047', brand: 'Taho', packQty: 0.4, unit: 'kg', nameMustInclude: 'pa de motlle integral' },
-      mercadona: { productId: '9369' },
-      bonpreu: { productId: '83030', query: 'pa de motlle llavors' },
-      ametller: { productId: '56489' },
-      condis: { productId: '213154', query: 'pan de molde integral' },
-    },
-  },
-  {
     id: 'macarrons',
     label: { ca: 'Macarrons', es: 'Macarrones' },
     qty: 0.5,
@@ -117,19 +148,6 @@ export const BASKET = [
       bonpreu: { productId: '36573', query: 'macarrons' },
       ametller: { productId: '56669' },
       condis: { productId: '121147', query: 'macarrones' },
-    },
-  },
-  {
-    id: 'espaguetis',
-    label: { ca: 'Espaguetis', es: 'Espaguetis' },
-    qty: 0.5,
-    unit: 'kg',
-    stores: {
-      foodcoop: { productId: '2171', brand: 'Castagno', packQty: 0.5, unit: 'kg', nameMustInclude: 'espaguetis blat eco' },
-      mercadona: { productId: '6331' },
-      bonpreu: { productId: '53554', query: 'espaguetis' },
-      ametller: { productId: '56668' },
-      condis: { productId: '122094', query: 'espaguetis' },
     },
   },
   {
@@ -147,6 +165,34 @@ export const BASKET = [
     },
   },
   {
+    id: 'flocs-civada',
+    label: { ca: 'Flocs de civada', es: 'Copos de avena' },
+    qty: 0.5,
+    unit: 'kg',
+    stores: {
+      /* Sold in bulk at FoodCoop: the shop price is already per kg. */
+      foodcoop: { productId: '2967', brand: '', packQty: 1, unit: 'kg', nameMustInclude: 'flocs civada' },
+      mercadona: { productId: '86341' },
+      bonpreu: { productId: '61882', query: 'flocs de civada' },
+      ametller: { productId: '10864' },
+      condis: { productId: '121877', query: 'copos de avena' },
+    },
+  },
+  {
+    id: 'ametlles',
+    label: { ca: 'Ametlles', es: 'Almendras' },
+    qty: 0.2,
+    unit: 'kg',
+    stores: {
+      /* Raw and with the skin on at every shop: roasted or blanched is a different product. */
+      foodcoop: { productId: '5090', brand: '', packQty: 1, unit: 'kg', nameMustInclude: 'ametlla amb pell' },
+      mercadona: { productId: '34865' },
+      bonpreu: { productId: '84174', query: 'ametlles crues' },
+      ametller: { productId: '2312' },
+      condis: { productId: '190301', query: 'almendra cruda' },
+    },
+  },
+  {
     id: 'farina-blat',
     label: { ca: 'Farina de blat', es: 'Harina de trigo' },
     qty: 1,
@@ -157,20 +203,6 @@ export const BASKET = [
       bonpreu: { productId: '55559', query: 'farina de blat' },
       ametller: { productId: '19418' },
       condis: { productId: '118010', query: 'harina de trigo' },
-    },
-  },
-  {
-    id: 'cigrons-cuits',
-    label: { ca: 'Cigrons cuits', es: 'Garbanzos cocidos' },
-    qty: 0.66,
-    unit: 'kg',
-    stores: {
-      /* Gumendi 660 g is cheaper per kg than Cal Valls 700 g (and organic). */
-      foodcoop: { productId: '5205', brand: 'Gumendi', packQty: 0.66, unit: 'kg', nameMustInclude: 'cigrons cuits' },
-      mercadona: { productId: '26029' },
-      bonpreu: { productId: '61633', query: 'cigrons cuits' },
-      ametller: { productId: '54363' },
-      condis: { productId: '122063', query: 'garbanzos cocidos' },
     },
   },
   {

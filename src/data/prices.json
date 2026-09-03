@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-02T19:11:07.558Z",
+  "generatedAt": "2026-09-03T10:58:40.178Z",
   "stores": {
     "foodcoop": {
-      "fetchedAt": "2026-09-02T19:11:07.558Z",
-      "lastAttemptAt": "2026-09-02T19:11:07.558Z",
+      "fetchedAt": "2026-09-03T10:36:40.465Z",
+      "lastAttemptAt": "2026-09-03T10:36:40.465Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "2969",
           "name": "LLET SENCERA Campllong 1 l",
           "brand": "Campllong",
@@ -20,34 +20,8 @@
           "unit": "l",
           "eco": false
         },
-        "llet-semidesnatada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "2970",
-          "name": "LLET SEMIDESNATADA Campllong 1 l",
-          "brand": "Campllong",
-          "url": "https://botiga.foodcoopbcn.cat/shop/7002044-c-basica-llet-semidesnatada-campllong-1-l-2970",
-          "image": null,
-          "packPrice": 1.3,
-          "memberPackPrice": 1.19,
-          "packQty": 1,
-          "unit": "l",
-          "eco": false
-        },
-        "ous": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "2207",
-          "name": "OUS La Tavella (mitja dotzena)",
-          "brand": "La Tavella",
-          "url": "https://botiga.foodcoopbcn.cat/shop/c-basica-ous-la-tavella-mitja-dotzena-2207",
-          "image": null,
-          "packPrice": 2.8000000000000003,
-          "memberPackPrice": 2.56,
-          "packQty": 6,
-          "unit": "unit",
-          "eco": true
-        },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "3004",
           "name": "IOGURT NATURAL La Torre 125 g",
           "brand": "La Torre",
@@ -59,8 +33,21 @@
           "unit": "kg",
           "eco": false
         },
+        "ous": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "2207",
+          "name": "OUS La Tavella (mitja dotzena)",
+          "brand": "La Tavella",
+          "url": "https://botiga.foodcoopbcn.cat/shop/c-basica-ous-la-tavella-mitja-dotzena-2207",
+          "image": null,
+          "packPrice": 2.8000000000000003,
+          "memberPackPrice": 2.56,
+          "packQty": 6,
+          "unit": "unit",
+          "eco": true
+        },
         "beguda-civada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "2301",
           "name": "BEGUDA CIVADA ECO Monsoy 1 l",
           "brand": "Monsoy",
@@ -73,7 +60,7 @@
           "eco": true
         },
         "macarrons": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "2177",
           "name": "MACARRONS BLAT ECO Castagno  500 g",
           "brand": "Castagno",
@@ -86,7 +73,7 @@
           "eco": true
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "1837",
           "name": "GRANEL ARRÒS RODÓ INTEGRAL ECO (kg)",
           "brand": "",
@@ -98,21 +85,8 @@
           "unit": "kg",
           "eco": true
         },
-        "llenties-pardines": {
-          "fetchedAt": "2026-09-02T18:00:18.182Z",
-          "productId": "1933",
-          "name": "GRANEL LLENTIA PARDINA ECO",
-          "brand": "",
-          "url": "https://botiga.foodcoopbcn.cat/shop/146-c-basica-granel-llentia-pardina-eco-1933",
-          "image": null,
-          "packPrice": 4.96,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "kg",
-          "eco": true
-        },
         "farina-blat": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "5045",
           "name": "FARINA DE BLAT ECO El Granero 1 kg",
           "brand": "El Granero",
@@ -124,60 +98,8 @@
           "unit": "kg",
           "eco": true
         },
-        "cafe-molt": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "2668",
-          "name": "CAFÈ MOLT NATURAL Oxfam 250 g",
-          "brand": "Oxfam",
-          "url": "https://botiga.foodcoopbcn.cat/shop/9119-c-basica-cafe-molt-natural-oxfam-250-g-2668",
-          "image": null,
-          "packPrice": 4.65,
-          "memberPackPrice": 4.25,
-          "packQty": 0.25,
-          "unit": "kg",
-          "eco": false
-        },
-        "pa-de-motlle": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "5047",
-          "name": "PA DE MOTLLE INTEGRAL 5 CEREALS I LLAVORS Taho  400 g",
-          "brand": "Taho",
-          "url": "https://botiga.foodcoopbcn.cat/shop/930208-c-basica-pa-de-motlle-integral-5-cereals-i-llavors-taho-400-g-5047",
-          "image": null,
-          "packPrice": 2.5500000000000003,
-          "memberPackPrice": 2.33,
-          "packQty": 0.4,
-          "unit": "kg",
-          "eco": false
-        },
-        "espaguetis": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "2171",
-          "name": "ESPAGUETIS BLAT ECO Castagno  500 g",
-          "brand": "Castagno",
-          "url": "https://botiga.foodcoopbcn.cat/shop/05100092-c-basica-espaguetis-blat-eco-castagno-500-g-2171",
-          "image": null,
-          "packPrice": 1.55,
-          "memberPackPrice": 1.42,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": true
-        },
-        "cigrons-cuits": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "5205",
-          "name": "CIGRONS CUITS ECO Gumendi 660 g",
-          "brand": "Gumendi",
-          "url": "https://botiga.foodcoopbcn.cat/shop/015269-c-basica-cigrons-cuits-eco-gumendi-660-g-5205",
-          "image": null,
-          "packPrice": 3.15,
-          "memberPackPrice": 2.88,
-          "packQty": 0.66,
-          "unit": "kg",
-          "eco": true
-        },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "759",
           "name": "LLENTIA CUITA ECO Cal Valls 700 g",
           "brand": "Cal Valls",
@@ -190,7 +112,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "1799",
           "name": "OLI DEGUSTUS P.I. Cooperativa La Granadella 5 l",
           "brand": "Degustus",
@@ -203,7 +125,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "2307",
           "name": "GRANEL SAL MARINA ECO Terres de l'Ebre (kg)",
           "brand": "Terres de l'Ebre",
@@ -215,8 +137,21 @@
           "unit": "kg",
           "eco": true
         },
+        "cafe-molt": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "2668",
+          "name": "CAFÈ MOLT NATURAL Oxfam 250 g",
+          "brand": "Oxfam",
+          "url": "https://botiga.foodcoopbcn.cat/shop/9119-c-basica-cafe-molt-natural-oxfam-250-g-2668",
+          "image": null,
+          "packPrice": 4.65,
+          "memberPackPrice": 4.25,
+          "packQty": 0.25,
+          "unit": "kg",
+          "eco": false
+        },
         "te-verd": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "1268",
           "name": "TE VERD ECO Artemís 20 b.",
           "brand": "Artemís",
@@ -229,7 +164,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "2752",
           "name": "FUET ESKI L'Esquiador (u.)",
           "brand": "L'Esquiador",
@@ -242,7 +177,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
           "productId": "4701",
           "name": "GRANEL RENTAVAIXELLES MANUAL LLIMONA Goodgranel",
           "brand": "GoodGranel",
@@ -253,16 +188,81 @@
           "packQty": 1,
           "unit": "l",
           "eco": false
+        },
+        "patata": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "2710",
+          "name": "FRESC PATATA VERMELLA ECO Rudolph - Alt penedes",
+          "brand": "",
+          "url": "https://botiga.foodcoopbcn.cat/shop/492-fresc-patata-vermella-eco-rudolph-alt-penedes-2710",
+          "image": null,
+          "packPrice": 2,
+          "memberPackPrice": 1.7,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": true
+        },
+        "ceba": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "1994",
+          "name": "FRESC CEBA SECA RECA ECO (kg) Baix Ebre",
+          "brand": "",
+          "url": "https://botiga.foodcoopbcn.cat/shop/471-fresc-ceba-seca-reca-eco-kg-baix-ebre-1994",
+          "image": null,
+          "packPrice": 2.54,
+          "memberPackPrice": 2.16,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": true
+        },
+        "poma": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "5182",
+          "name": "FRESC POMA GALA PROXIMITAT (kg) Baix Llobregat - Terra Pagesa",
+          "brand": "",
+          "url": "https://botiga.foodcoopbcn.cat/shop/fresc-poma-gala-proximitat-kg-baix-llobregat-terra-pagesa-5182",
+          "image": null,
+          "packPrice": 3.3000000000000003,
+          "memberPackPrice": 2.81,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": false
+        },
+        "flocs-civada": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "2967",
+          "name": "GRANEL FLOCS CIVADA PETITA ECO",
+          "brand": "",
+          "url": "https://botiga.foodcoopbcn.cat/shop/82-c-basica-granel-flocs-civada-petita-eco-2967",
+          "image": null,
+          "packPrice": 2.35,
+          "memberPackPrice": 2.15,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": true
+        },
+        "ametlles": {
+          "fetchedAt": "2026-09-03T10:36:40.465Z",
+          "productId": "5090",
+          "name": "GRANEL AMETLLA AMB PELL ECO (kg) Espanya Oleander",
+          "brand": "",
+          "url": "https://botiga.foodcoopbcn.cat/shop/c-basica-granel-ametlla-amb-pell-eco-kg-espanya-oleander-5090",
+          "image": null,
+          "packPrice": 14.15,
+          "memberPackPrice": 12.93,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": true
         }
       }
     },
     "mercadona": {
-      "fetchedAt": "2026-09-02T19:11:07.558Z",
-      "lastAttemptAt": "2026-09-02T19:11:07.558Z",
+      "fetchedAt": "2026-09-03T10:37:01.097Z",
+      "lastAttemptAt": "2026-09-03T10:37:01.097Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "10380",
           "name": "Leche entera Hacendado",
           "brand": "Hacendado",
@@ -274,34 +274,8 @@
           "unit": "l",
           "eco": false
         },
-        "llet-semidesnatada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "10382",
-          "name": "Leche semidesnatada Hacendado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/10382/leche-semidesnatada-hacendado-brick",
-          "image": "https://prod-mercadona.imgix.net/images/d8607e633d99f51031fe8751643ae7e2.jpg?fit=crop&h=300&w=300",
-          "packPrice": 0.84,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "l",
-          "eco": false
-        },
-        "ous": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "31310",
-          "name": "Huevos de gallinas camperas",
-          "brand": "",
-          "url": "https://tienda.mercadona.es/product/31310/huevos-gallinas-camperas-paquete",
-          "image": "https://prod-mercadona.imgix.net/images/f0b564317d41e7e29412148b08fb2e35.jpg?fit=crop&h=300&w=300",
-          "packPrice": 1.95,
-          "memberPackPrice": null,
-          "packQty": 6,
-          "unit": "unit",
-          "eco": false
-        },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "22313",
           "name": "Yogur natural Hacendado",
           "brand": "Hacendado",
@@ -313,8 +287,21 @@
           "unit": "kg",
           "eco": false
         },
+        "ous": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "31310",
+          "name": "Huevos de gallinas camperas",
+          "brand": "",
+          "url": "https://tienda.mercadona.es/product/31310/huevos-gallinas-camperas-paquete",
+          "image": "https://prod-mercadona.imgix.net/images/f0b564317d41e7e29412148b08fb2e35.jpg?fit=crop&h=300&w=300",
+          "packPrice": 1.95,
+          "memberPackPrice": null,
+          "packQty": 6,
+          "unit": "unit",
+          "eco": false
+        },
         "beguda-civada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "23912",
           "name": "Bebida de avena Alitey",
           "brand": "Alitey",
@@ -327,7 +314,7 @@
           "eco": false
         },
         "macarrons": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "6326",
           "name": "Macarrón Hacendado",
           "brand": "Hacendado",
@@ -340,7 +327,7 @@
           "eco": false
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "5184",
           "name": "Arroz integral largo Hacendado",
           "brand": "Hacendado",
@@ -352,21 +339,8 @@
           "unit": "kg",
           "eco": false
         },
-        "llenties-pardines": {
-          "fetchedAt": "2026-09-02T18:00:57.944Z",
-          "productId": "5330",
-          "name": "Lenteja pardina Hacendado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/5330/lenteja-pardina-hacendado-categoria-extra-paquete",
-          "image": "https://prod-mercadona.imgix.net/images/80c08ddcd236321ea41242268903726b.jpg?fit=crop&h=300&w=300",
-          "packPrice": 1.85,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "kg",
-          "eco": false
-        },
         "farina-blat": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "29100",
           "name": "Harina de trigo Hacendado",
           "brand": "Hacendado",
@@ -378,60 +352,8 @@
           "unit": "kg",
           "eco": false
         },
-        "cafe-molt": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "11172",
-          "name": "Café molido natural Hacendado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/11172/cafe-molido-natural-hacendado-paquete",
-          "image": "https://prod-mercadona.imgix.net/images/0ba1b42865bf3024356d993498c041f1.jpg?fit=crop&h=300&w=300",
-          "packPrice": 2.5,
-          "memberPackPrice": null,
-          "packQty": 0.25,
-          "unit": "kg",
-          "eco": false
-        },
-        "pa-de-motlle": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "9369",
-          "name": "Media Hogaza integral de avena, semillas de girasol y sésamo Hacendado rebanado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/9369/media-hogaza-integral-avena-semillas-girasol-sesamo-rebanado-paquete",
-          "image": "https://prod-mercadona.imgix.net/images/411167ca6e14c8c0278906d3d559f83f.jpg?fit=crop&h=300&w=300",
-          "packPrice": 0.95,
-          "memberPackPrice": null,
-          "packQty": 0.35,
-          "unit": "kg",
-          "eco": false
-        },
-        "espaguetis": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "6331",
-          "name": "Spaghetti Hacendado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/6331/spaghetti-hacendado-paquete",
-          "image": "https://prod-mercadona.imgix.net/images/cf7948ff181ca28f71679be1d69457f8.jpg?fit=crop&h=300&w=300",
-          "packPrice": 0.8,
-          "memberPackPrice": null,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": false
-        },
-        "cigrons-cuits": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "26029",
-          "name": "Garbanzo cocido Hacendado",
-          "brand": "Hacendado",
-          "url": "https://tienda.mercadona.es/product/26029/garbanzo-cocido-hacendado-tarro",
-          "image": "https://prod-mercadona.imgix.net/images/b8b807948038c4b64791632f799e9bd8.jpg?fit=crop&h=300&w=300",
-          "packPrice": 0.8,
-          "memberPackPrice": null,
-          "packQty": 0.57,
-          "unit": "kg",
-          "eco": false
-        },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "26030",
           "name": "Lenteja cocida Hacendado",
           "brand": "Hacendado",
@@ -444,7 +366,7 @@
           "eco": false
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "14727",
           "name": "Aceite de oliva virgen extra Hacendado",
           "brand": "Hacendado",
@@ -457,7 +379,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "19731",
           "name": "Sal fina Hacendado",
           "brand": "Hacendado",
@@ -469,8 +391,21 @@
           "unit": "kg",
           "eco": false
         },
+        "cafe-molt": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "11172",
+          "name": "Café molido natural Hacendado",
+          "brand": "Hacendado",
+          "url": "https://tienda.mercadona.es/product/11172/cafe-molido-natural-hacendado-paquete",
+          "image": "https://prod-mercadona.imgix.net/images/0ba1b42865bf3024356d993498c041f1.jpg?fit=crop&h=300&w=300",
+          "packPrice": 2.5,
+          "memberPackPrice": null,
+          "packQty": 0.25,
+          "unit": "kg",
+          "eco": false
+        },
         "te-verd": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "13651",
           "name": "Té verde Hacendado",
           "brand": "Hacendado",
@@ -483,7 +418,7 @@
           "eco": false
         },
         "fuet": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "55108",
           "name": "Fuet espetec Hacendado",
           "brand": "Hacendado",
@@ -496,7 +431,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
           "productId": "42441",
           "name": "Lavavajillas a mano Bosque Verde",
           "brand": "Bosque Verde",
@@ -507,16 +442,81 @@
           "packQty": 1.3,
           "unit": "l",
           "eco": false
+        },
+        "patata": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "69166",
+          "name": "Patatas",
+          "brand": "",
+          "url": "https://tienda.mercadona.es/product/69166/patatas-malla",
+          "image": "https://prod-mercadona.imgix.net/images/9a13af8fac3aa3f71d6b8098d7e9b176.jpg?fit=crop&h=300&w=300",
+          "packPrice": 4.3,
+          "memberPackPrice": null,
+          "packQty": 3,
+          "unit": "kg",
+          "eco": false
+        },
+        "ceba": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "69089",
+          "name": "Cebollas",
+          "brand": "",
+          "url": "https://tienda.mercadona.es/product/69089/cebollas-malla",
+          "image": "https://prod-mercadona.imgix.net/images/d950590e426dca5e9531e1ff2809edb4.jpg?fit=crop&h=300&w=300",
+          "packPrice": 2,
+          "memberPackPrice": null,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": false
+        },
+        "poma": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "3269",
+          "name": "Manzanas Golden",
+          "brand": "",
+          "url": "https://tienda.mercadona.es/product/3269/manzanas-golden-bolsa",
+          "image": "https://prod-mercadona.imgix.net/images/022fa8e1cd6c9d9ee18a41ed06d71c35.jpg?fit=crop&h=300&w=300",
+          "packPrice": 3.48,
+          "memberPackPrice": null,
+          "packQty": 1.58,
+          "unit": "kg",
+          "eco": false
+        },
+        "flocs-civada": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "86341",
+          "name": "Copos de avena Brüggen",
+          "brand": "Brüggen",
+          "url": "https://tienda.mercadona.es/product/86341/copos-avena-bruggen-caja",
+          "image": "https://prod-mercadona.imgix.net/images/98910a7833008eddea7deffc843ffac7.jpg?fit=crop&h=300&w=300",
+          "packPrice": 1.3,
+          "memberPackPrice": null,
+          "packQty": 0.8,
+          "unit": "kg",
+          "eco": false
+        },
+        "ametlles": {
+          "fetchedAt": "2026-09-03T10:37:01.097Z",
+          "productId": "34865",
+          "name": "Almendra natural Hacendado",
+          "brand": "Hacendado",
+          "url": "https://tienda.mercadona.es/product/34865/almendra-natural-hacendado-paquete",
+          "image": "https://prod-mercadona.imgix.net/images/b0be61b365cd2b6090deafd0a6ad9e41.jpg?fit=crop&h=300&w=300",
+          "packPrice": 2.3,
+          "memberPackPrice": null,
+          "packQty": 0.2,
+          "unit": "kg",
+          "eco": false
         }
       }
     },
     "ametller": {
-      "fetchedAt": "2026-09-02T19:11:07.558Z",
-      "lastAttemptAt": "2026-09-02T19:11:07.558Z",
+      "fetchedAt": "2026-09-03T10:37:09.873Z",
+      "lastAttemptAt": "2026-09-03T10:37:09.873Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "19157",
           "name": "Llet sencera Llet nostra 1l",
           "brand": "LLET NOSTRA",
@@ -528,34 +528,8 @@
           "unit": "l",
           "eco": false
         },
-        "llet-semidesnatada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "19156",
-          "name": "Llet semidesnatada Llet nostra 1l",
-          "brand": "LLET NOSTRA",
-          "url": "https://www.ametllerorigen.com/ca/llet-semidesnatada-llet-nostra-1l/19156.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dw7567b4d2/images/products/19156/19156_1.jpg",
-          "packPrice": 1.25,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "l",
-          "eco": false
-        },
-        "ous": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "53336",
-          "name": "Ous frescos ecològics M Ametller Origen - 6u.",
-          "brand": "AMETLLER ORIGEN",
-          "url": "https://www.ametllerorigen.com/ca/ous-frescos-ecologics-m-ametller-origen---6u./53336.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dw7dec8878/images/products/53336/53336_1.jpg",
-          "packPrice": 2.99,
-          "memberPackPrice": null,
-          "packQty": 6,
-          "unit": "unit",
-          "eco": true
-        },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "59069",
           "name": "Iogurt natural Essencials 125g - 4u.",
           "brand": "ESSENCIALS",
@@ -567,8 +541,21 @@
           "unit": "kg",
           "eco": false
         },
+        "ous": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "53336",
+          "name": "Ous frescos ecològics M Ametller Origen - 6u.",
+          "brand": "AMETLLER ORIGEN",
+          "url": "https://www.ametllerorigen.com/ca/ous-frescos-ecologics-m-ametller-origen---6u./53336.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dw7dec8878/images/products/53336/53336_1.jpg",
+          "packPrice": 2.99,
+          "memberPackPrice": null,
+          "packQty": 6,
+          "unit": "unit",
+          "eco": true
+        },
         "beguda-civada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "56378",
           "name": "Beguda de civada ecològica Ametller Origen 1l",
           "brand": "AMETLLER ORIGEN",
@@ -581,7 +568,7 @@
           "eco": true
         },
         "macarrons": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "56669",
           "name": "Macarrons ecològics Ametller Origen 500g",
           "brand": "AMETLLER ORIGEN",
@@ -594,7 +581,7 @@
           "eco": true
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "54807",
           "name": "Arròs rodó integral ecològic 1Kg",
           "brand": "AMETLLER ORIGEN",
@@ -606,21 +593,8 @@
           "unit": "kg",
           "eco": true
         },
-        "llenties-pardines": {
-          "fetchedAt": "2026-09-02T18:00:53.168Z",
-          "productId": "54364",
-          "name": "Llentia ecològica Ametller Origen 570g",
-          "brand": "AMETLLER ORIGEN",
-          "url": "https://www.ametllerorigen.com/ca/llentia-ecologica-ametller-origen-570g/54364.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwec7612a5/images/products/54364/54364_1.jpg",
-          "packPrice": 1.99,
-          "memberPackPrice": null,
-          "packQty": 0.57,
-          "unit": "kg",
-          "eco": true
-        },
         "farina-blat": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "19418",
           "name": "Farina de blat Santa Rita 1kg",
           "brand": "SANTA RITA",
@@ -632,60 +606,8 @@
           "unit": "kg",
           "eco": false
         },
-        "cafe-molt": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "56937",
-          "name": "Cafè mòlt natural Essencials 250g",
-          "brand": "ESSENCIALS",
-          "url": "https://www.ametllerorigen.com/ca/cafe-molt-natural-essencials-250g/56937.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwa8d1c6ae/images/products/56937/56937_1.jpg",
-          "packPrice": 2.79,
-          "memberPackPrice": null,
-          "packQty": 0.25,
-          "unit": "kg",
-          "eco": false
-        },
-        "pa-de-motlle": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "56489",
-          "name": "Pa de motlle integral Essencials 460g",
-          "brand": "ESSENCIALS",
-          "url": "https://www.ametllerorigen.com/ca/pa-de-motlle-integral-essencials-460g/56489.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwed879035/images/products/56489/56489_1.jpg",
-          "packPrice": 0.9,
-          "memberPackPrice": null,
-          "packQty": 0.46,
-          "unit": "kg",
-          "eco": false
-        },
-        "espaguetis": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "56668",
-          "name": "Espaguetis ecològics Ametller Origen 500g",
-          "brand": "AMETLLER ORIGEN",
-          "url": "https://www.ametllerorigen.com/ca/espaguetis-ecologics-ametller-origen-500g/56668.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwfcafeb5b/images/products/56668/56668_1.jpg",
-          "packPrice": 1.29,
-          "memberPackPrice": null,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": true
-        },
-        "cigrons-cuits": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "54363",
-          "name": "Cigró ecològic Ametller Origen 570g",
-          "brand": "AMETLLER ORIGEN",
-          "url": "https://www.ametllerorigen.com/ca/cigro-ecologic-ametller-origen-570g/54363.html",
-          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dw4408dbc8/images/products/54363/54363_1.jpg",
-          "packPrice": 1.99,
-          "memberPackPrice": null,
-          "packQty": 0.57,
-          "unit": "kg",
-          "eco": true
-        },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "54364",
           "name": "Llentia ecològica Ametller Origen 570g",
           "brand": "AMETLLER ORIGEN",
@@ -698,7 +620,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "10220",
           "name": "Oli d'Oliva verge extra Ametller Origen 5L",
           "brand": "AMETLLER ORIGEN",
@@ -711,7 +633,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "3250",
           "name": "Sal fina ecològica Marismeña 1 kg",
           "brand": "MARISMEÑA",
@@ -723,8 +645,21 @@
           "unit": "kg",
           "eco": true
         },
+        "cafe-molt": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "56937",
+          "name": "Cafè mòlt natural Essencials 250g",
+          "brand": "ESSENCIALS",
+          "url": "https://www.ametllerorigen.com/ca/cafe-molt-natural-essencials-250g/56937.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwa8d1c6ae/images/products/56937/56937_1.jpg",
+          "packPrice": 2.79,
+          "memberPackPrice": null,
+          "packQty": 0.25,
+          "unit": "kg",
+          "eco": false
+        },
         "te-verd": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "56039",
           "name": "Infusió de te verd ecològic ARTEMIS BIO 28g",
           "brand": "ARTEMIS BIO",
@@ -737,7 +672,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "57100",
           "name": "Fuet Ametller Origen 180g",
           "brand": "AMETLLER ORIGEN",
@@ -750,7 +685,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
           "productId": "3375",
           "name": "Rentavaixelles romaní Frosch 750ml",
           "brand": "FROSCH",
@@ -761,16 +696,81 @@
           "packQty": 0.75,
           "unit": "l",
           "eco": false
+        },
+        "patata": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "214",
+          "name": "Patata vermella",
+          "brand": "",
+          "url": "https://www.ametllerorigen.com/ca/patata-vermella/214.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwe0f920b6/images/products/214/214_1.jpg",
+          "packPrice": 0.52,
+          "memberPackPrice": null,
+          "packQty": 0.2,
+          "unit": "kg",
+          "eco": false
+        },
+        "ceba": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "55893",
+          "name": "Ceba cuina - bossa 1kg",
+          "brand": "",
+          "url": "https://www.ametllerorigen.com/ca/ceba-cuina---bossa-1kg/55893.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dweec98c2d/images/products/55893/55893_1.jpg",
+          "packPrice": 1.49,
+          "memberPackPrice": null,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": false
+        },
+        "poma": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "22",
+          "name": "Poma Golden extra",
+          "brand": "",
+          "url": "https://www.ametllerorigen.com/ca/poma-golden-extra/22.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dw3ee44a55/images/products/22/22_1.jpg",
+          "packPrice": 0.72,
+          "memberPackPrice": null,
+          "packQty": 0.2,
+          "unit": "kg",
+          "eco": false
+        },
+        "flocs-civada": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "10864",
+          "name": "Flocs de civada Essencials 500g",
+          "brand": "ESSENCIALS",
+          "url": "https://www.ametllerorigen.com/ca/flocs-de-civada-essencials-500g/10864.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwa05029a0/images/products/10864/10864_1.jpg",
+          "packPrice": 0.99,
+          "memberPackPrice": null,
+          "packQty": 0.5,
+          "unit": "kg",
+          "eco": false
+        },
+        "ametlles": {
+          "fetchedAt": "2026-09-03T10:37:09.873Z",
+          "productId": "2312",
+          "name": "Ametlles crues Essencials 200g",
+          "brand": "ESSENCIALS",
+          "url": "https://www.ametllerorigen.com/ca/ametlles-crues-essencials-200g/2312.html",
+          "image": "https://www.ametllerorigen.com/on/demandware.static/-/Sites-mastercatalog_AMETLLER/default/dwce873ae7/images/products/2312/2312_1.jpg",
+          "packPrice": 2.29,
+          "memberPackPrice": null,
+          "packQty": 0.2,
+          "unit": "kg",
+          "eco": false
         }
       }
     },
     "condis": {
-      "fetchedAt": "2026-09-02T19:11:07.558Z",
-      "lastAttemptAt": "2026-09-02T19:11:07.558Z",
+      "fetchedAt": "2026-09-03T10:37:18.831Z",
+      "lastAttemptAt": "2026-09-03T10:37:18.831Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "704049",
           "name": "LECHE CONDIS ENTERA 1 L",
           "brand": "CONDIS",
@@ -782,34 +782,8 @@
           "unit": "l",
           "eco": false
         },
-        "llet-semidesnatada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "704048",
-          "name": "LECHE CONDIS SEMIDESNATADA 1 L",
-          "brand": "CONDIS",
-          "url": "https://compraonline.condis.es/leche-condis-semidesnatada-1-l/p/704048/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/704048.jpg",
-          "packPrice": 0.87,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "l",
-          "eco": false
-        },
-        "ous": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "170306",
-          "name": "HUEVOS GRANJA MONTSENY ECOLÓGICOS 6 UNIDADES",
-          "brand": "",
-          "url": "https://compraonline.condis.es/huevos-granja-montseny-ecológicos-6-unidades/p/170306/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/170306.jpg",
-          "packPrice": 3.69,
-          "memberPackPrice": null,
-          "packQty": 6,
-          "unit": "unit",
-          "eco": true
-        },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "780231",
           "name": "YOGUR DANONE NATURAL 4 UNIDADES",
           "brand": "DANONE",
@@ -821,8 +795,21 @@
           "unit": "kg",
           "eco": false
         },
+        "ous": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "170306",
+          "name": "HUEVOS GRANJA MONTSENY ECOLÓGICOS 6 UNIDADES",
+          "brand": "",
+          "url": "https://compraonline.condis.es/huevos-granja-montseny-ecológicos-6-unidades/p/170306/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/170306.jpg",
+          "packPrice": 3.69,
+          "memberPackPrice": null,
+          "packQty": 6,
+          "unit": "unit",
+          "eco": true
+        },
         "beguda-civada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "704259",
           "name": "BEGETAL KAIKU AVENA SIN AZÚCAR 1 L",
           "brand": "KAIKU",
@@ -835,7 +822,7 @@
           "eco": false
         },
         "macarrons": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "121147",
           "name": "PASTA CONDIS MACARRONES 500 G",
           "brand": "CONDIS",
@@ -848,7 +835,7 @@
           "eco": false
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "103066",
           "name": "ARROZ SEO FOOD INTEGRAL ECOLO 1 KG",
           "brand": "SEO FOOD",
@@ -860,21 +847,8 @@
           "unit": "kg",
           "eco": true
         },
-        "llenties-pardines": {
-          "fetchedAt": "2026-09-02T18:05:04.227Z",
-          "productId": "191280",
-          "name": "LENTEJA  PARDINA ECO 500 G",
-          "brand": "",
-          "url": "https://compraonline.condis.es/lenteja--pardina-eco-500-g/p/191280/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/191280.jpg",
-          "packPrice": 4.79,
-          "memberPackPrice": null,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": true
-        },
         "farina-blat": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "118010",
           "name": "HARINA TRIGO CONDIS 1 KG",
           "brand": "CONDIS",
@@ -886,60 +860,8 @@
           "unit": "kg",
           "eco": false
         },
-        "cafe-molt": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "105046",
-          "name": "CAFÉ MOLIDO BONKA NATURAL 250 G",
-          "brand": "BONKA",
-          "url": "https://compraonline.condis.es/café-molido-bonka-natural-250-g/p/105046/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/105046.jpg",
-          "packPrice": 3.95,
-          "memberPackPrice": null,
-          "packQty": 0.25,
-          "unit": "kg",
-          "eco": false
-        },
-        "pa-de-motlle": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "213154",
-          "name": "PAN MOLDE CONDIS INTEGRAL 460 G",
-          "brand": "CONDIS",
-          "url": "https://compraonline.condis.es/pan-molde-condis-integral-460-g/p/213154/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/213154.jpg",
-          "packPrice": 0.9,
-          "memberPackPrice": null,
-          "packQty": 0.459,
-          "unit": "kg",
-          "eco": false
-        },
-        "espaguetis": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "122094",
-          "name": "ESPAGUETIS CONDIS ECO 500 G",
-          "brand": "CONDIS",
-          "url": "https://compraonline.condis.es/espaguetis-condis-eco-500-g/p/122094/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/122094.jpg",
-          "packPrice": 1.99,
-          "memberPackPrice": null,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": true
-        },
-        "cigrons-cuits": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "122063",
-          "name": "GARBANZOS CONDIS ECO COCIDOS 330 G",
-          "brand": "CONDIS",
-          "url": "https://compraonline.condis.es/garbanzos-condis-eco-cocidos-330-g/p/122063/es_ES",
-          "image": "https://cdn.condis.es/images/catalog/large/122063.jpg",
-          "packPrice": 1.99,
-          "memberPackPrice": null,
-          "packQty": 0.3,
-          "unit": "kg",
-          "eco": true
-        },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "122073",
           "name": "LENTEJAS CONDIS ECO COCIDAS 230 G",
           "brand": "CONDIS",
@@ -952,7 +874,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "110452",
           "name": "ACEITE VIRGEN EXTRA EL TROS ARBEQUINA 2 L",
           "brand": "EL TROS",
@@ -965,7 +887,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "121782",
           "name": "SAL MARINA FINA ECOLÓGICA ECO CESTA 1 KG",
           "brand": "ECO CESTA",
@@ -977,8 +899,21 @@
           "unit": "kg",
           "eco": true
         },
+        "cafe-molt": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "105046",
+          "name": "CAFÉ MOLIDO BONKA NATURAL 250 G",
+          "brand": "BONKA",
+          "url": "https://compraonline.condis.es/café-molido-bonka-natural-250-g/p/105046/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/105046.jpg",
+          "packPrice": 3.95,
+          "memberPackPrice": null,
+          "packQty": 0.25,
+          "unit": "kg",
+          "eco": false
+        },
         "te-verd": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "107299",
           "name": "TE VERDE CUPPER BIO CLASICO 20 UNIDADES",
           "brand": "",
@@ -991,7 +926,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "426100",
           "name": "ESPETEC CONDIS EXTRA 170 GRS",
           "brand": "CONDIS",
@@ -1004,7 +939,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
           "productId": "833003",
           "name": "LAVAVAJILLAS MISTOL ORIGINAL 900 ML",
           "brand": "MISTOL",
@@ -1015,12 +950,77 @@
           "packQty": 0.9,
           "unit": "l",
           "eco": false
+        },
+        "patata": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "191640",
+          "name": "PATATA CONDIS VERSÁTIL BOLSA 3 KG",
+          "brand": "CONDIS",
+          "url": "https://compraonline.condis.es/patata-condis-versátil-bolsa-3-kg/p/191640/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/191640.jpg",
+          "packPrice": 3.99,
+          "memberPackPrice": null,
+          "packQty": 3,
+          "unit": "kg",
+          "eco": false
+        },
+        "ceba": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "191095",
+          "name": "CEBOLLA CONDIS BOLSA 1 KG",
+          "brand": "CONDIS",
+          "url": "https://compraonline.condis.es/cebolla-condis-bolsa-1-kg/p/191095/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/191095.jpg",
+          "packPrice": 1.39,
+          "memberPackPrice": null,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": false
+        },
+        "poma": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "190530",
+          "name": "MANZANA GOLDEN 4 UNIDADES 800G APROX.",
+          "brand": "",
+          "url": "https://compraonline.condis.es/manzana-golden-4-unidades-800g-aprox./p/190530/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/190530.jpg",
+          "packPrice": 1.8,
+          "memberPackPrice": null,
+          "packQty": 0.8,
+          "unit": "kg",
+          "eco": false
+        },
+        "flocs-civada": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "121877",
+          "name": "COPOS AVENA ECO CESTA INTEGRAL 800 GR",
+          "brand": "ECO CESTA",
+          "url": "https://compraonline.condis.es/copos-avena-eco-cesta-integral-800-gr/p/121877/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/121877.jpg",
+          "packPrice": 3.95,
+          "memberPackPrice": null,
+          "packQty": 0.8,
+          "unit": "kg",
+          "eco": true
+        },
+        "ametlles": {
+          "fetchedAt": "2026-09-03T10:37:18.831Z",
+          "productId": "190301",
+          "name": "ALMENDRA CRUDA 200G",
+          "brand": "",
+          "url": "https://compraonline.condis.es/almendra-cruda-200g/p/190301/es_ES",
+          "image": "https://cdn.condis.es/images/catalog/large/190301.jpg",
+          "packPrice": 3.16,
+          "memberPackPrice": null,
+          "packQty": 0.2,
+          "unit": "kg",
+          "eco": false
         }
       }
     },
     "bonpreu": {
-      "fetchedAt": "2026-09-02T19:11:07.558Z",
-      "lastAttemptAt": "2026-09-02T19:11:07.558Z",
+      "fetchedAt": "2026-09-03T11:30:41.107Z",
+      "lastAttemptAt": "2026-09-03T11:30:41.107Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
@@ -1031,19 +1031,6 @@
           "url": "https://www.compraonline.bonpreuesclat.cat/products/81177/details",
           "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/6686c790-44d2-497d-9770-4c965361134b/300x300.jpg",
           "packPrice": 0.96,
-          "memberPackPrice": null,
-          "packQty": 1,
-          "unit": "l",
-          "eco": false
-        },
-        "llet-semidesnatada": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "81178",
-          "name": "BONPREU Llet semidesnatada en cartró",
-          "brand": "BONPREU",
-          "url": "https://www.compraonline.bonpreuesclat.cat/products/81178/details",
-          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/d81004ac-71db-4da1-b895-603cef2103f2/300x300.jpg",
-          "packPrice": 0.84,
           "memberPackPrice": null,
           "packQty": 1,
           "unit": "l",
@@ -1088,19 +1075,6 @@
           "unit": "l",
           "eco": true
         },
-        "pa-de-motlle": {
-          "fetchedAt": "2026-09-02T19:11:07.558Z",
-          "productId": "83030",
-          "name": "BONPREU Pa de motlle de sègol i llavors",
-          "brand": "BONPREU",
-          "url": "https://www.compraonline.bonpreuesclat.cat/products/83030/details",
-          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/57ac3165-4b3f-43b0-bc44-e2aedea9deb4/300x300.jpg",
-          "packPrice": 1.38,
-          "memberPackPrice": null,
-          "packQty": 0.676,
-          "unit": "kg",
-          "eco": false
-        },
         "macarrons": {
           "fetchedAt": "2026-09-02T18:20:01.460Z",
           "productId": "36573",
@@ -1108,19 +1082,6 @@
           "brand": "BONPREU",
           "url": "https://www.compraonline.bonpreuesclat.cat/products/36573/details",
           "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/9ef735ae-2b74-491b-af14-51c89531ace7/300x300.jpg",
-          "packPrice": 1.29,
-          "memberPackPrice": null,
-          "packQty": 0.5,
-          "unit": "kg",
-          "eco": true
-        },
-        "espaguetis": {
-          "fetchedAt": "2026-09-02T18:20:01.460Z",
-          "productId": "53554",
-          "name": "BONPREU Espaguetis ecològics",
-          "brand": "BONPREU",
-          "url": "https://www.compraonline.bonpreuesclat.cat/products/53554/details",
-          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/28b477ac-abb9-44e4-ae8b-00309feab11d/300x300.jpg",
           "packPrice": 1.29,
           "memberPackPrice": null,
           "packQty": 0.5,
@@ -1150,19 +1111,6 @@
           "packPrice": 1.89,
           "memberPackPrice": null,
           "packQty": 1,
-          "unit": "kg",
-          "eco": true
-        },
-        "cigrons-cuits": {
-          "fetchedAt": "2026-09-02T18:20:01.460Z",
-          "productId": "61633",
-          "name": "BONPREU Cigrons ecològics extra",
-          "brand": "BONPREU",
-          "url": "https://www.compraonline.bonpreuesclat.cat/products/61633/details",
-          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/54bac680-7638-4152-8426-2cc40f0dd67d/300x300.jpg",
-          "packPrice": 1.99,
-          "memberPackPrice": null,
-          "packQty": 0.4,
           "unit": "kg",
           "eco": true
         },
@@ -1245,7 +1193,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-02T18:20:01.460Z",
+          "fetchedAt": "2026-09-03T10:58:40.178Z",
           "productId": "45489",
           "name": "BONPREU Sabó de rentar plats Concentrat ecològic 0%",
           "brand": "BONPREU",
@@ -1256,6 +1204,71 @@
           "packQty": 0.5,
           "unit": "l",
           "eco": true
+        },
+        "patata": {
+          "fetchedAt": "2026-09-03T11:30:41.107Z",
+          "productId": "04657",
+          "name": "LA COLLITA Patata blanca bossa 4 kg",
+          "brand": "LA COLLITA",
+          "url": "https://www.compraonline.bonpreuesclat.cat/products/04657/details",
+          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/6069050b-c603-401f-9aa4-dd14770ebe3c/300x300.jpg",
+          "packPrice": 4.49,
+          "memberPackPrice": null,
+          "packQty": 4.009,
+          "unit": "kg",
+          "eco": false
+        },
+        "ceba": {
+          "fetchedAt": "2026-09-03T11:30:41.107Z",
+          "productId": "07375",
+          "name": "LA COLLITA Ceba seca Km0  en malla d'1 kg",
+          "brand": "LA COLLITA",
+          "url": "https://www.compraonline.bonpreuesclat.cat/products/07375/details",
+          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/494df541-6ca0-4d81-922f-6901057f8f27/300x300.jpg",
+          "packPrice": 1.59,
+          "memberPackPrice": null,
+          "packQty": 1,
+          "unit": "kg",
+          "eco": false
+        },
+        "poma": {
+          "fetchedAt": "2026-09-03T11:30:41.107Z",
+          "productId": "49235",
+          "name": "LA COLLITA Poma golden de Girona Km0 bossa 1,5 kg",
+          "brand": "LA COLLITA",
+          "url": "https://www.compraonline.bonpreuesclat.cat/products/49235/details",
+          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/4ae4550c-60d7-418c-8933-2e8773757620/300x300.jpg",
+          "packPrice": 3.29,
+          "memberPackPrice": null,
+          "packQty": 1.502,
+          "unit": "kg",
+          "eco": false
+        },
+        "flocs-civada": {
+          "fetchedAt": "2026-09-03T11:30:41.107Z",
+          "productId": "61882",
+          "name": "BONPREU Flocs de civada integral petits ecològics",
+          "brand": "BONPREU",
+          "url": "https://www.compraonline.bonpreuesclat.cat/products/61882/details",
+          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/8aa95c80-aed6-4702-a938-fb3d14d47005/300x300.jpg",
+          "packPrice": 1.59,
+          "memberPackPrice": null,
+          "packQty": 0.5,
+          "unit": "kg",
+          "eco": true
+        },
+        "ametlles": {
+          "fetchedAt": "2026-09-03T11:30:41.107Z",
+          "productId": "84174",
+          "name": "BONPREU Ametlles crues amb pell Km0 ecològiques",
+          "brand": "BONPREU",
+          "url": "https://www.compraonline.bonpreuesclat.cat/products/84174/details",
+          "image": "https://www.compraonline.bonpreuesclat.cat/images-v3/dcbcfd72-cf23-44a2-8e14-8a38edd645a3/e98f7b5f-2322-4977-85e7-7d9f48c005c4/300x300.jpg",
+          "packPrice": 2.99,
+          "memberPackPrice": null,
+          "packQty": 0.12,
+          "unit": "kg",
+          "eco": false
         }
       }
     }
