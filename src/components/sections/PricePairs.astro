@@ -1,0 +1,295 @@
+---
+/*
+ * "La mateixa cistella, botiga a botiga" — the summary that answers the question
+ * people actually arrive with: is this shop expensive?
+ *
+ * One row per supermarket. The line is what that shop charges for its own version
+ * of the same list; the bar runs from there to what a member pays here, and the
+ * row ends in a sentence anyone can read without decoding the picture: "un 27 %
+ * més barat aquí", "gairebé el mateix preu", "un 65 % més car aquí".
+ *
+ * Only the member price is plotted. An earlier version drew the public price too,
+ * as a second mark on the same track, which turned every row into a two-variable
+ * comparison and was the main reason the block was hard to read. The public price
+ * is on the page, in the table below, where it belongs as a detail rather than a
+ * co-headline.
+ *
+ * Rows run from the shop we compare best against to the one we compare worst
+ * against. The ordering is editorial, so the honesty has to come from what is
+ * shown rather than from the sequence: every supermarket is here, the one we
+ * lose to is drawn in the same weight as the ones we beat (grey, never red), and
+ * each row carries its own euro figures and its own caveat about products that
+ * are not organic at that shop.
+ *
+ * No JavaScript: every position is computed at build time and handed to CSS as a
+ * custom property.
+ */
+import { pairX, type ComparePair } from '../../lib/prices';
+import { getLang, useTranslations } from '../../i18n/utils';
+
+interface Props {
+  pairs: ComparePair[];
+  scale: { lo: number; hi: number };
+  /** Homepage teaser: drops the euro line. The organic caveat stays: it qualifies
+      the percentage, so a compact version without it would overstate the result. */
+  compact?: boolean;
+  class?: string;
+}
+const { pairs, scale, compact = false, class: className = '' } = Astro.props;
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const fill = (s: string, vars: Record<string, string | number>) =>
+  s.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ''));
+
+const pos = (n: number) => `${n.toFixed(1)}%`;
+const zero = pairX(0, scale);
+
+const verdict = (p: ComparePair) =>
+  p.verdict === 'same'
+    ? t('compare.pair.same')
+    : fill(t(p.verdict === 'cheaper' ? 'compare.pair.cheaper' : 'compare.pair.dearer'), { pct: p.absLabel });
+
+const rows = pairs.map((p) => {
+  const m = pairX(p.memberDelta, scale);
+  return {
+    p,
+    text: verdict(p),
+    style: [
+      `--zero:${pos(zero)}`,
+      `--m:${pos(m)}`,
+      /* Both ends given outright: CSS abs() is too new to lean on. */
+      `--bar-l:${pos(Math.min(zero, m))}`,
+      `--bar-w:${pos(Math.abs(m - zero))}`,
+    ].join(';'),
+  };
+});
+---
+<div class:list={['pairs', className]}>
+  <ol class="rows">
+    {
+      rows.map(({ p, text, style }) => (
+        <li class="row" data-verdict={p.verdict} style={style}>
+          <div class="head">
+            <span class="shop">{p.label}</span>
+            <span class="count">{fill(t('compare.pair.count'), { n: p.n })}</span>
+          </div>
+
+          {p.n > 0 ? (
+            <>
+              <div class="track" aria-hidden="true">
+                <span class="zero" />
+                <span class="bar" />
+                <span class="mark" />
+              </div>
+
+              <p class="verdict" aria-hidden="true">{text}</p>
+
+              {!compact && (
+                <p class="figures" aria-hidden="true">
+                  <span class="tabular-nums">{p.memberTotal}</span> {t('compare.pair.here')}
+                  <span class="sep">·</span>
+                  <span class="tabular-nums">{p.rivalTotal}</span>{' '}
+                  {fill(t('compare.pair.atShop'), { store: p.label })}
+                </p>
+              )}
+
+              {/*
+                The caveat rides with the number it qualifies. Where a shop's
+                version of a product is not organic, the gap is partly a price
+                difference and partly a different product, and the reader is the
+                one who gets to decide how much of it counts.
+              */}
+              {p.notEco > 0 && (
+                <p class="excluded">
+                  {p.notEco === 1
+                    ? fill(t('compare.pair.notEcoOne'), { store: p.label })
+                    : fill(t('compare.pair.notEco'), { n: p.notEco, store: p.label })}
+                </p>
+              )}
+
+              {/* The row in one sentence, so the picture is not the only way to read it. */}
+              <p class="sr-only">
+                {`${fill(t('compare.pair.sr'), {
+                  store: p.label,
+                  member: p.memberTotal,
+                  rival: p.rivalTotal,
+                })} ${text}`}
+              </p>
+            </>
+          ) : (
+            <p class="none">{t('compare.pair.none')}</p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="axis" aria-hidden="true">
+    <span>{`◀ ${t('compare.pair.cheaperHere')}`}</span>
+    <span>{`${t('compare.pair.dearerHere')} ▶`}</span>
+  </div>
+</div>
+
+<style>
+  .pairs {
+    --track-h: 1.5rem;
+    --mark: 0.875rem;
+  }
+
+  .rows {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  /*
+   * The verdict gets a column of its own. At the end of the bar it would have to
+   * flip sides near the axis ends, and on a short bar it would sit on top of the
+   * mark it is describing.
+   */
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 0.35rem 1rem;
+  }
+
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .shop {
+    font-weight: 700;
+  }
+
+  .count,
+  .excluded,
+  .none {
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
+
+  .verdict {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: right;
+    text-wrap: balance;
+    color: var(--color-ink-soft);
+  }
+
+  .row[data-verdict='cheaper'] .verdict {
+    color: var(--color-brand-ink);
+  }
+
+  .track {
+    position: relative;
+    grid-column: 1 / -1;
+    height: var(--track-h);
+    border-radius: 999px;
+    background: var(--color-paper-soft);
+  }
+
+  .zero {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--zero);
+    width: 2px;
+    translate: -1px 0;
+    background: var(--color-ink-soft);
+  }
+
+  .bar {
+    position: absolute;
+    top: 50%;
+    left: var(--bar-l);
+    width: var(--bar-w);
+    height: 0.5rem;
+    translate: 0 -50%;
+    border-radius: 999px;
+    background: var(--color-muted);
+  }
+
+  .mark {
+    position: absolute;
+    top: 50%;
+    left: var(--m);
+    width: var(--mark);
+    height: var(--mark);
+    translate: -50% -50%;
+    border-radius: 999px;
+    background: var(--color-muted);
+    /* A ring in the surface colour keeps the mark legible where it meets the zero line. */
+    box-shadow: 0 0 0 2px var(--color-paper);
+  }
+
+  .row[data-verdict='cheaper'] .bar,
+  .row[data-verdict='cheaper'] .mark {
+    background: var(--color-brand-fill);
+  }
+
+  .figures {
+    grid-column: 1 / -1;
+    font-size: var(--text-xs);
+    color: var(--color-ink-soft);
+  }
+
+  .sep {
+    margin: 0 0.4rem;
+    color: var(--color-line);
+  }
+
+  .excluded,
+  .none {
+    grid-column: 1 / -1;
+  }
+
+  .axis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: var(--text-xs);
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 40rem) {
+    .row {
+      grid-template-columns: 10rem 1fr 15.5rem;
+      align-items: center;
+    }
+
+    .head {
+      flex-direction: column;
+      gap: 0.1rem;
+      align-items: flex-start;
+    }
+
+    .track {
+      grid-column: 2;
+    }
+
+    .verdict {
+      grid-column: 3;
+    }
+
+    .figures,
+    .excluded,
+    .none {
+      grid-column: 2 / -1;
+    }
+  }
+
+  @media print {
+    .bar,
+    .mark,
+    .zero {
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+  }
+</style>

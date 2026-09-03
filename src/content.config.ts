@@ -222,7 +222,8 @@ const newsTeaserSection = block('newsTeaser', {
  * A teaser for the price comparison, which lives on its own page at /comparativa.
  * The full five-column table used to sit on the homepage; it is ~70 KB of HTML and
  * far more detail than a first visit needs. Only the heading is editable — the
- * product shown is chosen from live data by pickHighlight().
+ * figures are computed from live data: the whole basket against each supermarket,
+ * on the products that shop sells in the same kind.
  */
 const priceTeaserSection = block('priceTeaser', {
   eyebrow: optionalText(),

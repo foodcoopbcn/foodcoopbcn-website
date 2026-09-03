@@ -95,32 +95,63 @@ export const ui = {
     'lang.switch': 'Idioma',
     'compare.product': 'Producte',
     'compare.public': 'Preu públic',
-    'compare.member': 'Preu sòcia',
+    'compare.member': 'Preu de sòcia',
     'compare.updated': 'Actualitzat el',
-    'compare.total': 'Total de la selecció',
-    'compare.totalNote': 'Suma dels {n} productes que tenen preu a totes les botigues.',
     'compare.unavailable': 'Sense preu disponible',
     'compare.eco': 'ECO',
     'compare.notEco': 'No eco',
     'compare.viewProduct': 'Veure el producte a la botiga en línia',
     'compare.basket': 'La cistella d’avui',
-    'compare.basketNote': 'Els mateixos {n} productes bàsics, comprats a cada botiga.',
-    'compare.viewAll': 'Cistella sencera ({n})',
-    'compare.viewLike': 'Mateix tipus de producte ({n})',
-    'compare.viewNote':
-      'La cistella sencera compara el producte equivalent de cada botiga, sigui ecològic o no. L’altra vista es queda només amb els productes on totes les botigues venen el mateix tipus de producte, i és la comparació més neta que podem fer.',
-    'compare.relative': 'Preu relatiu dins de la fila',
+    'compare.pair.title': 'La mateixa cistella, botiga a botiga',
+    'compare.pair.note':
+      'Comparem els mateixos productes bàsics a cada supermercat, amb el preu de sòcia. Quan un producte no és ecològic en algun d’ells t’ho diem, perquè aleshores la comparació no és del tot equivalent.',
+    'compare.pair.count': 'els {n} productes de la cistella',
+    'compare.pair.notEco':
+      '{n} d’aquests productes no són ecològics a {store}, així que no són del tot comparables.',
+    'compare.pair.notEcoOne':
+      'Un d’aquests productes no és ecològic a {store}, així que no és del tot comparable.',
+    'compare.pair.same': 'gairebé el mateix preu',
+    'compare.pair.cheaper': 'un {pct} més barat a FoodCoop BCN',
+    'compare.pair.dearer': 'un {pct} més car a FoodCoop BCN',
+    'compare.pair.here': 'a FoodCoop BCN',
+    'compare.pair.cheaperHere': 'més barat a FoodCoop BCN',
+    'compare.pair.dearerHere': 'més car a FoodCoop BCN',
+    'compare.total': 'Total de la cistella',
+    'compare.totalNote': 'Suma dels {n} productes que tenen preu a totes les botigues.',
+    'compare.table.title': 'Producte a producte',
+    'compare.pair.none': 'Avui no en tenim cap producte comparable.',
+    'compare.pair.rival': 'Preu del supermercat',
+    'compare.pair.atShop': 'a {store}',
+    'compare.pair.sr':
+      'A FoodCoop BCN, {member} amb el preu de sòcia. A {store}, {rival}.',
+    'compare.table.summary': 'Veure la taula amb tots els preus i productes',
+    'compare.table.hint': 'Preus exactes, nom de cada producte i format.',
+    'compare.table.note':
+      'Aquesta taula suma la cistella sencera, tal com la ven cada botiga, sigui ecològica o no. Per a la comparació justa, mira el gràfic de dalt.',
     'compare.method.title': 'Com ho calculem',
     'compare.method.source':
       'Preus públics de la botiga en línia de cada establiment per a Barcelona, recollits automàticament cada dia. Darrera actualització: {date}.',
     'compare.method.member':
-      'A FoodCoop BCN mostrem els dos preus tal com surten a la nostra botiga en línia: el de la tarifa sòcia i, a sota, el públic que paga qualsevol persona. No calculem cap descompte: són els preus reals de cada tarifa.',
+      'El preu de sòcia i el preu públic surten tots dos de la nostra botiga en línia, que en publica dues llistes. No hi apliquem cap descompte: són els preus reals que cobrem.',
     'compare.method.match':
       'A cada supermercat hi ha el producte equivalent més proper i, si en té, la versió ecològica. Marca, certificació ecològica i origen poden variar: consulta el nom de cada producte.',
     'compare.method.qty':
       'Els preus es reescalen a la quantitat indicada a cada fila a partir del format de cada producte; els productes a granel es comparen per quilo o litre.',
+    'compare.method.pair':
+      'La comparació botiga a botiga suma tota la cistella amb el preu de sòcia i la compara amb el mateix llistat a cada supermercat. Els productes que allà no són ecològics compten igual, i te’n diem quants són.',
+    'compare.method.absent':
+      'Hi ha botigues que no hi surten perquè la seva web no deixa consultar els preus de manera automàtica.',
     'compare.method.hidden': 'Avui no tenim dades actualitzades de: {stores}.',
     'compare.method.missing': '{store} no té preu per a: {items}.',
+    'teaser.eyebrow': 'Preus',
+    'teaser.title': 'Quant costa comprar-hi?',
+    'teaser.intro':
+      'La mateixa cistella de productes bàsics, amb el preu de sòcia, comparada amb el que costa a cada supermercat de Barcelona.',
+    'teaser.caveat':
+      'No sempre som els més barats. Ho publiquem tot, també les botigues on perdem: mira la comparativa sencera i jutja-la tu.',
+    'teaser.cta': 'Veure la comparativa sencera',
+    'teaser.secondary': 'Preus i quotes',
+    'teaser.updated': 'Dades del',
   },
   es: {
     'nav.quisom': 'Quiénes somos',
@@ -204,32 +235,63 @@ export const ui = {
     'lang.switch': 'Idioma',
     'compare.product': 'Producto',
     'compare.public': 'Precio público',
-    'compare.member': 'Precio socia',
+    'compare.member': 'Precio de socia',
     'compare.updated': 'Actualizado el',
-    'compare.total': 'Total de la selección',
-    'compare.totalNote': 'Suma de los {n} productos que tienen precio en todas las tiendas.',
     'compare.unavailable': 'Sin precio disponible',
     'compare.eco': 'ECO',
     'compare.notEco': 'No eco',
     'compare.viewProduct': 'Ver el producto en la tienda en línea',
     'compare.basket': 'La cesta de hoy',
-    'compare.basketNote': 'Los mismos {n} productos básicos, comprados en cada tienda.',
-    'compare.viewAll': 'Cesta entera ({n})',
-    'compare.viewLike': 'Mismo tipo de producto ({n})',
-    'compare.viewNote':
-      'La cesta entera compara el producto equivalente de cada tienda, sea ecológico o no. La otra vista se queda solo con los productos donde todas las tiendas venden el mismo tipo de producto, y es la comparación más limpia que podemos hacer.',
-    'compare.relative': 'Precio relativo dentro de la fila',
+    'compare.pair.title': 'La misma cesta, tienda a tienda',
+    'compare.pair.note':
+      'Comparamos los mismos productos básicos en cada supermercado, con el precio de socia. Cuando un producto no es ecológico en alguno de ellos te lo decimos, porque entonces la comparación no es del todo equivalente.',
+    'compare.pair.count': 'los {n} productos de la cesta',
+    'compare.pair.notEco':
+      '{n} de estos productos no son ecológicos en {store}, así que no son del todo comparables.',
+    'compare.pair.notEcoOne':
+      'Uno de estos productos no es ecológico en {store}, así que no es del todo comparable.',
+    'compare.pair.same': 'casi el mismo precio',
+    'compare.pair.cheaper': 'un {pct} más barato en FoodCoop BCN',
+    'compare.pair.dearer': 'un {pct} más caro en FoodCoop BCN',
+    'compare.pair.here': 'en FoodCoop BCN',
+    'compare.pair.cheaperHere': 'más barato en FoodCoop BCN',
+    'compare.pair.dearerHere': 'más caro en FoodCoop BCN',
+    'compare.total': 'Total de la cesta',
+    'compare.totalNote': 'Suma de los {n} productos que tienen precio en todas las tiendas.',
+    'compare.table.title': 'Producto a producto',
+    'compare.pair.none': 'Hoy no tenemos ningún producto comparable.',
+    'compare.pair.rival': 'Precio del supermercado',
+    'compare.pair.atShop': 'en {store}',
+    'compare.pair.sr':
+      'En FoodCoop BCN, {member} con el precio de socia. En {store}, {rival}.',
+    'compare.table.summary': 'Ver la tabla con todos los precios y productos',
+    'compare.table.hint': 'Precios exactos, nombre de cada producto y formato.',
+    'compare.table.note':
+      'Esta tabla suma la cesta entera, tal como la vende cada tienda, sea ecológica o no. Para la comparación justa, mira el gráfico de arriba.',
     'compare.method.title': 'Cómo lo calculamos',
     'compare.method.source':
       'Precios públicos de la tienda en línea de cada establecimiento para Barcelona, recogidos automáticamente cada día. Última actualización: {date}.',
     'compare.method.member':
-      'En FoodCoop BCN mostramos los dos precios tal como salen en nuestra tienda en línea: el de la tarifa socia y, debajo, el público que paga cualquier persona. No calculamos ningún descuento: son los precios reales de cada tarifa.',
+      'El precio de socia y el precio público salen los dos de nuestra tienda en línea, que publica dos listas. No aplicamos ningún descuento: son los precios reales que cobramos.',
     'compare.method.match':
       'En cada supermercado figura el producto equivalente más cercano y, si lo tiene, la versión ecológica. Marca, certificación ecológica y origen pueden variar: consulta el nombre de cada producto.',
     'compare.method.qty':
       'Los precios se reescalan a la cantidad indicada en cada fila a partir del formato de cada producto; los productos a granel se comparan por kilo o litro.',
+    'compare.method.pair':
+      'La comparación tienda a tienda suma toda la cesta con el precio de socia y la compara con el mismo listado en cada supermercado. Los productos que allí no son ecológicos cuentan igual, y te decimos cuántos son.',
+    'compare.method.absent':
+      'Hay tiendas que no aparecen porque su web no permite consultar los precios de forma automática.',
     'compare.method.hidden': 'Hoy no tenemos datos actualizados de: {stores}.',
     'compare.method.missing': '{store} no tiene precio para: {items}.',
+    'teaser.eyebrow': 'Precios',
+    'teaser.title': '¿Cuánto cuesta comprar aquí?',
+    'teaser.intro':
+      'La misma cesta de productos básicos, con el precio de socia, comparada con lo que cuesta en cada supermercado de Barcelona.',
+    'teaser.caveat':
+      'No siempre somos los más baratos. Lo publicamos todo, también las tiendas donde perdemos: mira la comparativa entera y júzgala tú.',
+    'teaser.cta': 'Ver la comparativa entera',
+    'teaser.secondary': 'Precios y cuotas',
+    'teaser.updated': 'Datos del',
   },
 } as const;
 

@@ -255,7 +255,7 @@ const sectionBlocks = {
     }),
   },
   priceTeaser: {
-    label: 'Preus: un exemple (automàtic)',
+    label: 'Preus: la cistella botiga a botiga (automàtic)',
     schema: fields.object({
       eyebrow: fields.text({ label: 'Etiqueta', description: 'Deixa-ho buit per al text per defecte.' }),
       title: fields.text({ label: 'Títol', description: 'Deixa-ho buit per al text per defecte.' }),
