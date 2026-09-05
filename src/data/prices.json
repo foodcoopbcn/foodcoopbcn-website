@@ -1,14 +1,14 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-04T09:40:54.972Z",
+  "generatedAt": "2026-09-05T09:06:15.569Z",
   "stores": {
     "foodcoop": {
-      "fetchedAt": "2026-09-04T09:40:54.972Z",
-      "lastAttemptAt": "2026-09-04T09:40:54.972Z",
+      "fetchedAt": "2026-09-05T09:06:15.569Z",
+      "lastAttemptAt": "2026-09-05T09:06:15.569Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2969",
           "name": "LLET SENCERA Campllong 1 l",
           "brand": "Campllong",
@@ -21,7 +21,7 @@
           "eco": false
         },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "3004",
           "name": "IOGURT NATURAL La Torre 125 g",
           "brand": "La Torre",
@@ -47,7 +47,7 @@
           "eco": true
         },
         "patata": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2710",
           "name": "FRESC PATATA VERMELLA ECO Rudolph - Alt penedes",
           "brand": "",
@@ -60,7 +60,7 @@
           "eco": true
         },
         "ceba": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "1994",
           "name": "FRESC CEBA SECA RECA ECO (kg) Baix Ebre",
           "brand": "",
@@ -73,7 +73,7 @@
           "eco": true
         },
         "poma": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "5182",
           "name": "FRESC POMA GALA PROXIMITAT (kg) Baix Llobregat - Terra Pagesa",
           "brand": "",
@@ -86,7 +86,7 @@
           "eco": false
         },
         "beguda-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2301",
           "name": "BEGUDA CIVADA ECO Monsoy 1 l",
           "brand": "Monsoy",
@@ -99,7 +99,7 @@
           "eco": true
         },
         "macarrons": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2177",
           "name": "MACARRONS BLAT ECO Castagno  500 g",
           "brand": "Castagno",
@@ -112,7 +112,7 @@
           "eco": true
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "1837",
           "name": "GRANEL ARRÒS RODÓ INTEGRAL ECO (kg)",
           "brand": "",
@@ -125,7 +125,7 @@
           "eco": true
         },
         "flocs-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2967",
           "name": "GRANEL FLOCS CIVADA PETITA ECO",
           "brand": "",
@@ -138,7 +138,7 @@
           "eco": true
         },
         "ametlles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "5090",
           "name": "GRANEL AMETLLA AMB PELL ECO (kg) Espanya Oleander",
           "brand": "",
@@ -151,7 +151,7 @@
           "eco": true
         },
         "farina-blat": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "5045",
           "name": "FARINA DE BLAT ECO El Granero 1 kg",
           "brand": "El Granero",
@@ -164,7 +164,7 @@
           "eco": true
         },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "759",
           "name": "LLENTIA CUITA ECO Cal Valls 700 g",
           "brand": "Cal Valls",
@@ -177,7 +177,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "1799",
           "name": "OLI DEGUSTUS P.I. Cooperativa La Granadella 5 l",
           "brand": "Degustus",
@@ -190,7 +190,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2307",
           "name": "GRANEL SAL MARINA ECO Terres de l'Ebre (kg)",
           "brand": "Terres de l'Ebre",
@@ -203,7 +203,7 @@
           "eco": true
         },
         "cafe-molt": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2668",
           "name": "CAFÈ MOLT NATURAL Oxfam 250 g",
           "brand": "Oxfam",
@@ -216,7 +216,7 @@
           "eco": false
         },
         "te-verd": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "1268",
           "name": "TE VERD ECO Artemís 20 b.",
           "brand": "Artemís",
@@ -229,7 +229,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2752",
           "name": "FUET ESKI L'Esquiador (u.)",
           "brand": "L'Esquiador",
@@ -242,14 +242,14 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "4701",
           "name": "GRANEL RENTAVAIXELLES MANUAL LLIMONA Goodgranel",
           "brand": "GoodGranel",
           "url": "https://botiga.foodcoopbcn.cat/shop/c-basica-granel-rentavaixelles-manual-llimona-goodgranel-4701",
           "image": null,
-          "packPrice": 2.35,
-          "memberPackPrice": 2.15,
+          "packPrice": 2.48,
+          "memberPackPrice": 2.27,
           "packQty": 1,
           "unit": "l",
           "eco": false
@@ -257,12 +257,12 @@
       }
     },
     "mercadona": {
-      "fetchedAt": "2026-09-04T09:40:54.972Z",
-      "lastAttemptAt": "2026-09-04T09:40:54.972Z",
+      "fetchedAt": "2026-09-05T09:06:15.569Z",
+      "lastAttemptAt": "2026-09-05T09:06:15.569Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "10380",
           "name": "Leche entera Hacendado",
           "brand": "Hacendado",
@@ -275,7 +275,7 @@
           "eco": false
         },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "22313",
           "name": "Yogur natural Hacendado",
           "brand": "Hacendado",
@@ -288,7 +288,7 @@
           "eco": false
         },
         "ous": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "31310",
           "name": "Huevos de gallinas camperas",
           "brand": "",
@@ -301,7 +301,7 @@
           "eco": false
         },
         "patata": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "69166",
           "name": "Patatas",
           "brand": "",
@@ -314,7 +314,7 @@
           "eco": false
         },
         "ceba": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "69089",
           "name": "Cebollas",
           "brand": "",
@@ -327,7 +327,7 @@
           "eco": false
         },
         "poma": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "3269",
           "name": "Manzanas Golden",
           "brand": "",
@@ -340,7 +340,7 @@
           "eco": false
         },
         "beguda-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "23912",
           "name": "Bebida de avena Alitey",
           "brand": "Alitey",
@@ -353,7 +353,7 @@
           "eco": false
         },
         "macarrons": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "6326",
           "name": "Macarrón Hacendado",
           "brand": "Hacendado",
@@ -366,7 +366,7 @@
           "eco": false
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "5184",
           "name": "Arroz integral largo Hacendado",
           "brand": "Hacendado",
@@ -379,7 +379,7 @@
           "eco": false
         },
         "flocs-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "86341",
           "name": "Copos de avena Brüggen",
           "brand": "Brüggen",
@@ -392,7 +392,7 @@
           "eco": false
         },
         "ametlles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "34865",
           "name": "Almendra natural Hacendado",
           "brand": "Hacendado",
@@ -405,7 +405,7 @@
           "eco": false
         },
         "farina-blat": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "29100",
           "name": "Harina de trigo Hacendado",
           "brand": "Hacendado",
@@ -418,7 +418,7 @@
           "eco": false
         },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "26030",
           "name": "Lenteja cocida Hacendado",
           "brand": "Hacendado",
@@ -444,7 +444,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "19731",
           "name": "Sal fina Hacendado",
           "brand": "Hacendado",
@@ -457,7 +457,7 @@
           "eco": false
         },
         "cafe-molt": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "11172",
           "name": "Café molido natural Hacendado",
           "brand": "Hacendado",
@@ -470,7 +470,7 @@
           "eco": false
         },
         "te-verd": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "13651",
           "name": "Té verde Hacendado",
           "brand": "Hacendado",
@@ -483,7 +483,7 @@
           "eco": false
         },
         "fuet": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "55108",
           "name": "Fuet espetec Hacendado",
           "brand": "Hacendado",
@@ -496,7 +496,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "42441",
           "name": "Lavavajillas a mano Bosque Verde",
           "brand": "Bosque Verde",
@@ -511,12 +511,12 @@
       }
     },
     "ametller": {
-      "fetchedAt": "2026-09-04T09:40:54.972Z",
-      "lastAttemptAt": "2026-09-04T09:40:54.972Z",
+      "fetchedAt": "2026-09-05T09:06:15.569Z",
+      "lastAttemptAt": "2026-09-05T09:06:15.569Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "19157",
           "name": "Llet sencera Llet nostra 1l",
           "brand": "LLET NOSTRA",
@@ -529,7 +529,7 @@
           "eco": false
         },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "59069",
           "name": "Iogurt natural Essencials 125g - 4u.",
           "brand": "ESSENCIALS",
@@ -542,7 +542,7 @@
           "eco": false
         },
         "ous": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "53336",
           "name": "Ous frescos ecològics M Ametller Origen - 6u.",
           "brand": "AMETLLER ORIGEN",
@@ -555,7 +555,7 @@
           "eco": true
         },
         "patata": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "214",
           "name": "Patata vermella",
           "brand": "",
@@ -568,7 +568,7 @@
           "eco": false
         },
         "ceba": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "55893",
           "name": "Ceba cuina - bossa 1kg",
           "brand": "",
@@ -581,7 +581,7 @@
           "eco": false
         },
         "poma": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "22",
           "name": "Poma Golden extra",
           "brand": "",
@@ -594,7 +594,7 @@
           "eco": false
         },
         "beguda-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "56378",
           "name": "Beguda de civada ecològica Ametller Origen 1l",
           "brand": "AMETLLER ORIGEN",
@@ -607,7 +607,7 @@
           "eco": true
         },
         "macarrons": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "56669",
           "name": "Macarrons ecològics Ametller Origen 500g",
           "brand": "AMETLLER ORIGEN",
@@ -620,7 +620,7 @@
           "eco": true
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "54807",
           "name": "Arròs rodó integral ecològic 1Kg",
           "brand": "AMETLLER ORIGEN",
@@ -633,7 +633,7 @@
           "eco": true
         },
         "flocs-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "10864",
           "name": "Flocs de civada Essencials 500g",
           "brand": "ESSENCIALS",
@@ -646,7 +646,7 @@
           "eco": false
         },
         "ametlles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "2312",
           "name": "Ametlles crues Essencials 200g",
           "brand": "ESSENCIALS",
@@ -659,7 +659,7 @@
           "eco": false
         },
         "farina-blat": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "19418",
           "name": "Farina de blat Santa Rita 1kg",
           "brand": "SANTA RITA",
@@ -672,7 +672,7 @@
           "eco": false
         },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "54364",
           "name": "Llentia ecològica Ametller Origen 570g",
           "brand": "AMETLLER ORIGEN",
@@ -685,7 +685,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "10220",
           "name": "Oli d'Oliva verge extra Ametller Origen 5L",
           "brand": "AMETLLER ORIGEN",
@@ -698,7 +698,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "3250",
           "name": "Sal fina ecològica Marismeña 1 kg",
           "brand": "MARISMEÑA",
@@ -711,7 +711,7 @@
           "eco": true
         },
         "cafe-molt": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "56937",
           "name": "Cafè mòlt natural Essencials 250g",
           "brand": "ESSENCIALS",
@@ -737,7 +737,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "57100",
           "name": "Fuet Ametller Origen 180g",
           "brand": "AMETLLER ORIGEN",
@@ -750,7 +750,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "3375",
           "name": "Rentavaixelles romaní Frosch 750ml",
           "brand": "FROSCH",
@@ -765,12 +765,12 @@
       }
     },
     "condis": {
-      "fetchedAt": "2026-09-04T09:40:54.972Z",
-      "lastAttemptAt": "2026-09-04T09:40:54.972Z",
+      "fetchedAt": "2026-09-05T09:06:15.569Z",
+      "lastAttemptAt": "2026-09-05T09:06:15.569Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "704049",
           "name": "LECHE CONDIS ENTERA 1 L",
           "brand": "CONDIS",
@@ -783,7 +783,7 @@
           "eco": false
         },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "780231",
           "name": "YOGUR DANONE NATURAL 4 UNIDADES",
           "brand": "DANONE",
@@ -796,7 +796,7 @@
           "eco": false
         },
         "ous": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "170306",
           "name": "HUEVOS GRANJA MONTSENY ECOLÓGICOS 6 UNIDADES",
           "brand": "",
@@ -809,7 +809,7 @@
           "eco": true
         },
         "patata": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "191640",
           "name": "PATATA CONDIS VERSÁTIL BOLSA 3 KG",
           "brand": "CONDIS",
@@ -822,7 +822,7 @@
           "eco": false
         },
         "ceba": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "191095",
           "name": "CEBOLLA CONDIS BOLSA 1 KG",
           "brand": "CONDIS",
@@ -835,7 +835,7 @@
           "eco": false
         },
         "poma": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "190530",
           "name": "MANZANA GOLDEN 4 UNIDADES 800G APROX.",
           "brand": "",
@@ -848,7 +848,7 @@
           "eco": false
         },
         "beguda-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "704259",
           "name": "BEGETAL KAIKU AVENA SIN AZÚCAR 1 L",
           "brand": "KAIKU",
@@ -861,7 +861,7 @@
           "eco": false
         },
         "macarrons": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "121147",
           "name": "PASTA CONDIS MACARRONES 500 G",
           "brand": "CONDIS",
@@ -874,7 +874,7 @@
           "eco": false
         },
         "arros-integral": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "103066",
           "name": "ARROZ SEO FOOD INTEGRAL ECOLO 1 KG",
           "brand": "SEO FOOD",
@@ -887,7 +887,7 @@
           "eco": true
         },
         "flocs-civada": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "121877",
           "name": "COPOS AVENA ECO CESTA INTEGRAL 800 GR",
           "brand": "ECO CESTA",
@@ -900,7 +900,7 @@
           "eco": true
         },
         "ametlles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "190301",
           "name": "ALMENDRA CRUDA 200G",
           "brand": "",
@@ -913,7 +913,7 @@
           "eco": false
         },
         "farina-blat": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "118010",
           "name": "HARINA TRIGO CONDIS 1 KG",
           "brand": "CONDIS",
@@ -926,7 +926,7 @@
           "eco": false
         },
         "llenties-cuites": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "122073",
           "name": "LENTEJAS CONDIS ECO COCIDAS 230 G",
           "brand": "CONDIS",
@@ -939,7 +939,7 @@
           "eco": true
         },
         "oli-oliva": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "110452",
           "name": "ACEITE VIRGEN EXTRA EL TROS ARBEQUINA 2 L",
           "brand": "EL TROS",
@@ -952,7 +952,7 @@
           "eco": false
         },
         "sal-marina": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "121782",
           "name": "SAL MARINA FINA ECOLÓGICA ECO CESTA 1 KG",
           "brand": "ECO CESTA",
@@ -965,7 +965,7 @@
           "eco": true
         },
         "cafe-molt": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "105046",
           "name": "CAFÉ MOLIDO BONKA NATURAL 250 G",
           "brand": "BONKA",
@@ -978,7 +978,7 @@
           "eco": false
         },
         "te-verd": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "107299",
           "name": "TE VERDE CUPPER BIO CLASICO 20 UNIDADES",
           "brand": "",
@@ -991,7 +991,7 @@
           "eco": true
         },
         "fuet": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "426100",
           "name": "ESPETEC CONDIS EXTRA 170 GRS",
           "brand": "CONDIS",
@@ -1004,7 +1004,7 @@
           "eco": false
         },
         "rentavaixelles": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "833003",
           "name": "LAVAVAJILLAS MISTOL ORIGINAL 900 ML",
           "brand": "MISTOL",
@@ -1019,12 +1019,12 @@
       }
     },
     "bonpreu": {
-      "fetchedAt": "2026-09-04T09:40:54.972Z",
-      "lastAttemptAt": "2026-09-04T09:40:54.972Z",
+      "fetchedAt": "2026-09-05T09:06:15.569Z",
+      "lastAttemptAt": "2026-09-05T09:06:15.569Z",
       "lastError": null,
       "items": {
         "llet-sencera": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "81177",
           "name": "BONPREU Llet sencera en cartró",
           "brand": "BONPREU",
@@ -1037,7 +1037,7 @@
           "eco": false
         },
         "iogurt-natural": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "90813",
           "name": "BONPREU Iogurt natural",
           "brand": "BONPREU",
@@ -1050,7 +1050,7 @@
           "eco": false
         },
         "ous": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "04230",
           "name": "BONPREU Ous frescos ecològics classe M",
           "brand": "BONPREU",
@@ -1063,7 +1063,7 @@
           "eco": true
         },
         "patata": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "04657",
           "name": "LA COLLITA Patata blanca bossa 4 kg",
           "brand": "LA COLLITA",
@@ -1076,7 +1076,7 @@
           "eco": false
         },
         "ceba": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "07375",
           "name": "LA COLLITA Ceba seca Km0  en malla d'1 kg",
           "brand": "LA COLLITA",
@@ -1089,7 +1089,7 @@
           "eco": false
         },
         "poma": {
-          "fetchedAt": "2026-09-04T09:40:54.972Z",
+          "fetchedAt": "2026-09-05T09:06:15.569Z",
           "productId": "49235",
           "name": "LA COLLITA Poma golden de Girona Km0 bossa 1,5 kg",
           "brand": "LA COLLITA",
